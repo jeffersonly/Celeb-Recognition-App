@@ -1,0 +1,14 @@
+{
+    "local": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-celebrecognitionapp-local-213106-authRole",
+            "UnauthRoleArn": "arn:aws:iam::162045688266:role/amplify-celebrecognitionapp-local-213106-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::162045688266:role/amplify-celebrecognitionapp-local-213106-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-celebrecognitionapp-local-213106-deployment",
+            "UnauthRoleName": "amplify-celebrecognitionapp-local-213106-unauthRole",
+            "StackName": "amplify-celebrecognitionapp-local-213106",
+            "StackId": "arn:aws:cloudformation:us-east-1:162045688266:stack/amplify-celebrecognitionapp-local-213106/cc5f19e0-011f-11ea-8bdf-0e27f3a268d6"
+        }
+    }
+}
