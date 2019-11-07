@@ -9,6 +9,13 @@
             "UnauthRoleName": "amplify-celebrecognitionapp-local-213106-unauthRole",
             "StackName": "amplify-celebrecognitionapp-local-213106",
             "StackId": "arn:aws:cloudformation:us-east-1:162045688266:stack/amplify-celebrecognitionapp-local-213106/cc5f19e0-011f-11ea-8bdf-0e27f3a268d6"
+        },
+        "categories": {
+            "auth": {
+                "celebrecognitionappc3eecff0": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"754801024992578\",\"client_secret\":\"a3ce8bf9bcfcc074b568e8bf41bf200c\"},{\"ProviderName\":\"Google\",\"client_id\":\"980776711765-9pren58b3q20g9letphbmebkp7pg9lh0.apps.googleusercontent.com\",\"client_secret\":\"8nz0ZOdAC7AfP8v2zmOiuL1f\"}]"
+                }
+            }
         }
     }
 }
