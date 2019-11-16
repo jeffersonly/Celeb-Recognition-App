@@ -85,7 +85,13 @@ Parameters:
                 
   hostedUI:
     Type: String
-            
+                    
+  userPoolGroupList:
+    Type: CommaDelimitedList
+              
+  dependsOn:
+    Type: CommaDelimitedList
+      
   hostedUIDomainName:
     Type: String
                       
@@ -100,13 +106,7 @@ Parameters:
               
   oAuthMetadata:
     Type: String
-                      
-  userPoolGroupList:
-    Type: CommaDelimitedList
-                          
-  dependsOn:
-    Type: CommaDelimitedList
-    
+                        
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 

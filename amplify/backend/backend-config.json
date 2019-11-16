@@ -1,9 +1,15 @@
 {
-	"auth": {
-		"celebrecognitionappc3eecff0": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": []
-		}
-	}
+    "auth": {
+        "celebrecognitionappc3eecff0": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": []
+        }
+    },
+    "hosting": {
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation"
+        }
+    }
 }
