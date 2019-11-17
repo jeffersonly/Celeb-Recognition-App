@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 import Amplify, { Auth } from 'aws-amplify'
 import config from './aws-exports'
+import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 
 var urlsIn = config.oauth.redirectSignIn.split(",");
 var urlsOut = config.oauth.redirectSignOut.split(",");
@@ -35,7 +36,7 @@ else {
 var configUpdate = config;
 configUpdate.oauth = oauth;
 Amplify.configure(configUpdate);
-
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

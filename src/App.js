@@ -6,6 +6,9 @@ import React, { useEffect } from 'react';
 // import Hub
 import { Auth, Hub } from 'aws-amplify'
 
+import Predictions from '@aws-amplify/predictions';
+import avengerslul from './imgs/avengerslul.jpg';
+
 function checkUser() {
   Auth.currentAuthenticatedUser()
     .then(user => console.log({ user }))
@@ -18,8 +21,28 @@ function signOut() {
     .catch(err => console.log(err));
 }
 
+function predictCeleb(file) {
+  //console.log(file);
+  //console.log(file.target.files);
+  //let image = file.target.files;
+  //let reader = new FileReader();
+  //reader.readAsDataURL(image[0]);
+  //reader.onload = (file) => {
+   // const formData = {file: file.target.result}
+  //}
+
+  Predictions.identify({
+    entities: {
+      source: {
+        file,
+      },
+    }
+  })
+  .then(res =>  console.log("celeb info " + res))
+  .catch(err => console.log(err));
+}
+
 function App(props) {
-  // in useEffect, we create the listener
   useEffect(() => {
     Hub.listen('auth', (data) => {
       const { payload } = data
@@ -32,6 +55,7 @@ function App(props) {
        }
     })
   }, [])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -40,7 +64,9 @@ function App(props) {
         <button onClick={signOut}>Sign Out</button>
         <button onClick={() => Auth.federatedSignIn({provider: 'Facebook'})}>Sign In with Facebook</button>
         <button onClick={() => Auth.federatedSignIn({provider: 'Google'})}>Sign In with Google</button>
+        <button onClick={predictCeleb}>Predict Image</button>
 
+        <input type="file" onChange={predictCeleb}></input>
       </header>
     </div>
   );
