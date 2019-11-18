@@ -17,14 +17,14 @@ const initialState = {
     username: "",
     password: "",
     password2: "",
-    email: "",
-    emailError: "",
+    confirmationCode: "",
     usernameError: "",
     passwordError: "",
     password2Error: "",
+    confirmationcodeError: "",
 }
 
-class Register extends Component {
+class ChangePassword extends Component {
     constructor() {
         super();
         this.state = initialState;
@@ -38,13 +38,13 @@ class Register extends Component {
 
     //check to see if form has errors
     validateForm = () => {
-        let emailError = "";
+        let confirmationcodeError = "";
         let usernameError = "";
         let passwordError = "";
         let password2Error = "";
 
-        if(!this.state.email) {
-            emailError = "Email can not be empty!";
+        if(!this.state.confirmationCode) {
+            confirmationcodeError = "Confirmation Code can not be empty!";
         }
 
         if(!this.state.username) {
@@ -67,8 +67,8 @@ class Register extends Component {
             passwordError = password2Error = "Password length must be at least 8 characters.";
         }
 
-        if(emailError || usernameError || passwordError || password2Error) {
-            this.setState({emailError, usernameError, passwordError, password2Error});
+        if(confirmationcodeError || usernameError || passwordError || password2Error) {
+            this.setState({confirmationcodeError, usernameError, passwordError, password2Error});
             return false;
         }
 
@@ -81,26 +81,26 @@ class Register extends Component {
         const isValid = this.validateForm();
         if(isValid) {
             //check to see if user can sign up - amplify
-            console.log(this.state);
             let usersName = event.target[0].value;
-            let usersEmail = event.target[1].value;
-            let usersPassword = event.target[2].value;
-
-            //console.log("user: " + usersName);
-            //console.log("email: " + usersEmail);
-            //console.log("password: " + usersPassword);
-
-            //Sign user up
-            Auth.signUp( usersName, usersPassword, usersEmail )
-            .then(res => window.location.href = "Confirm")
-            .catch(err => console.log("error signing user up...", err));
+            let usersConfirmationCode = event.target[1].value;
+            let usersNewPassword = event.target[2].value;
+            //let usersNewPassword2 = event.target[3].value;
+            // console.log("username: " + usersName);
+            // console.log("confirm code: " + usersConfirmationCode);
+            // console.log("user new pass: " + usersNewPassword);
+            // console.log("user new pass2: " + usersNewPassword2);
+            
+            // Change password after receiving confirmation code
+            Auth.forgotPasswordSubmit(usersName, usersConfirmationCode, usersNewPassword)
+            .then(data => window.location.href = "Login")
+            .catch(err => console.log(err));
         } 
     };
 
     render() {
         return (
             <Form className="loginForm" onSubmit={this.handleSubmit}>
-                <h3 className="text-center">Register for Account</h3>
+                <h3 className="text-center">Change Password</h3>
                 <br/>
                 <FormGroup>
                     <Label>Username</Label>
@@ -116,23 +116,23 @@ class Register extends Component {
                     </div>
                 </FormGroup>
                 <FormGroup>
-                    <Label>Email</Label>
+                    <Label>Confirmation Code</Label>
                     <Input 
-                        type="email" 
-                        placeholder="Enter Email"
-                        name="email"
-                        value={this.state.email}
+                        type="text" 
+                        placeholder="Enter Confirmation Code"
+                        name="confirmationCode"
+                        value={this.state.confirmationCode}
                         onChange={this.handleChange}
                     />
                     <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.emailError}
+                        {this.state.confirmationcodeError}
                     </div>
                 </FormGroup>
                 <FormGroup>
                     <Label>Password</Label>
                     <Input 
                         type="password" 
-                        placeholder="Enter Password"
+                        placeholder="Enter New Password"
                         name="password"
                         value={this.state.password}
                         onChange={this.handleChange}
@@ -145,7 +145,7 @@ class Register extends Component {
                     <Label>Confirm Password</Label>
                     <Input 
                         type="password" 
-                        placeholder="Confirm Password"
+                        placeholder="Confirm New Password"
                         name="password2"
                         value={this.state.password2}
                         onChange={this.handleChange}
@@ -155,19 +155,25 @@ class Register extends Component {
                     </div>
                 </FormGroup>
                 <br/>
-                <Button className="btn-lg btn-dark btn-block" type="submit">Register</Button>
+                <Button className="btn-lg btn-dark btn-block" type="submit">Change</Button>
 
                 <br/>
                 <div className="text-center">
                     <span className="p-3">
-                        Already have an account? 
+                        Need confirmation code?
+                        <a href="/ForgotPassword"> Click Here</a> 
+                    </span>
+                </div>
+                <div className="text-center">
+                    <span className="p-3">
+                        Don't need to reset password?
                         <a href="/Login"> Sign In</a> 
                     </span>
                 </div>
                 <div className="text-center">
                     <span className="p-3">
-                        Need to confirm account? 
-                        <a href="/Confirm"> Click here</a> 
+                        Don't have an account? 
+                        <a href="/Register"> Register here</a> 
                     </span>
                 </div>
             </Form>
@@ -175,4 +181,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default ChangePassword;
