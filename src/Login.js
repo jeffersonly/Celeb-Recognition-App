@@ -6,6 +6,7 @@ const initialFormState = {
   username: '', password: '', email: '', confirmationCode: ''
 }
 
+//update the form based on actions
 function reducer(state, action) {
   switch(action.type) {
     case 'updateFormState':
@@ -17,6 +18,7 @@ function reducer(state, action) {
   }
 }
 
+//sign up user
 async function signUp({ username, password, email }, updateFormType) {
   try {
     await Auth.signUp({
@@ -29,6 +31,7 @@ async function signUp({ username, password, email }, updateFormType) {
   }
 }
 
+//confirm sign up with confirmation code
 async function confirmSignUp({ username, confirmationCode }, updateFormType) {
   try {
     await Auth.confirmSignUp(username, confirmationCode)
@@ -39,11 +42,12 @@ async function confirmSignUp({ username, confirmationCode }, updateFormType) {
   }
 }
 
+//sign user in 
 async function signIn({ username, password }) {
   try {
     await Auth.signIn(username, password)
     console.log('sign in success!')
-    
+
   } catch (err) {
     console.log('error signing up..', err)
   }
