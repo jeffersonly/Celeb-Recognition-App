@@ -10,6 +10,8 @@ import {
     Input 
 } from 'reactstrap';
 
+import { Auth } from 'aws-amplify';
+
 //set initial state for clearing upon submit
 const initialState = {
     username: "",
@@ -80,7 +82,18 @@ class Register extends Component {
         if(isValid) {
             //check to see if user can sign up - amplify
             console.log(this.state);
-            this.setState(initialState);
+            let usersName = event.target[0].value;
+            let usersEmail = event.target[1].value;
+            let usersPassword = event.target[2].value;
+
+            //console.log("user: " + usersName);
+            //console.log("email: " + usersEmail);
+            //console.log("password: " + usersPassword);
+
+            //Sign user up
+            Auth.signUp( usersName, usersPassword, usersEmail )
+            .then(res => window.location.href = "Confirm")
+            .catch(err => console.log("error signing user up...", err));
         } 
     };
 

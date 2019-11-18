@@ -4,9 +4,10 @@ import { Auth } from 'aws-amplify'
 
 import Predictions from '@aws-amplify/predictions';
 
+
 function checkUser() {
   Auth.currentAuthenticatedUser()
-    .then(user => console.log({ user }))
+    .then(user => console.log(user))
     .catch(err => console.log(err));
 }
 
