@@ -3,7 +3,7 @@ import React from 'react';
 import { Auth } from 'aws-amplify'
 
 import Predictions from '@aws-amplify/predictions';
-
+import NavBar from '../CRUD/NavBar';
 
 function checkUser() {
   Auth.currentAuthenticatedUser()
@@ -47,6 +47,7 @@ function Home(props) {
         <button onClick={() => Auth.federatedSignIn({provider: 'Google'})}>Sign In with Google</button>
 
         <input type="file" onChange={identifyFile}></input>
+        <NavBar />
       </header>
     </div>
   );
