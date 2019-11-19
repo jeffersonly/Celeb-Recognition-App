@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import { Auth } from 'aws-amplify'
+import { Auth } from 'aws-amplify';
+
+import Dropzone from 'react-dropzone';
 
 import Predictions from '@aws-amplify/predictions';
 
+import NavBar from '../../Components/NavBar';
+import Previews from '../../Components/DropZone';
 
-function checkUser() {
-  Auth.currentAuthenticatedUser()
-    .then(user => console.log(user))
-    .catch(err => console.log(err));
-}
+class Home extends Component {
 
-function signOut() {
-  Auth.signOut()
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-}
+  checkUser() {
+    Auth.currentAuthenticatedUser()
+      .then(user => console.log(user))
+      .catch(err => console.log(err));
+  }
 
-function Home(props) {
-  function identifyFile(event) {
+  signOut() {
+    Auth.signOut()
+      .then(data => console.log(data), window.location.href = "/Login")
+      .catch(err => console.log(err));
+  }
+
+  identifyFile(event) {
     const { target: {files}} = event;
     const [file,] = files || [];
 
@@ -37,19 +42,31 @@ function Home(props) {
     .catch(err => console.log(err));
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={() => Auth.federatedSignIn()}>Sign In</button>
-        <button onClick={checkUser}>Check User</button>
-        <button onClick={signOut}>Sign Out</button>
-        <button onClick={() => Auth.federatedSignIn({provider: 'Facebook'})}>Sign In with Facebook</button>
-        <button onClick={() => Auth.federatedSignIn({provider: 'Google'})}>Sign In with Google</button>
+  //check if user is authenticated/logged in
+  isAuthenticated() {
+    Auth.currentAuthenticatedUser()
+    .then(user => console.log(user))
+    .catch(err => 
+      //this is bugged -> window href is ran and then alert is prompted upon success
+      window.location.href = "/Login",
+    );
+  }
 
-        <input type="file" onChange={identifyFile}></input>
-      </header>
-    </div>
-  );
+  render() {
+    this.isAuthenticated();
+    return (
+      <div className="App">
+        <NavBar />
+        <header className="App-header">
+          <button onClick={this.checkUser}>Check User</button>
+          <button onClick={this.signOut}>Sign Out</button>
+          <input type="file" onChange={this.identifyFile}></input>
+        </header>
+        <Previews />
+      </div>
+    )
+  }
+
 }
 
 export default Home
