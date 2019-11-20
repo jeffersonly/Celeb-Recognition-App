@@ -10,6 +10,7 @@ const thumbsContainer = {
   marginTop: 16
 };
 
+//style for image thumbnail
 const thumb = {
   display: 'inline-flex',
   borderRadius: 2,
@@ -25,12 +26,6 @@ const thumbInner = {
   display: 'flex',
   minWidth: 0,
   overflow: 'hidden'
-};
-
-const img = {
-  display: 'block',
-  width: 'auto',
-  height: '100%'
 };
 
 //styling of drop zone
@@ -50,6 +45,7 @@ const baseStyle = {
   cursor: 'pointer',
 };
 
+//style for text inside of dropzone
 const textStyle = {
   textColor: '#343a40',
 }
@@ -58,6 +54,7 @@ const disclaimStyle = {
   color: '#bdbdbd',
 }
 
+//style for text outside of drop zone
 const outerText = {
   textColor: '#343a40',
   textAlign: 'center',
@@ -65,6 +62,7 @@ const outerText = {
   paddingBottom: 5,
 }
 
+//styling to make image fit into page
 const imgStyle = {
   width: '100%',
   height: '100%',
