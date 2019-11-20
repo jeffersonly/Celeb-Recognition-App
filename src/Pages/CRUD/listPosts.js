@@ -6,15 +6,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Popover from '@material-ui/core/Popover';
 import Grid from '@material-ui/core/Grid';
 
 import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
 import * as queries from '../../graphql/queries';
 import EditPost from './editPost';
 import DeletePost from './deletePost';
-// import CommentForm from './addComment';
-import Button from '@material-ui/core/Button';
+import CommentForm from './addComment';
 const styles = {
   card: {
     width: 400,
@@ -99,7 +97,6 @@ state = {
 render(){
     const { classes } = this.props;
     const { posts } = this.state;
-    const { comments}=this.state;
     return (
       <div className={classes.root}>
       <Grid container className={classes.root} spacing={16}>
@@ -121,11 +118,10 @@ render(){
                       </Typography>
                   </CardContent>
                     <CardActions>
-                      {/* <CommentForm currentItem={post}/>  */}
+                      <CommentForm currentItem={post}/> 
                       <EditPost currentItem ={post} />
                      <DeletePost currentItem={post} /> 
-                   </CardActions>
-                   {/* Comment section */}                     
+                   </CardActions>                    
                  </Card>                
                </Grid>
               

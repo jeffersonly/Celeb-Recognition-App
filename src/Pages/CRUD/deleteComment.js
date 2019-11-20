@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
-class DeletePost extends Component {
+class DeleteComment extends Component {
 state = {
     open: false
   };
@@ -19,14 +19,11 @@ handleClose = () => {
 handleDelete = () => {
   console.log("item deleted");
     this.setState({ open: false });
-    var postDetails = {
-      id: this.props.currentItem.id,
+    var commentDetails = {
+      id: this.props.currentComment.id,
     }
-    API.graphql(graphqlOperation(mutations.deletePost, { input: postDetails }))
+    API.graphql(graphqlOperation(mutations.deleteComment, { input: commentDetails }))
     // .then(()=> {window.location.reload()})
-    Storage.remove(this.props.currentItem.imageURL)
-    .then(()=>console.log("image deleted in S3"))
-    .catch(error => console.log(error))
   };
 render() {
       return (
@@ -39,7 +36,7 @@ render() {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Are you sure you want to delete Post: {this.props.currentItem.title}?</DialogTitle>
+          <DialogTitle id="form-dialog-title">Are you sure you want to delete this comment?</DialogTitle>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
@@ -53,4 +50,4 @@ render() {
     );
   }
 }
-export default DeletePost;
+export default DeleteComment;
