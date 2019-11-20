@@ -2,7 +2,7 @@
     "paths": [
         {
             "name": "/search",
-            "lambdaFunction": "searchfunction",
+            "lambdaFunction": "searchingfunction",
             "privacy": {
                 "private": true,
                 "auth": [
@@ -11,11 +11,11 @@
             }
         }
     ],
-    "resourceName": "searchapi",
-    "apiName": "searchapi",
+    "resourceName": "searchingapi",
+    "apiName": "searchingapi",
     "functionArns": [
         {
-            "lambdaFunction": "searchfunction"
+            "lambdaFunction": "searchingfunction"
         }
     ],
     "privacy": {
@@ -27,7 +27,7 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "searchfunction",
+            "resourceName": "searchingfunction",
             "attributes": [
                 "Name",
                 "Arn"
