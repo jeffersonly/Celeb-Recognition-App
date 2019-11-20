@@ -9,10 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import Popover from '@material-ui/core/Popover';
 import Grid from '@material-ui/core/Grid';
 import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
-import * as queries from '../graphql/queries';
-import EditPost from './editPost';
-import DeletePost from './deletePost';
-import CommentForm from './addComment';
+import * as queries from '../../graphql/queries';
+// import EditPost from './editPost';
+// import DeletePost from './deletePost';
+// import CommentForm from './addComment';
 import Button from '@material-ui/core/Button';
 const styles = {
   card: {
@@ -120,31 +120,15 @@ render(){
                       </Typography>
                   </CardContent>
                     <CardActions>
-                      <CommentForm currentItem={post}/> 
+                      {/* <CommentForm currentItem={post}/> 
                       <EditPost currentItem ={post} />
-                     <DeletePost currentItem={post} /> 
+                     <DeletePost currentItem={post} />  */}
                    </CardActions>
                    {/* Comment section */}                     
                  </Card>                
                </Grid>
               
              ))}
-            
-              {/* <CardContent>
-                        <h3>Comments</h3>
-                        {comments.map((comment) => (
-                          <CardContent key={comment.id} comment>
-                              <Typography className={classes.title} color="textSecondary" gutterBottom>
-                              Author: {comment.author}
-                            </Typography>
-                                               
-                              <Typography component="p">
-                              Content: {comment.content}
-                              </Typography>
-                            
-                        ))}
-                        
-                      </CardContent> */}
          </Grid>
       </div>
     );
