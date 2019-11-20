@@ -14,15 +14,15 @@
         },
     
     
-          "functionsearchfunctionName": {
+          "functionsearchingfunctionName": {
             "Type": "String",
-            "Default": "functionsearchfunctionName"
+            "Default": "functionsearchingfunctionName"
           },
         
           
-          "functionsearchfunctionArn": {
+          "functionsearchingfunctionArn": {
             "Type": "String",
-            "Default": "functionsearchfunctionArn"
+            "Default": "functionsearchingfunctionArn"
           }
         
           
@@ -41,13 +41,13 @@
     },
     "Resources": {
         
-        "PolicyAPIGWsearchapiauth": {
+        "PolicyAPIGWsearchingapiauth": {
             "DependsOn": [
-              "searchapi"
+              "searchingapi"
             ],
             "Type": "AWS::IAM::Policy",
             "Properties": {
-              "PolicyName": "PolicyAPIGWsearchapiauth",
+              "PolicyName": "PolicyAPIGWsearchingapiauth",
               "Roles": [
                 {"Ref": "authRoleName"}
               ],
@@ -77,7 +77,7 @@
                             },
                             ":",
                             {
-                              "Ref": "searchapi"
+                              "Ref": "searchingapi"
                             },
                             "/",
                             {
@@ -108,7 +108,7 @@
                             },
                             ":",
                             {
-                              "Ref": "searchapi"
+                              "Ref": "searchingapi"
                             },
                             "/",
                             {
@@ -141,16 +141,16 @@
         
         
         
-      "searchapi": {
+      "searchingapi": {
         "Type": "AWS::ApiGateway::RestApi",
         "Properties": {
           "Description": "",
-          "Name": "searchapi",
+          "Name": "searchingapi",
           "Body": {
             "swagger": "2.0",
             "info": {
               "version": "2018-05-24T17:52:00Z",
-              "title": "searchapi"
+              "title": "searchingapi"
             },
             "host": {
                 "Fn::Join": [
@@ -278,7 +278,7 @@
                             
                             {
                                 
-                                "Ref": "functionsearchfunctionArn"
+                                "Ref": "functionsearchingfunctionArn"
                             },
                             
                             "/invocations"
@@ -383,7 +383,7 @@
                           
                           {
                             
-                            "Ref": "functionsearchfunctionArn"
+                            "Ref": "functionsearchingfunctionArn"
                           },
                           
                           "/invocations"
@@ -440,12 +440,12 @@
                   
         
         
-        "functionsearchfunctionPermissionsearchapi": {
+        "functionsearchingfunctionPermissionsearchingapi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionsearchfunctionName"
+                        "Ref":  "functionsearchingfunctionName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -464,7 +464,7 @@
                             },
                             ":",
                             {
-                                "Ref": "searchapi"
+                                "Ref": "searchingapi"
                             },
                             "/*/*/*"
                         ]
@@ -475,7 +475,7 @@
         
         
         
-      "DeploymentAPIGWsearchapi": {
+      "DeploymentAPIGWsearchingapi": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",
@@ -489,7 +489,7 @@
             ]
           },
           "RestApiId": {
-            "Ref": "searchapi"
+            "Ref": "searchingapi"
           }
         }
       }
@@ -497,11 +497,11 @@
     "Outputs": {
         "RootUrl": {
             "Description": "Root URL of the API gateway",
-            "Value": {"Fn::Join": ["", ["https://", {"Ref": "searchapi"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
+            "Value": {"Fn::Join": ["", ["https://", {"Ref": "searchingapi"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
         },
         "ApiName": {
           "Description": "API Friendly name",
-          "Value": "searchapi"
+          "Value": "searchingapi"
         }
     }
   }
