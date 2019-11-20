@@ -75,8 +75,8 @@ class Login extends Component {
     };
 
     //check if user is authenticated/logged in
-    isAuthenticated() {
-        Auth.currentAuthenticatedUser()
+    async isAuthenticated() {
+        await Auth.currentAuthenticatedUser()
         .then(user => window.location.href = "Home")
         .catch(err => console.log(err));
     }

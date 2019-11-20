@@ -17,10 +17,12 @@ Amplify Params - DO NOT EDIT */
 var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+
 var fetch = require('node-fetch')
 var bluebird = require('bluebird')
 var axios = require('axios')
 fetch.Promise = bluebird;
+
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())
@@ -32,6 +34,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
 });
+
 function successWithCors(result) {
   return { 
        statusCode: 200,
@@ -42,6 +45,7 @@ function successWithCors(result) {
       }
  };
 }
+
 
 /**********************
  * Example get method *

@@ -20,14 +20,23 @@
 			"identifyType": "identifyEntities"
 		}
 	},
-	"function": {
-		"searchfunction": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
-		}
-	},
 	"api": {
+		"celebrecognitionapp": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "API key",
+							"apiKeyExpirationDays": "150"
+						}
+					}
+				}
+			}
+		},
 		"searchapi": {
 			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
@@ -41,6 +50,19 @@
 					]
 				}
 			]
+		}
+	},
+	"storage": {
+		"celebrecappposts3": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"searchfunction": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
 		}
 	}
 }
