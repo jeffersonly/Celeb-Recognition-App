@@ -4,6 +4,7 @@ import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Home from './Pages/Auth/Home';
 import Confirm from './Pages/Auth/ConfirmCode';
+import Search from './Pages/Search/Search';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ChangePassword from './Pages/Auth/ChangePassword';
 
@@ -21,6 +22,8 @@ function App() {
           <Route path="/Confirm" component={Confirm} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/ChangePassword" component={ChangePassword} />
+          <Route path="/Search" component={Search} />
+
         </Switch>
       </Router>
     </div>
