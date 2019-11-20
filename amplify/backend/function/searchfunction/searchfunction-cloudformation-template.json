@@ -63,7 +63,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-celebrecognitionapp-local-213106-deployment",
-					"S3Key": "amplify-builds/searchfunction-6f7570774b31624d4b75-build.zip"
+					"S3Key": "amplify-builds/searchfunction-7767426f5a577a314e71-build.zip"
 				}
 			}
 		},

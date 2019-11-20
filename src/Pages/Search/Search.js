@@ -87,6 +87,7 @@ class Search extends Component {
         })
         .then(res =>  {
             console.log("entities: " + JSON.stringify(res.entities));
+            console.log(res.entities.length);
             this.setState({data:res.entities, loaded:true, opened:true, loading:false});
             console.log(this.state);
             console.log(this.state.data[0].metadata.name);
@@ -109,6 +110,8 @@ class Search extends Component {
                 console.log(this.state.error);
               }
               else{
+                console.log("HERE");
+                console.log(response);
                 this.setState({celeb:data,opened:false});
                 this.renderPages();
                 console.log(this.state.celeb);
@@ -122,9 +125,8 @@ class Search extends Component {
       async newSelect(condition){
         console.log(condition.value);
         this.setState({ pages: condition.value });
-        const data = await this.performSearch(this.state.name,condition.value);
-        await this.setState({posts:data,loading:false});
-        console.log(data);
+        await this.performSearch(this.state.name,condition.value);
+        await this.setState({loading:false});
     }
       async loadCelebrity(e){
         await this.setState({name:e.target.id});
