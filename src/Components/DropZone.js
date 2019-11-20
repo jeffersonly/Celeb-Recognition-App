@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {useDropzone} from 'react-dropzone';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+//for the previewed image thumbnail container
 const thumbsContainer = {
   display: 'flex',
   flexDirection: 'row',
@@ -12,12 +14,11 @@ const thumb = {
   display: 'inline-flex',
   borderRadius: 2,
   border: '1px solid #eaeaea',
-  marginBottom: 8,
-  marginRight: 8,
-  width: 100,
-  height: 100,
-  padding: 4,
-  boxSizing: 'border-box'
+  width: '100%',
+  height: '100%',
+  boxSizing: 'border-box',
+  justifyContent: 'center',
+  alignItems: 'center',
 };
 
 const thumbInner = {
@@ -32,15 +33,71 @@ const img = {
   height: '100%'
 };
 
+//styling of drop zone
+const baseStyle = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '100px',
+  borderWidth: 2,
+  borderRadius: 2,
+  borderColor: '#343a40',
+  borderStyle: 'dashed',
+  backgroundColor: '#fafafa',
+  outline: 'none',
+  transition: 'border .24s ease-in-out',
+  cursor: 'pointer',
+};
+
+const textStyle = {
+  textColor: '#343a40',
+}
+
+const disclaimStyle = {
+  color: '#bdbdbd',
+}
+
+const outerText = {
+  textColor: '#343a40',
+  textAlign: 'center',
+  paddingTop: 15,
+  paddingBottom: 5,
+}
+
+const imgStyle = {
+  width: '100%',
+  height: '100%',
+  maxHeight: '100vh'
+}
 
 export default function Previews(props) {
   const [files, setFiles] = useState([]);
+
+  const [modal, setModal] = useState(false);
+
+  //toggle for modal open/close
+  function toggle() {
+    setModal(!modal);
+  }
+
   const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*',
+    accept: 'image/jpeg, image/png',
     onDrop: acceptedFiles => {
-      setFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      })));
+      //if one file, continue else alert user
+      if (acceptedFiles.length === 1) {
+
+        //after files have been accepted, do stuff
+        setFiles(acceptedFiles.map(file => Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })));
+        //call modal toggle on file upload
+        toggle();
+
+      } else {
+        alert("Only one image is allowed at a time.")
+      }
+      
     }
   });
   
@@ -49,11 +106,16 @@ export default function Previews(props) {
       <div style={thumbInner}>
         <img
           src={file.preview}
-          style={img}
+          style={imgStyle}
         />
       </div>
     </div>
   ));
+
+  //allows for us to pass css to our drag and drop zone
+  const style = useMemo(() => ({
+    ...baseStyle,
+  }))
 
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
@@ -62,14 +124,30 @@ export default function Previews(props) {
 
   return (
     <section className="container">
-      <div {...getRootProps({className: 'dropzone'})}>
+      <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <h4 style={textStyle}>Drag and Drop Photo Here To Identify Celebrities!</h4>
+        <em style={disclaimStyle}>Only *.jpeg and *.png images are accepted</em>
       </div>
-      <aside style={thumbsContainer}>
+      
+      <h4 style={outerText}>The image uploaded will appear below.</h4>
+      
+      <aside style={thumbsContainer} onClick={toggle}>
         {thumbs}
       </aside>
+
+      <div>
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Celebrities Identified</ModalHeader>
+          <ModalBody>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={toggle}>Close</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
     </section>
   );
 }
-
