@@ -7,8 +7,8 @@ import Confirm from './Pages/Auth/ConfirmCode';
 import Search from './Pages/Search/Search';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ChangePassword from './Pages/Auth/ChangePassword';
-
-import PrivateRoute from './Pages/Auth/PrivateRoute';
+import NotFound from './Pages/Auth/NotFound';
+import ProtectedRoute from './Pages/Auth/ProtectedRoute';
 import CrudHome from './Pages/CRUD/crudHome'
 import {
   BrowserRouter as Router,
@@ -35,6 +35,7 @@ function App() {
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/ChangePassword" component={ChangePassword} />
           <Route path="/Search" component={Search} />
+          <Route path="/*" component={NotFound} />
           <Route path="/MyPosts" component={CrudHome}/>
         </Switch>
       </Router>

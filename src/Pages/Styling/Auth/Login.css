@@ -1,3 +1,4 @@
+/* Used for login form items */
 .loginForm {
     margin: auto;
     height: 100%;
@@ -11,4 +12,52 @@
     width: 100%;
     max-width: 350px;
     padding: 18px;
+}
+/* Used for not found page items */
+.NotFoundHeaderText {
+    font-size: 40px;
+    text-align: center;
+}
+.NotFoundText {
+    font-size: 20px;
+    text-align: center;
+}
+.NotFoundDiv {
+    padding-top: 10%;
+}
+/* Used for aligning text to center */
+.textCenter {
+    text-align: center;
+}
+/* Popup container */
+.popup {
+    position: relative;
+    cursor: pointer;
+}
+.popup .popuptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    z-index: 1;
+    margin-left: -85px;
+}
+.popup:hover .popuptext {
+    visibility: initial;
+}
+.popup .popuptext::after {
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #343a40 transparent transparent transparent;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
 }
