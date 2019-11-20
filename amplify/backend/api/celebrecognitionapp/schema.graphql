@@ -1,0 +1,26 @@
+type User @model {
+    id: ID!
+    username: String!
+    avatar: S3Object
+}
+type Post @model {
+    id: ID!
+    title: String!
+    description: String!    
+    avatar: S3Object
+    filename: String
+    key: String
+    userid: String
+    comments: [Comment] @connection(limit: 50, name: "PostComments")
+}
+type Comment @model {
+    id: ID!
+    author: String!
+    content: String!
+    post: Post @connection(name: "PostComments")
+}
+type S3Object {
+    bucket: String!
+    region: String!
+    key: String!
+}
