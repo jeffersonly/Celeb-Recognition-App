@@ -19,5 +19,29 @@
 			"dependsOn": [],
 			"identifyType": "identifyEntities"
 		}
+	},
+	"api": {
+		"celebrecognitionapp": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "API key",
+							"apiKeyExpirationDays": "150"
+						}
+					}
+				}
+			}
+		}
+	},
+	"storage": {
+		"celebrecappposts3": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
 	}
 }
