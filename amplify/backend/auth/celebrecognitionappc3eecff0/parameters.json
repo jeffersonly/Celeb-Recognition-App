@@ -1,6 +1,6 @@
 {
     "identityPoolName": "celebrecognitionappc3eecff0_identitypool_c3eecff0",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "celebrc3eecff0",
     "userPoolName": "celebrecognitionappc3eecff0_userpool_c3eecff0",
     "autoVerifiedAttributes": [
