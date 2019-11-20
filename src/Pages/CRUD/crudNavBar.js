@@ -5,7 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-//import AddPost from './addPost';
+import AddPost from './addPost';
+
 import { Auth } from 'aws-amplify';
 
 const styles = theme => ({
@@ -27,7 +28,7 @@ const styles = theme => ({
 //       .catch(err => console.log(err))
 // }
 
-class NavBar extends Component {
+class CrudNavBar extends Component {
 render(){
     const { classes } = this.props;
     return (
@@ -37,7 +38,7 @@ render(){
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Posts
             </Typography>
-            {/* <AddPost /> */}
+            <AddPost />
             {/* <AddItem /> */}
             {/* <Button onClick={signOut}>Log Out</Button> */}
           </Toolbar>
@@ -47,7 +48,7 @@ render(){
   }
 }
 
-NavBar.propTypes = {
+CrudNavBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(NavBar);
+export default withStyles(styles)(CrudNavBar);
