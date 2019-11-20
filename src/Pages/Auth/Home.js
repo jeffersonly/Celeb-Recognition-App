@@ -9,6 +9,8 @@ import Predictions from '@aws-amplify/predictions';
 import NavBar from '../../Components/NavBar';
 import Previews from '../../Components/DropZone';
 
+import '../Styling/Auth/Home.css';
+
 class Home extends Component {
 
   checkUser() {
@@ -62,7 +64,10 @@ class Home extends Component {
           <button onClick={this.signOut}>Sign Out</button>
           <input type="file" onChange={this.identifyFile}></input>
         </header>
-        <Previews />
+        <div className="lowerItem">
+          <Previews/>
+        </div>
+        
       </div>
     )
   }
