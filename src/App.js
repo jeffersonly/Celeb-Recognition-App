@@ -35,8 +35,9 @@ function App() {
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/ChangePassword" component={ChangePassword} />
           <Route path="/Search" component={Search} />
-          <Route path="/*" component={NotFound} />
           <Route path="/MyPosts" component={CrudHome}/>
+          <Route path="/*" component={NotFound} />
+          
         </Switch>
       </Router>
     </div>
