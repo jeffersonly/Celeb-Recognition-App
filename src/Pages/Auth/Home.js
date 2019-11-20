@@ -12,38 +12,7 @@ import Previews from '../../Components/DropZone';
 import '../Styling/Auth/Home.css';
 
 class Home extends Component {
-
-  checkUser() {
-    Auth.currentAuthenticatedUser()
-      .then(user => console.log(user))
-      .catch(err => console.log(err));
-  }
-
-  signOut() {
-    Auth.signOut()
-      .then(data => console.log(data), window.location.href = "/Login")
-      .catch(err => console.log(err));
-  }
-
-  identifyFile(event) {
-    const { target: {files}} = event;
-    const [file,] = files || [];
-
-    if(!file) {
-      return;
-    }
-    Predictions.identify({
-      entities: {
-        source: {
-          file,
-        },
-        celebrityDetection: true
-      }
-    })
-    .then(res =>  console.log("entities: " + JSON.stringify(res.entities)))
-    .catch(err => console.log(err));
-  }
-
+  
   //check if user is authenticated/logged in
   isAuthenticated() {
     Auth.currentAuthenticatedUser()
@@ -59,11 +28,6 @@ class Home extends Component {
     return (
       <div className="App">
         <NavBar />
-        <header className="App-header">
-          <button onClick={this.checkUser}>Check User</button>
-          <button onClick={this.signOut}>Sign Out</button>
-          <input type="file" onChange={this.identifyFile}></input>
-        </header>
         <div className="lowerItem">
           <Previews/>
         </div>

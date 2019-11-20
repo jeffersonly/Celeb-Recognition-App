@@ -82,7 +82,6 @@ class Login extends Component {
     }
 
     render() {
-        //check if user is logged in, if they are redirect to home page
         this.isAuthenticated();
         return (
             <div>
@@ -118,8 +117,28 @@ class Login extends Component {
                     <Button className="btn-lg btn-dark btn-block" type="submit">Login</Button>
                 </Form>
                 <div className="otherFormStuff">
-                    <GoogleLoginButton className="mt-2 btm-3" onClick={() => Auth.federatedSignIn({provider: 'Google'})} />
-                    <FacebookLoginButton className="mt-2 btm-3" onClick={() => Auth.federatedSignIn({provider: 'Facebook'})} />
+                    <p className="textCenter">Or Sign in with Social Providers...</p>
+                    
+                    <div class="popup">
+                        <span class='popuptext' id='myPopup'>
+                          This button is used for logging into the application using Google.
+                          <br/><br/>
+                          To associate your account for log in, please click the button once initially.
+                          <br/><br/>
+                          Upon redirect, click the button again to log in.
+                        </span>
+                        <GoogleLoginButton className="mt-2 btm-3" onClick={() => Auth.federatedSignIn({provider: 'Google'})} />
+                    </div>
+                    <div class="popup">
+                        <span class='popuptext' id='myPopup'>
+                          This button is used for logging into the application using Facebook.
+                          <br/><br/>
+                          To associate your account for log in, please click the button once initially.
+                          <br/><br/>
+                          Upon redirect, click the button again to log in.
+                        </span>
+                        <FacebookLoginButton className="mt-2 btm-3" onClick={() => Auth.federatedSignIn({provider: 'Facebook'})} />
+                    </div>
                     <br/>
                     <div className="text-center">
                         <a href="/Register">Sign Up</a>

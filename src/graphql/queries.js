@@ -75,7 +75,11 @@ export const listPosts = `query ListPosts(
       key
       userid
       comments {
-        nextToken
+        items {
+          id
+          author
+          content
+        }
       }
     }
     nextToken
