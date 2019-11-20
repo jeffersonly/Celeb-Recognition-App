@@ -14,6 +14,7 @@ import {
   DropdownItem 
 } from 'reactstrap';
 
+
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,13 +43,15 @@ const NavBar = (props) => {
                 Posts about Celebs
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem href="/">
-                  View Posts
+           
+                <DropdownItem href="/Myposts" >
+                     My Posts
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="/">
-                  Create Post
+                <DropdownItem href="/Otherposts" >
+                     Other posts
                 </DropdownItem>
+               
               </DropdownMenu>
             </UncontrolledDropdown>
 
