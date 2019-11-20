@@ -42,11 +42,11 @@ const NavBar = (props) => {
                 Posts about Celebs
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem href="/">
+                <DropdownItem href="/otherposts">
                   View Posts
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="/">
+                <DropdownItem href="/ownerposts">
                   Create Post
                 </DropdownItem>
               </DropdownMenu>
