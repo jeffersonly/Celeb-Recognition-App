@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import '../Styling/Search/Search.css'
 import ReactLoading from 'react-loading';
-import { 
-    Button, 
-    Form, 
-    FormGroup, 
-    Label, 
-    Input,
-    Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle,Row,Col
-} from 'reactstrap';
+import { Button, Card, CardText, CardBody, CardTitle, Row, Col } from 'reactstrap';
 import NavBar from '../../Components/NavBar';
-import { Auth, API } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
 import Popup from "reactjs-popup";
@@ -28,237 +20,256 @@ class Search extends Component {
             celeb:[],
             pages:1
         };
-        this.handleChange = this.handleChange.bind(this);
         this.identifyFile = this.identifyFile.bind(this);
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+        this.openModal = this.openModal.bind(this); //not needed later
+        this.closeModal = this.closeModal.bind(this); //not needed later
         this.newSelect= this.newSelect.bind(this);
+      }
 
-      }
-      async componentDidMount(){
-        let info = {content:"Lindsay Lohan",page:1};
-        let myInit = { // OPTIONAL
-          queryStringParameters: {  // OPTIONAL
-              name: "Lindsay Lohan",
-              page:1
-          }
-      }
-        API.get('searchapi','/search',myInit).then(response => {
-          this.setState({message:response});
-          console.log(this.state);
-        }).catch(error=>{
-          console.log(error);
-        })
-      }
-      openModal() {
-        this.setState({ opened: true });
-      }
-      closeModal() {
-        this.setState({ opened: false });
-      }
-    //handle text change
-    handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+//open modal  - not needed later
+openModal() {
+  this.setState({ opened: true }); 
+}
+//close modal - not needed later
+closeModal() {
+  this.setState({ opened: false });
+}
+
+
+
+
+
+    //identify celebrity based off of image
     async identifyFile(event) {
-
-        const { target: {files}} = event;
-        const [file,] = files || [];
-        console.log("HI");
-        if(!file) {
-          return;
-        }
-        await this.setState({            
-          opened: false,
-          loading: false,
-          loaded: false,
-          data: {},
-          message:[],
-          celeb:[],});
-        this.setState({loading:true});
-        Predictions.identify({
-          entities: {
-            source: {
-              file,
-            },
-            celebrityDetection: true
-          }
-        })
-        .then(res =>  {
-            console.log("entities: " + JSON.stringify(res.entities));
-            this.setState({data:res.entities, loaded:true, opened:true, loading:false});
-            console.log(this.state);
-            console.log(this.state.data[0].metadata.name);
-    })
-        .catch(err => console.log(err));
-
+      const { target: {files}} = event;
+      const [file,] = files || [];
+      
+      //if not a file return.... dont need this 
+      if(!file) {
+        return;
       }
-      async performSearch(n1,p1){
-        let myInit = { // OPTIONAL
-          queryStringParameters: {  // OPTIONAL
-              name: n1,
-              page: p1
-          }
-      }
+
+      //set state 
+      await this.setState({            
+        opened: false, //opened prob not needed
+        loading: false,
+        loaded: false,
+        data: {},
+        message:[],
+        celeb:[],
+      });
+
+      //used to show that item is being loaded
       this.setState({loading:true});
-        API.get('searchapi','/search',myInit).then(response => {
-          const data = response;
+
+      //use aws rekognition/amplify predictions to recognize celebs
+      Predictions.identify({
+        entities: {
+          source: {
+            file,
+          },
+          celebrityDetection: true
+        }
+      })
+      .then(res =>  {
+        //set state based on results
+        //data is set based on celebrities identified, loaded indicates loading done
+        this.setState({data:res.entities, loaded:true, loading:false, opened:true});
+      })
+      .catch(err => console.log(err));
+    }
+
+
+
+
+    //search for celebrity based on name and page
+    async performSearch(n1,p1) {
+
+        let myInit = {
+          queryStringParameters: {
+            name: n1,
+            page: p1
+          }
+        }
+
+        //used to show that item is being loaded
+        this.setState({loading:true});
+
+        //use search api + api gateway based on the query set by init
+        API.get('searchapi','/search',myInit)
+          .then(response => {
+              const data = response;
+
+              //if failed data set error message
               if(data["error"]){
                 this.setState({error:data["message"]});
-                console.log(this.state.error);
-              }
-              else{
-                this.setState({celeb:data,opened:false});
+              } else {
+                //if successful, display celeb data and render items
+                this.setState({celeb:data, opened:false});
                 this.renderPages();
-                console.log(this.state.celeb);
               }
-            
-          
-        }).catch(error=>{
-          console.log(error);
-        })
-      }
-      async newSelect(condition){
-        console.log(condition.value);
-        this.setState({ pages: condition.value });
-        const data = await this.performSearch(this.state.name,condition.value);
-        await this.setState({posts:data,loading:false});
-        console.log(data);
+          })
+          .catch(err => { console.log(err); })
     }
-      async loadCelebrity(e){
+
+
+
+
+
+
+      //displays another page for movies that are shown
+      async newSelect(condition) {
+          this.setState({ pages: condition.value });
+          const data = await this.performSearch(this.state.name,condition.value);
+          await this.setState({posts:data, loading:false});
+      }
+
+
+
+
+
+
+
+      async loadCelebrity(e) {
+        //set the name state to whichever celebrity is selected
         await this.setState({name:e.target.id});
-        let myInit = { // OPTIONAL
-          queryStringParameters: {  // OPTIONAL
+
+        //initialize name and page parameters
+        let myInit = {
+          queryStringParameters: {
               name: this.state.name,
               page: this.state.pages
           }
-      }
-        API.get('searchapi','/search',myInit).then(response => {
-          const data = response;
-              if(data["error"]){
+        }
+
+        //search based on selected celebrity name & page of movies to display
+        API.get('searchapi', '/search', myInit)
+          .then(response => {
+              const data = response;
+              //if error set error, otherwise display celebrity info
+              if(data["error"]) {
                 this.setState({error:data["message"]});
-                console.log(this.state.error);
-              }
-              else{
+              } else {
                 this.setState({celeb:data,opened:false});
                 this.renderPages();
-                console.log(this.state.celeb);
               }
-            
-          
-        }).catch(error=>{
-          console.log(error);
-        })
-        // let bigData = this.state.data;
-        // let body = [];
-        // for(let i = 0 ;i < bigData.length; i++){
-        //     body.push(bigData[i].metadata.name);
-        // }
-        // let inits = {
-        //   body:body
-        // }
-        // console.log("first body check " + body);
-        // API.post('searchapi', '/celebImages').then(response => {
-        //   const data = response;
-        //       if(data["error"]){
-        //         this.setState({error:data["message"]});
-        //         console.log(this.state.error);
-        //       }
-        //       else{
-        //         this.setState({celeb:data,opened:false});
-        //         this.renderPages();
-        //         console.log(this.state.celeb);
-        //       }
-        //       console.log("sec body check " + body);
-          
-        // }).catch(error=>{
-        //   console.log(error);
-        // })
+          })
+          .catch(err => { console.log(err); })
       }
-      loadOptions(){
+
+
+
+
+
+
+
+
+      //different buttons displayed for loading celebrities based off of names taken from rekognition
+      loadOptions() {
         let returns = [];
         let data = this.state.data;
-        for (let i =0; i< data.length; i++) {
-         returns.push(
-
-          <Button id={data[i].metadata.name} onClick={e => this.loadCelebrity(e)}>{data[i].metadata.name}</Button>
-         )
+        //for each of the celebrities identified, render a button w/ their name
+        for (let i = 0; i < data.length; i++) {
+          returns.push (
+            <Button 
+              id={data[i].metadata.name} 
+              onClick={e => this.loadCelebrity(e)}
+            >
+              {data[i].metadata.name}
+            </Button>
+          )
         }
         return returns;
       }
-      async renderPages(){
-        console.log("HI");
-    const items = [];
 
-      for (let i = 1; i <= this.state.celeb.message.pages; i++) {
-        items.push({value: i, label: i});
+
+      //makes multiple pages for celebrity movie cards loaded
+      async renderPages(){
+        const items = [];
+        for (let i = 1; i <= this.state.celeb.message.pages; i++) {
+            items.push({value: i, label: i});
+        }
+        await this.setState({items:items});
       }
-    await this.setState({items:items});
-    console.log(this.state.items);
-    }
-      generateMovies(){
+
+
+
+
+
+      
+
+      //create cards regarding movies based on celeb
+      generateMovies() {
         let returns = [];
+        //for each of the movies loaded
         for (let i =0; i< this.state.celeb.message.movies.length; i++) {
+          //current movie information
           let current = this.state.celeb.message.movies[i];
           returns.push(
-          <Col sm="3">
-          <Card body>
-          <a class="thumbnail">
-                    <img src={'https://image.tmdb.org/t/p/w1280'+ current.poster_path}/>
-                </a>  
-            <CardTitle>{current.title}</CardTitle>
-            <CardText>{current.overview}</CardText>
-          </Card>
-        </Col>)
+            <Col sm="3">
+                <Card body>
+                    <a class="thumbnail">
+                      <img src={'https://image.tmdb.org/t/p/w1280'+ current.poster_path}/>
+                    </a>  
+                    <CardTitle>{current.title}</CardTitle>
+                    <CardText>{current.overview}</CardText>
+                </Card>
+            </Col>)
         }
         return returns;
       }
+
+    
     render() {
         return (
             <div className="App">
-            <NavBar />
-            <header className="App-header">
-              <input type="file" onChange={this.identifyFile}></input>
-            </header>
+                <NavBar />
+                <header className="App-header">
+                  <input type="file" onChange={this.identifyFile}></input>
+                </header>
 
-            <div>
-            
-        {this.state.loaded &&
-        <Popup
-          open={this.state.opened}
-          closeOnDocumentClick
-          onClose={this.closeModal}
-        >
-            <div>
-            <a className="close cursor-pointer" onClick={this.closeModal} >
-              &times;
-            </a>
-           {this.loadOptions()}
+                <div>
+                    { this.state.loaded &&
+                        <Popup
+                          open={this.state.opened}
+                          closeOnDocumentClick
+                          onClose={this.closeModal}
+                        >
+                            <div>
+                                <a className="close cursor-pointer" onClick={this.closeModal} >
+                                  &times;
+                                </a>
+                                {this.loadOptions()}
+                            </div>
+                          </Popup>
+                    }
+                </div>
+
+                {this.state.celeb.length !== 0 && 
+                    <div>
+                        <div>
+                            <Card>
+                                <a class="thumbnail">
+                                    <img src={this.state.celeb.message.photo}/>
+                                 </a>        
+
+                                <CardBody>
+                                    <CardTitle>{this.state.celeb.message.name}</CardTitle>
+                                    <CardText>{this.state.celeb.message.info}</CardText>
+                                </CardBody>
+                            </Card>
+                        </div>
+                    <div>
+
+                    <label for="condition">Page</label>
+                    <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
+                </div>
+                <Row>
+                    {this.generateMovies()}
+                </Row>
             </div>
-        </Popup>}
-      </div>
-      {this.state.celeb.length !== 0 && 
-      <div>
-        <div>
-      <Card>
-            <a class="thumbnail">
-                    <img src={this.state.celeb.message.photo}/>
-                </a>        
-
-                <CardBody>
-          <CardTitle>{this.state.celeb.message.name}</CardTitle>
-          <CardText>{this.state.celeb.message.info}</CardText>
-        </CardBody>
-      </Card>
-    </div>
-    <div>
-      <label for="condition">Page</label>
-      <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
-    </div>
-    <Row>
-      {this.generateMovies()}
-    </Row>
-      </div>}
+        }
+      
       {this.state.loading &&
         <ReactLoading type={"bars"} color={"#38a169"} height={'20%'} width={'20%'} /> 
         }  
