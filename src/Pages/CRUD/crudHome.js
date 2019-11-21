@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CrudNavBar from './crudNavBar';
 import ListPosts from './listPosts';
 import {Auth } from 'aws-amplify';
+
 class crudHome extends Component {
   state ={
     userid:""
