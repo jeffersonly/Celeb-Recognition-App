@@ -10,7 +10,7 @@ import {
     Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle,Row,Col
 } from 'reactstrap';
-
+import NavBar from '../../Components/NavBar';
 import { Auth, API } from 'aws-amplify';
 import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
@@ -194,6 +194,7 @@ class Search extends Component {
     render() {
         return (
             <div className="App">
+            <NavBar/>
             <header className="App-header">
               <input type="file" onChange={this.identifyFile}></input>
             </header>
