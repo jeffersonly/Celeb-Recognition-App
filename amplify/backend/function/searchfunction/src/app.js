@@ -46,6 +46,41 @@ function successWithCors(result) {
 /**********************
  * Example get method *
  **********************/
+// app.get('/celebImages', async (req, res, next) => {
+//   //req.body to get empty dictionary 
+//   let names = ['Lindsay Lohan', 'Ryan Higa']
+//   let photosAndNames = [];
+//   try {
+//     for(let i=0; i<names.length; i++) {
+//       let nameOfArtist = names[i];
+//       const getId = await fetch(`https://api.themoviedb.org/3/search/person?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US&query=${nameOfArtist}&page=1`);
+//       const json = await getId.json();
+//       if(json.results[0]) {
+//         let id = json.results[0].id;
+//         const getInfo = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US`);
+//         const json2 = await getInfo.json();
+//         const returns = {
+//           name: json.results[0].name,
+//           photo: "https://image.tmdb.org/t/p/w1280" + json.results[0].profile_path,
+//           info: json2.biography
+//         };
+//         photosAndNames.push(returns);
+//         console.log("checking this: " + photosAndNames[i]);
+//       }
+//     }
+//     res.json({
+//       message: photosAndNames,
+//       error: false
+//     });
+//   } catch(e) {
+//     console.log(e);
+//       res.json({
+//         message: "Encountered Error",
+//         error: true
+//     });
+//   }
+// });
+
 
 app.get('/search', async (req, res, next ) => {
   let name = req.query.name;
@@ -77,7 +112,7 @@ app.get('/search', async (req, res, next ) => {
         console.log(returns);
         res.json({
           message:returns,
-          errror: false
+          error: false
         });
     }
     else {
