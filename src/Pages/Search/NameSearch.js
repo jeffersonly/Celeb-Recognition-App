@@ -9,7 +9,7 @@ import {
     Label, 
     Input,
     Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle,Row,Col
+  CardTitle, CardSubtitle,Row,Col,FormText
 } from 'reactstrap';
 import NavBar from '../../Components/NavBar';
 import { Auth, API } from 'aws-amplify';
@@ -17,7 +17,7 @@ import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
 import Popup from "reactjs-popup";
 
-class Search extends Component {
+class NameSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,14 +27,21 @@ class Search extends Component {
             data: {},
             message:[],
             celeb:[],
-            pages:1
+            pages:1,
+            name:''
         };
         this.handleChange = this.handleChange.bind(this);
-        this.identifyFile = this.identifyFile.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.newSelect= this.newSelect.bind(this);
 
+      }
+      onSubmit(e){
+            console.log("HELLO")
+            e.preventDefault();
+            console.log("HI");
+            this.performSearch(this.state.name, this.state.pages);
       }
       async componentDidMount(){
         let info = {content:"Lindsay Lohan",page:1};
@@ -59,60 +66,27 @@ class Search extends Component {
       }
     //handle text change
     handleChange = (event) => {
+        console.log(event.target.value);
         this.setState({ [event.target.name]: event.target.value });
     };
-    async identifyFile(event) {
-        console.log(event);
-        const { target: {files}} = event;
-        const [file,] = files || [];
-        console.log("HI");
-        if(!file) {
-          return;
-        }
-        await this.setState({            
-          opened: false,
-          loading: false,
-          loaded: false,
-          data: {},
-          message:[],
-          celeb:[],});
-        this.setState({loading:true});
-        Predictions.identify({
-          entities: {
-            source: {
-              file,
-            },
-            celebrityDetection: true
-          }
-        })
-        .then(res =>  {
-            console.log("entities: " + JSON.stringify(res.entities));
-            console.log(res.entities.length);
-            this.setState({data:res.entities, loaded:true, opened:true, loading:false});
-            console.log(this.state);
-            console.log(this.state.data[0].metadata.name);
-    })
-        .catch(err => console.log(err));
-
-      }
-      async performSearch(n1,p1){
+    async performSearch(n1,p1){
         let myInit = { // OPTIONAL
-          queryStringParameters: {  // OPTIONAL
+        queryStringParameters: {  // OPTIONAL
               name: n1,
               page: p1
-          }
-      }
-      this.setState({loading:true});
+            }
+        }
+        this.setState({loading:true});
         API.get('searchapi','/search',myInit).then(response => {
           const data = response;
               if(data["error"]){
-                this.setState({error:data["message"]});
+                this.setState({error:data["message"],loading:false});
                 console.log(this.state.error);
               }
               else{
                 console.log("HERE");
                 console.log(response);
-                this.setState({celeb:data,opened:false});
+                this.setState({celeb:data,opened:false,loading:false});
                 this.renderPages();
                 console.log(this.state.celeb);
               }
@@ -190,14 +164,12 @@ class Search extends Component {
         return returns;
       }
       async renderPages(){
-        console.log("HI");
-    const items = [];
-
-      for (let i = 1; i <= this.state.celeb.message.pages; i++) {
-        items.push({value: i, label: i});
-      }
-    await this.setState({items:items});
-    console.log(this.state.items);
+        const items = [];
+        for (let i = 1; i <= this.state.celeb.message.pages; i++) {
+            items.push({value: i, label: i});
+        }
+        await this.setState({items:items});
+        console.log(this.state.items);
     }
       
     render() {
@@ -205,53 +177,68 @@ class Search extends Component {
             <div className="App">
             <NavBar />
             <header className="App-header">
-              <input type="file" onChange={this.identifyFile}></input>
+            <Form onSubmit={this.onSubmit} >
+              <FormGroup className="text-center">
+                    <Label sm={2} style={{fontSize: 50}}  for="name">Search</Label>
+                </FormGroup>
+                <FormGroup row className="ml-5">
+                <Col sm={10}>
+                    <Input
+                    onChange={this.handleChange}
+                    sm={2}
+                    value={this.state.name}
+                    type="name"
+                    name="name"
+                    id="name"
+                    placeholder="Input Celebrity Name Here"
+                    />
+                    </Col>
+                    <Button>Search By Name</Button>
+
+                </FormGroup>
+            </Form>
             </header>
 
             <div>
-            
-        {this.state.loaded &&
-        <Popup
-          open={this.state.opened}
-          closeOnDocumentClick
-          onClose={this.closeModal}
-        >
-            <div>
-            <a className="close cursor-pointer" onClick={this.closeModal} >
-              &times;
-            </a>
-           {this.loadOptions()}
-            </div>
-        </Popup>}
       </div>
       {this.state.celeb.length !== 0 && 
-      <div>
         <div>
-      <Card>
-            <a class="thumbnail">
-                    <img src={this.state.celeb.message.photo}/>
-                </a>        
+            <div>
+                <Row>
+                <Col xs="2" className="ml-5">
+                    <a class="thumbnail">
+                        <img src={this.state.celeb.message.photo}/>
+                    </a>
+                </Col>
+                <Col className="mr-5">
+                    <p className="font-weight-bold" style={{fontSize: 20}}>{this.state.celeb.message.name}</p>
+                    {this.state.celeb.message.info}
+                </Col>
+                </Row>
+            </div>
+            <div xs="2" className="mb-2 w-25">
+                <label className="ml-2" for="condition">
+                    Page
+                </label>
+                <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
+            </div>
+            <Row>
+                {
+                    this.state.celeb.message.movies.map(item => <SearchCard movie={item} />)
+                }
+            </Row>
+        </div>
+        }
+            {this.state.loading &&
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+<ReactLoading className="align-middle" type={"bars"} color={"#353A40"} height={'20%'} width={'20%'} /> 
 
-                <CardBody>
-          <CardTitle>{this.state.celeb.message.name}</CardTitle>
-          <CardText>{this.state.celeb.message.info}</CardText>
-        </CardBody>
-      </Card>
-    </div>
-    <div>
-      <label for="condition">Page</label>
-      <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
-    </div>
-    <Row>
-      {this.state.celeb.message.movies.map(item => <SearchCard movie={item} />)}
-    </Row>
-      </div>}
-      {this.state.loading &&
-        <ReactLoading type={"bars"} color={"#343a40"} height={'20%'} width={'20%'} /> 
-        }  
+</div>
+               
+            }  
             </div>
         );
     }
 }
 
-export default Search;
+export default NameSearch;

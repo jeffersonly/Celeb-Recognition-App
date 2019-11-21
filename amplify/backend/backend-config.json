@@ -31,7 +31,7 @@
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
 							"description": "API key",
-							"apiKeyExpirationDays": "150"
+							"apiKeyExpirationDays": "100"
 						}
 					}
 				}
@@ -53,7 +53,7 @@
 		}
 	},
 	"storage": {
-		"celebrecappposts3": {
+		"celebrityrecognitionapppostss3": {
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
 		}

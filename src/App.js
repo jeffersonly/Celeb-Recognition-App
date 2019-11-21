@@ -5,6 +5,7 @@ import Register from './Pages/Auth/Register';
 import Home from './Pages/Auth/Home';
 import Confirm from './Pages/Auth/ConfirmCode';
 import Search from './Pages/Search/Search';
+import NameSearch from './Pages/Search/NameSearch';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ChangePassword from './Pages/Auth/ChangePassword';
 import NotFound from './Pages/Auth/NotFound';
@@ -36,6 +37,7 @@ function App() {
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/ChangePassword" component={ChangePassword} />
           <Route path="/Search" component={Search} />
+          <Route path="/NameSearch" component={NameSearch} />
           <Route path="/MyPosts" exact component={CrudHome}/>
           <Route path="/Otherposts" exact component={otherlistPosts}/>
           <Route path="/*" component={NotFound} />
