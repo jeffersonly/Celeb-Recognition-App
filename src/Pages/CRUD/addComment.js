@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography';
 // import * as queries from '../graphql/queries';
 import EditComment from "./editComment";
 import DeleteComment from "./deleteComment";
+import ScrollArea from'react-scrollbar';
+
 const styles = {
   card: {
     width: 400,
@@ -115,14 +117,7 @@ class AddComment extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Add a New Comment</DialogTitle>
-          <DialogContent>
-              {/* <TextField
-                style={{marginRight: 10}}
-                id="beerName"
-                label="Author Name"
-                type="string"
-                onChange={this.handleChange('commentAuthor')}
-              /> */}
+          <DialogContent>              
               <Typography>
                   Author: {this.state.userid}
               </Typography>
@@ -146,46 +141,42 @@ class AddComment extends React.Component {
               Add Comment
             </Button>
           </DialogActions>
-          <Grid container className={classes.root} spacing={16}>
-          {comments.map((comment) => (
-            console.log(comment),
-             <Grid >
-                 <Card className={classes.cardDisplayComment}>
-                   <CardContent>
-                   
-                     <Typography className={classes.title}  gutterBottom>
-                       Author: {comment.author}
-                     </Typography>
-                     <br />
-                      <Typography component="p">
-                      Content: {comment.content}
-                      </Typography>
-                  </CardContent>
-                   {comment.author == this.state.userid ? (
-                    <div>
-                         <EditComment currentComment={comment}/>
-                         <DeleteComment currentComment={comment} />
-                    </div>
+    
+          </Dialog>
+     
+                <Grid container className={classes.root} spacing={16}>
+                {comments.map((comment) => (
+                  console.log(comment),
+                  <Grid >
+                      <Card className={classes.cardDisplayComment}>
+                        <CardContent>
                         
-                  ): (null)
-                   } 
-
-
-                    <CardActions>
-                     
+                          <Typography className={classes.title}  gutterBottom>
+                            Author: {comment.author}
+                          </Typography>
+                          <br />
+                            <Typography component="p">
+                            Content: {comment.content}
+                            </Typography>
+                        </CardContent>
+                        {comment.author == this.state.userid ? (
+                          <div>
+                              <EditComment currentComment={comment}/>
+                              <DeleteComment currentComment={comment} />
+                          </div>
+                              
+                        ): (null)
+                        } 
+                      </Card> 
                       
-                     
-                   </CardActions>
-                   {/* Comment section */}
-                 </Card> 
-                 
-               
+                    
+                      </Grid>
+                        ))}
                 </Grid>
-                   ))}
-          </Grid>
+     
+         
        
 
-        </Dialog>
       </div>
         )
     }

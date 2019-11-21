@@ -130,7 +130,7 @@ class EditComment extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
-              Add New Comment
+              Edit Comment
             </Button>
           </DialogActions>
         

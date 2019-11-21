@@ -115,6 +115,7 @@ render() {
               <br/>
                <Input 
                     style={{marginRight: 10}}
+                    accept="image/*"
                     id="itemFile"
                     label="File"
                     type="file"
