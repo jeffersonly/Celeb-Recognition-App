@@ -16,7 +16,7 @@ import { API, graphqlOperation, Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
 // import * as queries from '../graphql/queries';
-import EditComment from "./editComment";
+
 import DeleteComment from "./deleteComment";
 const styles = {
   card: {
