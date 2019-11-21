@@ -99,7 +99,7 @@ export default function Previews() {
   async function identifyFile(acceptedFiles) {
     //const { target: {files}} = event;
     //const [file,] = files || [];
-    const file = acceptedFiles || [];
+    const file = acceptedFiles[0] || [];
     //set state to empty
     await setLoading(false);
     await setLoaded(false);
@@ -110,7 +110,7 @@ export default function Previews() {
     setLoading(true);
 
     //use aws rekognition/amplify predictions to recognize celebs
-    Predictions.identify({
+    await Predictions.identify({
       entities: {
         source: {
           file,
@@ -119,13 +119,18 @@ export default function Previews() {
       }
     })
     .then(res =>  {
-      console.log(res.entities);
+      let entitiesToText = JSON.stringify(res.entities);
+      let textEntitiesToData = JSON.parse(entitiesToText);
+      console.log("data asdasd " + textEntitiesToData);
+      console.log(textEntitiesToData[0].metadata.name);
       //set state based on results
       //data is set based on celebrities identified, loaded indicates loading done
-      setData(res.entities);
+      setData(textEntitiesToData);
       setLoaded(true);
       setLoading(false);
       setModal(true);
+      //console.log({data});
+      console.log("helo " + {data}[0]);
     })
     .catch(err => console.log(err));
   };
@@ -250,10 +255,20 @@ export default function Previews() {
     onDrop: acceptedFiles => {
       //if one file, continue else alert user
       if (acceptedFiles.length === 1) {
-        console.log("accepted file" + acceptedFiles);
         identifyFile(acceptedFiles);
-        //after files have been accepted, do stuff
+        loadOptions();
+        
+        // console.log("loading: " + JSON.parse(JSON.stringify({loading})));
+        // console.log("loaded: " + JSON.stringify({loaded}));
+        // console.log("data: " + JSON.stringify({data}));
+        // console.log("message: " + {message});
+        // console.log("celeb: " + {celeb});
+        // console.log("pages: " + {pages});
+        // console.log("error: " + {error});
+        // console.log("name: " + {name});
+        // console.log("items: " + {items});
 
+        //after files have been accepted, do stuff
         //renders image that was uploaded
         setFiles(acceptedFiles.map(file => Object.assign(file, {
           preview: URL.createObjectURL(file)
@@ -307,6 +322,7 @@ export default function Previews() {
           <ModalBody>
             Photo Uploaded:
             {thumbs}
+            {loadOptions()}
             Celebrities identified: ...
           </ModalBody>
           <ModalFooter>

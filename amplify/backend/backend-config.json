@@ -21,22 +21,6 @@
 		}
 	},
 	"api": {
-		"celebrecognitionapp": {
-			"service": "AppSync",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"authConfig": {
-					"additionalAuthenticationProviders": [],
-					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "API key",
-							"apiKeyExpirationDays": "100"
-						}
-					}
-				}
-			}
-		},
 		"searchapi": {
 			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
@@ -50,6 +34,22 @@
 					]
 				}
 			]
+		},
+		"celebrecognitionapp": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "API key",
+							"apiKeyExpirationDays": "150"
+						}
+					}
+				}
+			}
 		}
 	},
 	"storage": {

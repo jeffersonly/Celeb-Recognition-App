@@ -72,6 +72,7 @@ closeModal() {
         }
       })
       .then(res =>  {
+        console.log(res.entities);
         //set state based on results
         //data is set based on celebrities identified, loaded indicates loading done
         this.setState({data:res.entities, loaded:true, loading:false, opened:true});
@@ -168,6 +169,7 @@ closeModal() {
       loadOptions() {
         let returns = [];
         let data = this.state.data;
+        console.log(data);
         //for each of the celebrities identified, render a button w/ their name
         for (let i = 0; i < data.length; i++) {
           returns.push (
@@ -196,7 +198,7 @@ closeModal() {
 
 
 
-      
+
 
       //create cards regarding movies based on celeb
       generateMovies() {
