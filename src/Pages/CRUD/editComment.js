@@ -81,10 +81,12 @@ class EditComment extends React.Component {
             commentPostId: this.props.currentItem.id
           }
           API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}));
+          
       }
 
     
     render(){
+      console.log(this.state.userid)
     //   const { classes } = this.props;
     //     const { comments }=this.state;
         return (
@@ -119,7 +121,7 @@ class EditComment extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
-              Add Comment
+              Add New Comment
             </Button>
           </DialogActions>
         

@@ -7,11 +7,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
 import * as queries from '../../graphql/queries';
-import EditPost from './editPost';
-import DeletePost from './deletePost';
+
 import CommentForm from './addComment';
 const styles = {
   card: {
@@ -68,7 +68,7 @@ state = {
     API.graphql(graphqlOperation(queries.listPosts ,{
       filter: {
           userid: {
-              eq: this.state.userid
+              ne: this.state.userid
               //eq: this.state.userID
           }
       }
@@ -100,9 +100,18 @@ render(){
     const { posts } = this.state;
     return (
       <div className={classes.root}>
+         <AppBar position="static" color="default">
+          <Toolbar>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              Other Posts
+            </Typography>
+            {/* <AddPost /> */}
+            {/* <AddItem /> */}
+            {/* <Button onClick={signOut}>Log Out</Button> */}
+          </Toolbar>
+        </AppBar>
       <Grid container className={classes.root} spacing={16}>
           {posts.map((post, index) => (
-            console.log(post),
              <Grid key={post.id} post>
                  <Card className={classes.card}>
                    <CardContent>
@@ -121,8 +130,7 @@ render(){
                   </CardContent>
                     <CardActions>
                       <CommentForm currentItem={post}/> 
-                      <EditPost currentItem ={post} />
-                     <DeletePost currentItem={post} /> 
+                  
                    </CardActions>                    
                  </Card>                
                </Grid>

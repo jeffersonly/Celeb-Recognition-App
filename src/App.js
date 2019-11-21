@@ -21,6 +21,7 @@ import {
 } from 'react-router-dom';
 
 import { Auth } from 'aws-amplify';
+import otherlistPosts from './Pages/CRUD/otherlistPosts';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/ChangePassword" exact component={ChangePassword} />
           <Route path="/Search" component={Search} />
           <Route path="/MyPosts" exact component={CrudHome}/>
+          <Route path="/Otherposts" exact component={otherlistPosts}/>
           <Route path="/*" component={NotFound} />
           
         </Switch>
