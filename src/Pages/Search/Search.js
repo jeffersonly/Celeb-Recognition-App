@@ -131,7 +131,7 @@ class Search extends Component {
         let myInit = { // OPTIONAL
           queryStringParameters: {  // OPTIONAL
               name: this.state.name,
-              page: this.state.page
+              page: this.state.pages
           }
       }
         API.get('searchapi','/search',myInit).then(response => {
@@ -192,7 +192,7 @@ class Search extends Component {
     render() {
         return (
             <div className="App">
-            <NavBar/>
+            <NavBar />
             <header className="App-header">
               <input type="file" onChange={this.identifyFile}></input>
             </header>

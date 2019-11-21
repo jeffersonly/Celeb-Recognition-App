@@ -37,13 +37,13 @@
 				}
 			}
 		},
-		"searchingapi": {
+		"searchapi": {
 			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "function",
-					"resourceName": "searchingfunction",
+					"resourceName": "searchfunction",
 					"attributes": [
 						"Name",
 						"Arn"
@@ -59,7 +59,7 @@
 		}
 	},
 	"function": {
-		"searchingfunction": {
+		"searchfunction": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true
