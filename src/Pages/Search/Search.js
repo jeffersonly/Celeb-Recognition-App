@@ -16,6 +16,7 @@ import { Auth, API } from 'aws-amplify';
 import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
 import Popup from "reactjs-popup";
+
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -27,8 +28,6 @@ class Search extends Component {
             message:[],
             celeb:[],
             pages:1
-
-
         };
         this.handleChange = this.handleChange.bind(this);
         this.identifyFile = this.identifyFile.bind(this);
@@ -153,6 +152,31 @@ class Search extends Component {
         }).catch(error=>{
           console.log(error);
         })
+        // let bigData = this.state.data;
+        // let body = [];
+        // for(let i = 0 ;i < bigData.length; i++){
+        //     body.push(bigData[i].metadata.name);
+        // }
+        // let inits = {
+        //   body:body
+        // }
+        // console.log("first body check " + body);
+        // API.post('searchapi', '/celebImages').then(response => {
+        //   const data = response;
+        //       if(data["error"]){
+        //         this.setState({error:data["message"]});
+        //         console.log(this.state.error);
+        //       }
+        //       else{
+        //         this.setState({celeb:data,opened:false});
+        //         this.renderPages();
+        //         console.log(this.state.celeb);
+        //       }
+        //       console.log("sec body check " + body);
+          
+        // }).catch(error=>{
+        //   console.log(error);
+        // })
       }
       loadOptions(){
         let returns = [];

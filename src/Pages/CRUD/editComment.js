@@ -12,12 +12,11 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { API, graphqlOperation, Auth } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
 // import * as queries from '../graphql/queries';
 
-import DeleteComment from "./deleteComment";
 const styles = {
   card: {
     width: 400,
@@ -46,27 +45,17 @@ const styles = {
     minWidth: 200
   }
 };
-class AddComment extends React.Component {
+class EditComment extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             open: false,
-            comments: this.props.currentItem.comments.items,
             postid: "",
             commentAuthor: "",
             commentContent: "",
-            userid:""
+            userid: this.props.currentItem.userid
             
         }
-    }
-    async componentDidMount () {
-        let data = await Auth.currentSession();
-        console.log(data);
-         var token = await data.getIdToken();
-         this.setState({
-           userid: token.payload["cognito:username"]
-         })
-         console.log(this.state.userid)
     }
     handleClickOpen = () => {
         this.setState({ open: true });
@@ -86,19 +75,20 @@ class AddComment extends React.Component {
             open: false,
           })
           var commentDetails = {
+            id: this.props.comment.id,
             author: this.state.userid,
             content: this.state.commentContent,
             commentPostId: this.props.currentItem.id
           }
-       
-          API.graphql(graphqlOperation(mutations.createComment, {input: commentDetails}));
+          API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}));
+          
       }
 
     
     render(){
-      const { classes } = this.props;
-        const { comments }=this.state;
-        
+      console.log(this.state.userid)
+    //   const { classes } = this.props;
+    //     const { comments }=this.state;
         return (
             <div style={{display: 'flex', flexWrap: 'wrap'}}>
       <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
@@ -109,15 +99,8 @@ class AddComment extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add a New Comment</DialogTitle>
+          <DialogTitle id="form-dialog-title">Edit Comment</DialogTitle>
           <DialogContent>
-              {/* <TextField
-                style={{marginRight: 10}}
-                id="beerName"
-                label="Author Name"
-                type="string"
-                onChange={this.handleChange('commentAuthor')}
-              /> */}
               <Typography>
                   Author: {this.state.userid}
               </Typography>
@@ -138,55 +121,13 @@ class AddComment extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
-              Add Comment
+              Add New Comment
             </Button>
           </DialogActions>
-          <Grid container className={classes.root} spacing={16}>
-          {comments.map((comment) => (
-            console.log(comment),
-             <Grid >
-                 <Card className={classes.card}>
-                   <CardContent>
-                   
-                     <Typography className={classes.title}  gutterBottom>
-                       Author: {comment.author}
-                     </Typography>
-                     <br />
-                      <Typography component="p">
-                      Content: {comment.content}
-                      </Typography>
-                  </CardContent>
-                   {comment.author == this.state.userid ? (
-                    <div>
-                         {/* <EditComment currentComment={comment}/> */}
-                         <DeleteComment currentComment={comment} />
-                    </div>
-                        
-                  ): (null)
-                   } 
-
-
-                    <CardActions>
-<<<<<<< HEAD
-                      <DeleteComment currentComment={comment} />
-=======
-                     
-                      
-                     
->>>>>>> origin/master
-                   </CardActions>
-                   {/* Comment section */}
-                 </Card> 
-                 
-               
-                </Grid>
-                   ))}
-          </Grid>
-       
-
+        
         </Dialog>
       </div>
         )
     }
 }
-export default withStyles(styles)(AddComment);
+export default withStyles(styles)(EditComment);
