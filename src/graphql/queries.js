@@ -80,7 +80,6 @@ export const listPosts = `query ListPosts(
           id
           author
           content
-          createdAt
         }
       }
     }

@@ -213,6 +213,7 @@ class NameSearch extends Component {
                 <Col className="mr-5">
                     <p className="font-weight-bold" style={{fontSize: 20}}>{this.state.celeb.message.name}</p>
                     {this.state.celeb.message.info}
+                    
                 </Col>
                 </Row>
             </div>

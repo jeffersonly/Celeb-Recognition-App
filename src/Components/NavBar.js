@@ -40,7 +40,7 @@ const NavBar = (props) => {
             </NavItem>
 
             <NavItem>
-              <NavLink href="/Search">Search for Celebrity</NavLink>
+              <NavLink href="/NameSearch">Search for Celebrity</NavLink>
             </NavItem>
 
             <UncontrolledDropdown nav inNavbar>

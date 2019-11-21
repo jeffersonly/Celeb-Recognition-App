@@ -11,7 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
 import * as queries from '../../graphql/queries';
-
+import NavBar from '../../Components/NavBar';
 import CommentForm from './addComment';
 const styles = {
   card: {
@@ -41,6 +41,7 @@ const styles = {
     minWidth: 200
   }
 };
+
 class ListPosts extends Component {
 state = {
     open: false,
@@ -99,7 +100,9 @@ render(){
     const { classes } = this.props;
     const { posts } = this.state;
     return (
-      <div className={classes.root}>
+      
+      <div>
+        <NavBar />
          <AppBar position="static" color="default">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>

@@ -43,7 +43,6 @@ function App() {
           <Route path="/MyPosts" exact component={CrudHome}/>
           <Route path="/Otherposts" exact component={otherlistPosts}/>
           <Route path="/*" component={NotFound} />
-          <Route path="/MyPosts" component={CrudHome}/>
         </Switch>
       </Router>
     </div>
