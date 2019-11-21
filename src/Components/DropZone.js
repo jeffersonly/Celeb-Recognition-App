@@ -27,6 +27,7 @@ const thumb = {
   boxSizing: 'border-box',
   justifyContent: 'center',
   alignItems: 'center',
+  cursor: 'pointer'
 };
 const thumbInner = {
   display: 'flex',
@@ -71,12 +72,27 @@ const imgStyle = {
 }
 const loadingStyle = {
   position: 'absolute',
-  //top: '50%',
+  top: '50%',
   left: '50%',
   transform: 'translate(-50%, 0%)',
   color: '#343a40',
-  height: '30%',
-  width: '30%',
+  height: '25%',
+  width: '25%',
+}
+
+const celebButtonStyle = {
+  backgroundColor: '#343a40',
+  color: 'white',
+}
+
+const buttonStyle = {
+  backgroundColor: '#343a40',
+  color: 'white',
+  margin: '10px',
+}
+
+const modalText = {
+  fontSize: '16px',
 }
 
 export default function Previews() {
@@ -87,11 +103,8 @@ export default function Previews() {
   const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState(new Map());
   const [message, setMessage] = useState([]);
-  const [celeb, setCeleb] = useState([]);
-  const [pages, setPages] = useState(1);
   const [name, setName] = useState('');
   const [error, setError] = useState();
-  const [items, setItems] = useState();
 
   //toggle for modal open/close
   function toggle() {
@@ -108,7 +121,6 @@ export default function Previews() {
     await setLoaded(false);
     await setData(new Map());
     await setMessage([]);
-    await setCeleb([]);
     //used to show that item is being loaded
     await setLoading(true);
 
@@ -143,6 +155,18 @@ export default function Previews() {
     changePage(true);
   }
 
+  function listOfCelebs() {
+    let namesReturns = 'Celebrities Identified: ';
+    let listData = data.get("data");
+    if(listData) {
+      for(let i = 0; i < listData.length; i++) {
+        let aName = listData[i].metadata.name;
+        namesReturns += aName + ", "
+      }
+    }
+    //console.log("celeb names: " + listOfCelebs());
+    return namesReturns;
+  }
 
   //different buttons displayed for loading celebrities based off of names taken from rekognition
   function loadOptions() {
@@ -155,6 +179,7 @@ export default function Previews() {
           <Button 
             id={dataOf[i].metadata.name}
             onClick={e => goTo(e)}
+            style={celebButtonStyle}
           >
             {dataOf[i].metadata.name}
           </Button>
@@ -228,14 +253,18 @@ export default function Previews() {
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Celebrities Identified</ModalHeader>
           <ModalBody>
-            Photo Uploaded:
-            {thumbs}
-            {loadOptions()}
-            Celebrities identified: ...
+            <span style={modalText}>
+              Photo Uploaded:
+              {thumbs}
+              {listOfCelebs()}
+              <br/><br/>
+              Click on an actor to view more information about them!
+              <br/><br/>
+              {loadOptions()}
+            </span>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={toggle}>Close</Button>
+            <Button color="secondary" onClick={toggle} style={buttonStyle}>Close</Button>
           </ModalFooter>
         </Modal>
       </div>
