@@ -63,7 +63,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-celebrecognitionapp-local-213106-deployment",
-					"S3Key": "amplify-builds/searchfunction-7767426f5a577a314e71-build.zip"
+					"S3Key": "amplify-builds/searchfunction-4930544b64547a714a36-build.zip"
 				}
 			}
 		},
@@ -73,12 +73,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"celebrecognitionappLambdaRole95ea75e5",
+						"celebrecognitionappLambdaRole361fe5fd",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"celebrecognitionappLambdaRole95ea75e5",
+									"celebrecognitionappLambdaRole361fe5fd",
 									"-",
 									{
 										"Ref": "env"
