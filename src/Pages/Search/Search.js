@@ -7,7 +7,7 @@ import { API } from 'aws-amplify';
 import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
 import Popup from "reactjs-popup";
-
+import {withRouter } from 'react-router-dom';
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -35,6 +35,9 @@ closeModal() {
   this.setState({ opened: false });
 }
 
+componentDidMount(){
+  console.log(this.props.location);
+}
 
 
 
@@ -280,4 +283,4 @@ closeModal() {
     }
 }
 
-export default Search;
+export default withRouter(Search);

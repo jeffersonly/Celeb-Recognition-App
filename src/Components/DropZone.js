@@ -8,7 +8,7 @@ import ReactLoading from 'react-loading';
 import { API } from 'aws-amplify';
 import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
-
+import {Redirect} from 'react-router-dom';
 // In Line Constants for Styling //
 //for the previewed image thumbnail container
 const thumbsContainer = {
@@ -83,7 +83,7 @@ const loadingStyle = {
 export default function Previews() {
   const [files, setFiles] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const [newpage, changePage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState(new Map());
@@ -185,16 +185,11 @@ export default function Previews() {
     //console.log("page number: " + pages)
     
     //setting name is undefined.... wtf
-
-    
-  }
-
-  useEffect(() => {
     //initialize name and page parameters
-    
+
     console.log("name: " + name);
     console.log("pages: " + pages);
-    let nameString = name;
+    let nameString = `${name}`;
     let pageString = `${pages}`;
     let myInit = {
       queryStringParameters: {
@@ -217,6 +212,8 @@ export default function Previews() {
       .then(async response => {
           const data = response;
           console.log("data: " + myInit.queryStringParameters.name);
+          console.log("page data: " + myInit.queryStringParameters.page);
+          
           console.log('data from search: ' + data.message);
           //if error set error, otherwise display celebrity info
           if(data["error"]) {
@@ -229,7 +226,14 @@ export default function Previews() {
           }
       })
       .catch(err => { console.log(err); })
-  }, [name])
+    
+  }
+
+  async function goTo(e) {
+    await setName(e.target.id);
+    changePage(true);
+  }
+
 
   //different buttons displayed for loading celebrities based off of names taken from rekognition
   function loadOptions() {
@@ -241,7 +245,7 @@ export default function Previews() {
         returns.push (
           <Button 
             id={dataOf[i].metadata.name}
-            onClick={e => loadCelebrity(e)}
+            onClick={e => goTo(e)}
           >
             {dataOf[i].metadata.name}
           </Button>
@@ -335,6 +339,8 @@ export default function Previews() {
   }, [files]);
 
   return (
+    <>
+    {newpage ? <Redirect to= {{ pathname: '/search', state: {n: name}}}/> : null}
     <section className="container">
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
@@ -366,5 +372,6 @@ export default function Previews() {
         </Modal>
       </div>
     </section>
+  </>
   );
 }
