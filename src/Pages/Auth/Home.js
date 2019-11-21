@@ -12,7 +12,7 @@ import Previews from '../../Components/DropZone';
 import '../Styling/Auth/Home.css';
 
 class Home extends Component {
-  
+
   //check if user is authenticated/logged in
   isAuthenticated() {
     Auth.currentAuthenticatedUser()
