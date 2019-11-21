@@ -167,13 +167,9 @@ class AddComment extends React.Component {
 
 
                     <CardActions>
-<<<<<<< HEAD
-                      <DeleteComment currentComment={comment} />
-=======
                      
                       
                      
->>>>>>> origin/master
                    </CardActions>
                    {/* Comment section */}
                  </Card> 

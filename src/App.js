@@ -36,11 +36,8 @@ function App() {
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/ChangePassword" component={ChangePassword} />
           <Route path="/Search" component={Search} />
-<<<<<<< HEAD
-=======
           <Route path="/MyPosts" exact component={CrudHome}/>
           <Route path="/Otherposts" exact component={otherlistPosts}/>
->>>>>>> origin/master
           <Route path="/*" component={NotFound} />
           <Route path="/MyPosts" component={CrudHome}/>
         </Switch>
