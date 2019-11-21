@@ -223,9 +223,10 @@ class NameSearch extends Component {
                 <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
             </div>
             <Row>
-                {
-                    this.state.celeb.message.movies.map(item => <SearchCard movie={item} />)
-                }
+                {this.state.celeb.message.movies.map(item => {
+                  if(item.poster_path){
+                    return <SearchCard movie={item} />}
+                })}
             </Row>
         </div>
         }
