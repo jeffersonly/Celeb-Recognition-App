@@ -18,6 +18,11 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
+var fetch = require('node-fetch')
+var bluebird = require('bluebird')
+var axios = require('axios')
+fetch.Promise = bluebird;
+
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())
@@ -30,14 +35,68 @@ app.use(function(req, res, next) {
   next()
 });
 
+function successWithCors(result) {
+  return { 
+       statusCode: 200,
+       body: JSON.stringify(result),
+       headers: {
+          'Content-Type': 'application/json', 
+          'Access-Control-Allow-Origin': '*' 
+      }
+ };
+}
+
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/search', function(req, res) {
+app.get('/search', async (req, res, next ) => {
+  let name = req.query.name;
+  let page = req.query.page;
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+ // res.json({success: 'get call succeed!', url: req.url, n:name, p:page});
+  try {
+    console.log("HI");
+    const getId = await fetch(`https://api.themoviedb.org/3/search/person?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US&query=${name}&page=1`);
+    const json= await getId.json();
+    //console.log(json.results[0]);
+    if (json.results[0]) {
+        const id = json.results[0].id;
+        const getMovies = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_cast=${id}&page=${page}`);
+        const json2 = await getMovies.json();
+        const getInfo = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US`)
+        const json3 = await getInfo.json();
+        //console.log(json2.results);
+        const returns = {
+            id: json.results[0].id,
+            name: json.results[0].name,
+            photo: "https://image.tmdb.org/t/p/w1280" + json.results[0].profile_path,
+            movies: json2.results,
+            total: json2.total_results,
+            pages: Math.ceil(json2.total_results/20),
+            info: json3.biography
+        };
+        console.log(json2.results.length);
+        console.log(returns);
+        res.json({
+          message:returns,
+          errror: false
+        });
+    }
+    else {
+      res.json({
+        message:"Item not found",
+        error: true
+      });
+    }
+  } catch (e) {
+      console.log(e);
+      res.json({
+        message: "Encountered Error",
+        error: true
+      });
+    }
 });
 
 app.get('/search/*', function(req, res) {
@@ -50,8 +109,61 @@ app.get('/search/*', function(req, res) {
 ****************************/
 
 app.post('/search', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+    const name1 = "Lindsay Lohan";
+    const page1 = "1";
+    return successWithCors("MADE IT");
+    // try {
+    //     console.log("HI");
+    //     const getId = await fetch(`https://api.themoviedb.org/3/search/person?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US&query=${name}&page=1`);
+    //     const json= await getId.json();
+    //     //console.log(json.results[0]);
+    //     if (json.results[0]) {
+    //         const id = json.results[0].id;
+    //         const getMovies = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_cast=${id}&page=${page}`);
+    //         const json2 = await getMovies.json();
+    //         const getInfo = await fetch(`https://api.themoviedb.org/3/person/${json.results[0].id}?api_key=2cbde4075edb513172b32b5126a770d4&language=en-US`)
+    //         //console.log(json2.results);
+    //         const returns = {
+    //             id: json.results[0].id,
+    //             name: json.results[0].name,
+    //             photo: "https://image.tmdb.org/t/p/w1280" + json.results[0].profile_path,
+    //             movies: json2.results,
+    //             total: json2.total_results,
+    //             pages: Math.ceil(json2.total_results/20),
+    //             info: getInfo
+    //         };
+    //         console.log(json2.results.length);
+    //         console.log(returns);
+    //         res.json({
+    //           status:200,
+    //           headers: {
+    //             "Access-Control-Allow-Origin": "*",
+    //             "Access-Control-Allow-Credentials": true
+    //           },
+    //           message:JSON.stringify(returns)
+    //         });
+    //     }
+    //     else {
+    //       res.json({
+    //         status:500,
+    //         headers: {
+    //           "Access-Control-Allow-Origin": "*",
+    //           "Access-Control-Allow-Credentials": true
+    //         },
+    //         error:JSON.stringify("Item not found")
+    //       });
+    //     }
+    //   } catch (e) {
+    //       console.log(e);
+    //       res.json({
+    //         status:500,
+    //         headers: {
+    //           "Access-Control-Allow-Origin": "*",
+    //           "Access-Control-Allow-Credentials": true
+    //         },
+    //         error:JSON.stringify("Error encountered.")
+    //       });
+    //     }
 });
 
 app.post('/search/*', function(req, res) {
