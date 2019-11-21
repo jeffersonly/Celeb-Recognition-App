@@ -35,8 +35,10 @@ closeModal() {
   this.setState({ opened: false });
 }
 
+//receives data from dropzone
 componentDidMount(){
   console.log(this.props.location);
+  console.log(this.props.location.state.n);
 }
 
 
