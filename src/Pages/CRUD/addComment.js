@@ -12,7 +12,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
 // import * as queries from '../graphql/queries';
@@ -55,9 +55,18 @@ class AddComment extends React.Component {
             postid: "",
             commentAuthor: "",
             commentContent: "",
-            userid: this.props.currentItem.userid
+            userid:""
             
         }
+    }
+    async componentDidMount () {
+        let data = await Auth.currentSession();
+        console.log(data);
+         var token = await data.getIdToken();
+         this.setState({
+           userid: token.payload["cognito:username"]
+         })
+         console.log(this.state.userid)
     }
     handleClickOpen = () => {
         this.setState({ open: true });
@@ -81,6 +90,7 @@ class AddComment extends React.Component {
             content: this.state.commentContent,
             commentPostId: this.props.currentItem.id
           }
+       
           API.graphql(graphqlOperation(mutations.createComment, {input: commentDetails}));
       }
 
@@ -88,6 +98,7 @@ class AddComment extends React.Component {
     render(){
       const { classes } = this.props;
         const { comments }=this.state;
+        
         return (
             <div style={{display: 'flex', flexWrap: 'wrap'}}>
       <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
@@ -132,6 +143,7 @@ class AddComment extends React.Component {
           </DialogActions>
           <Grid container className={classes.root} spacing={16}>
           {comments.map((comment) => (
+            console.log(comment),
              <Grid >
                  <Card className={classes.card}>
                    <CardContent>
@@ -144,9 +156,20 @@ class AddComment extends React.Component {
                       Content: {comment.content}
                       </Typography>
                   </CardContent>
+                   {comment.author == this.state.userid ? (
+                    <div>
+                         {/* <EditComment currentComment={comment}/> */}
+                         <DeleteComment currentComment={comment} />
+                    </div>
+                        
+                  ): (null)
+                   } 
+
+
                     <CardActions>
-                        {/* <EditComment currentComment={comment}/> */}
-                      <DeleteComment currentComment={comment} />
+                     
+                      
+                     
                    </CardActions>
                    {/* Comment section */}
                  </Card> 
