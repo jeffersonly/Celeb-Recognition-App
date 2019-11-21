@@ -23,7 +23,7 @@ handleDelete = () => {
       id: this.props.currentComment.id,
     }
     API.graphql(graphqlOperation(mutations.deleteComment, { input: commentDetails }))
-    // .then(()=> {window.location.reload()})
+    .then(()=> {window.location.reload()});
   };
 render() {
       return (

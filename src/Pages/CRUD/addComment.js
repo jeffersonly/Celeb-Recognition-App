@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import EditComment from "./editComment";
 import DeleteComment from "./deleteComment";
 import ScrollArea from'react-scrollbar';
+import Box from '@material-ui/core/Box';
 
 const styles = {
   card: {
@@ -51,7 +52,8 @@ const styles = {
   media: {
     minHeight: 200,
     minWidth: 200
-  }
+  },
+
 };
 class AddComment extends React.Component {
     constructor(props){
@@ -98,7 +100,8 @@ class AddComment extends React.Component {
             commentPostId: this.props.currentItem.id
           }
        
-          API.graphql(graphqlOperation(mutations.createComment, {input: commentDetails}));
+          API.graphql(graphqlOperation(mutations.createComment, {input: commentDetails}))
+          .then(()=> window.location.reload());
       }
 
     
@@ -116,6 +119,7 @@ class AddComment extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
+          <Box>
           <DialogTitle id="form-dialog-title">Add a New Comment</DialogTitle>
           <DialogContent>              
               <Typography>
@@ -141,38 +145,44 @@ class AddComment extends React.Component {
               Add Comment
             </Button>
           </DialogActions>
-    
+          </Box>
+         
+                <Box height="100%" bgcolor="grey.300" mx={0.5} width={420} display="inline-block">
+                    <Grid container className={classes.root} spacing={16}>
+                          {comments.map((comment) => (
+                            console.log(comment),
+                            <Grid >
+                                <Card className={classes.cardDisplayComment}>
+                                  <CardContent>
+                                  
+                                    <Typography className={classes.title}  gutterBottom>
+                                      Author: {comment.author}
+                                    </Typography>
+                                    <br />
+                                      <Typography component="p">
+                                      Content: {comment.content}
+                                      </Typography>
+                                  </CardContent>
+                                  {comment.author == this.state.userid ? (
+                                     <CardActions>
+                                        <EditComment currentComment={comment}/>
+                                        <DeleteComment currentComment={comment} />
+                                        </CardActions>
+                                        
+                                  ): (null)
+                                  } 
+                                </Card> 
+                                
+                              
+                                </Grid>
+                                  ))}
+                          </Grid>
+                  </Box>
+            
+       
           </Dialog>
      
-                <Grid container className={classes.root} spacing={16}>
-                {comments.map((comment) => (
-                  console.log(comment),
-                  <Grid >
-                      <Card className={classes.cardDisplayComment}>
-                        <CardContent>
-                        
-                          <Typography className={classes.title}  gutterBottom>
-                            Author: {comment.author}
-                          </Typography>
-                          <br />
-                            <Typography component="p">
-                            Content: {comment.content}
-                            </Typography>
-                        </CardContent>
-                        {comment.author == this.state.userid ? (
-                          <div>
-                              <EditComment currentComment={comment}/>
-                              <DeleteComment currentComment={comment} />
-                          </div>
-                              
-                        ): (null)
-                        } 
-                      </Card> 
-                      
-                    
-                      </Grid>
-                        ))}
-                </Grid>
+               
      
          
        

@@ -82,6 +82,7 @@ handleSubmit = (e) => {
        })
      })
      .catch(error => console.log(error))
+     window.location.reload();
     }
 fileHandler =(e)=>{
       const file = e.target.files[0]
