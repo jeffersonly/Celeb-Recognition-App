@@ -12,9 +12,10 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation,Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
+
 // import * as queries from '../graphql/queries';
 
 const styles = {
@@ -53,10 +54,19 @@ class EditComment extends React.Component {
             postid: "",
             commentAuthor: "",
             commentContent: "",
-            userid: this.props.currentItem.userid
+            userid: "",
             
         }
     }
+    async componentDidMount () {
+      let data = await Auth.currentSession();
+      console.log(data);
+       var token = await data.getIdToken();
+       this.setState({
+         userid: token.payload["cognito:username"]
+       })
+       console.log(this.state.userid)
+  }
     handleClickOpen = () => {
         this.setState({ open: true });
       };
@@ -75,10 +85,10 @@ class EditComment extends React.Component {
             open: false,
           })
           var commentDetails = {
-            id: this.props.comment.id,
+            id: this.props.currentComment.id,
             author: this.state.userid,
             content: this.state.commentContent,
-            commentPostId: this.props.currentItem.id
+            
           }
           API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}));
           
@@ -86,13 +96,12 @@ class EditComment extends React.Component {
 
     
     render(){
-      console.log(this.state.userid)
     //   const { classes } = this.props;
     //     const { comments }=this.state;
         return (
             <div style={{display: 'flex', flexWrap: 'wrap'}}>
       <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <CommentIcon />
+        <EditIcon />
       </Button>
 <Dialog
           open={this.state.open}
@@ -108,7 +117,7 @@ class EditComment extends React.Component {
               <TextField
                 style={{marginTop: 10}}
                 multiline
-                id="beerDescription"
+                id="b"
                 label="Content"
                 type="string"
                 rows="4"

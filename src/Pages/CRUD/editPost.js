@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CardMedia from '@material-ui/core/CardMedia';
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@material-ui/icons/Edit'; 
 import Button from '@material-ui/core/Button';
 import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';

@@ -24,6 +24,11 @@ const styles = {
     minHeight: 275,
     margin: 2
   },
+  cardDisplayComment: {
+    width: 380,
+    height: 200,
+    margin: 1
+  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -145,7 +150,7 @@ class AddComment extends React.Component {
           {comments.map((comment) => (
             console.log(comment),
              <Grid >
-                 <Card className={classes.card}>
+                 <Card className={classes.cardDisplayComment}>
                    <CardContent>
                    
                      <Typography className={classes.title}  gutterBottom>
@@ -158,7 +163,7 @@ class AddComment extends React.Component {
                   </CardContent>
                    {comment.author == this.state.userid ? (
                     <div>
-                         {/* <EditComment currentComment={comment}/> */}
+                         <EditComment currentComment={comment}/>
                          <DeleteComment currentComment={comment} />
                     </div>
                         
