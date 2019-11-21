@@ -90,7 +90,8 @@ class EditComment extends React.Component {
             content: this.state.commentContent,
             
           }
-          API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}));
+          API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}))
+          .then(()=> window.location.reload());
           
       }
 
@@ -130,7 +131,7 @@ class EditComment extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
-              Add New Comment
+              Edit Comment
             </Button>
           </DialogActions>
         

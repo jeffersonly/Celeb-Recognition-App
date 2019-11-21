@@ -26,6 +26,7 @@ const styles = {
   },
   title: {
     fontSize: 14,
+    color: "primary",
   },
   pos: {
     marginBottom: 12,
@@ -34,11 +35,12 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'inherit',
-    padding: '10px'
+    padding: '10px',
   },
   media: {
     minHeight: 200,
-    minWidth: 200
+    minWidth: 200,
+
   }
 };
 class ListPosts extends Component {
@@ -109,8 +111,8 @@ render(){
                    <CardMedia
                     className={classes.media}
                     image = {post.imageURL}
-                    title="Contemplative Reptile" />
-                     <Typography className={classes.title}  gutterBottom>
+                    title="image" />
+                     <Typography className={classes.title} >
                        Title: {post.title}
                      </Typography>
                      <br />
