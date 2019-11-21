@@ -38,6 +38,10 @@ class Search extends Component {
       }
       async componentDidMount(){
         console.log(this.props.location);
+        if(!this.props.location.state){
+          this.props.history.push('/Home');
+          return;
+        }
         this.loadCelebrity(this.props.location.state.n);
         let info = {content:"Lindsay Lohan",page:1};
         let myInit = { // OPTIONAL

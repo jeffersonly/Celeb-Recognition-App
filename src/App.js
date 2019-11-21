@@ -23,12 +23,12 @@ import {
 import { createBrowserHistory } from 'history';
 import { Auth } from 'aws-amplify';
 import otherlistPosts from './Pages/CRUD/otherlistPosts';
-
+import './Pages/Styling/Auth/Bar.css'
 const browserHistory = createBrowserHistory();
 
 function App() {
   return (
-    <div>
+    <div className="fancy-font">
       <Router history={browserHistory}>
         <Switch>
           <Route path="/" exact component={Login} />
