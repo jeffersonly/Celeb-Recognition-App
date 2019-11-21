@@ -19,14 +19,16 @@ import {
   useHistory,
   useLocation
 } from 'react-router-dom';
-
+import { createBrowserHistory } from 'history';
 import { Auth } from 'aws-amplify';
 import otherlistPosts from './Pages/CRUD/otherlistPosts';
+
+const browserHistory = createBrowserHistory();
 
 function App() {
   return (
     <div>
-      <Router>
+      <Router history={browserHistory}>
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/Login" exact component={Login} />
