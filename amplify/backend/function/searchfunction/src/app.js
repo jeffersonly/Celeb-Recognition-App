@@ -124,8 +124,8 @@ app.get('/search', async (req, res, next ) => {
   } catch (e) {
       console.log(e);
       res.json({
-        message: "Encountered Error: " + e,
-        n: name,
+        message: "Encountered Error: " + e ,
+        n:name,
         p: page,
         error: true
       });

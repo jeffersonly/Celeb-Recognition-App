@@ -38,10 +38,11 @@ class Search extends Component {
       }
       async componentDidMount(){
         console.log(this.props.location);
+        this.loadCelebrity(this.props.location.state.n);
         let info = {content:"Lindsay Lohan",page:1};
         let myInit = { // OPTIONAL
           queryStringParameters: {  // OPTIONAL
-              name: "Lindsay Lohan",
+              name: this.props.location.state.n,
               page:1
           }
       }
@@ -130,7 +131,7 @@ class Search extends Component {
         await this.setState({loading:false});
     }
       async loadCelebrity(e){
-        await this.setState({name:e.target.id});
+        await this.setState({name:e});
         let myInit = { // OPTIONAL
           queryStringParameters: {  // OPTIONAL
               name: this.state.name,
@@ -205,25 +206,8 @@ class Search extends Component {
         return (
             <div className="App">
             <NavBar />
-            <header className="App-header">
-              <input type="file" onChange={this.identifyFile}></input>
-            </header>
-
             <div>
             
-        {this.state.loaded &&
-        <Popup
-          open={this.state.opened}
-          closeOnDocumentClick
-          onClose={this.closeModal}
-        >
-            <div>
-            <a className="close cursor-pointer" onClick={this.closeModal} >
-              &times;
-            </a>
-           {this.loadOptions()}
-            </div>
-        </Popup>}
       </div>
       {this.state.celeb.length !== 0 && 
       <div>

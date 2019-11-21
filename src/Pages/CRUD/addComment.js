@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
+import EditComment from './editComment';
 // import * as queries from '../graphql/queries';
 
 import DeleteComment from "./deleteComment";
