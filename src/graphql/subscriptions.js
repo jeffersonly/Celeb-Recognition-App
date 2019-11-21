@@ -55,6 +55,7 @@ export const onCreatePost = `subscription OnCreatePost {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -79,6 +80,7 @@ export const onUpdatePost = `subscription OnUpdatePost {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -103,6 +105,7 @@ export const onDeletePost = `subscription OnDeletePost {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -130,6 +133,7 @@ export const onCreateComment = `subscription OnCreateComment {
         nextToken
       }
     }
+    createdAt
   }
 }
 `;
@@ -154,6 +158,7 @@ export const onUpdateComment = `subscription OnUpdateComment {
         nextToken
       }
     }
+    createdAt
   }
 }
 `;
@@ -178,6 +183,7 @@ export const onDeleteComment = `subscription OnDeleteComment {
         nextToken
       }
     }
+    createdAt
   }
 }
 `;

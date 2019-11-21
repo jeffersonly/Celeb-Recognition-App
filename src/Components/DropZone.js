@@ -9,10 +9,6 @@ import { API } from 'aws-amplify';
 import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
 
-// import React, { Component } from 'react';
-// import '../Styling/Search/Search.css'
-
-
 // In Line Constants for Styling //
 //for the previewed image thumbnail container
 const thumbsContainer = {
@@ -130,7 +126,7 @@ export default function Previews() {
       setLoading(false);
       setModal(true);
       //console.log({data});
-      console.log("helo " + {data}[0]);
+      console.log("helo " + {data}[0].metadata);
     })
     .catch(err => console.log(err));
   };
