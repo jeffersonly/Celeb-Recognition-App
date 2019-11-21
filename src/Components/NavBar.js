@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Auth } from 'aws-amplify';
-import {
+import '../Pages/Styling/Auth/Bar.css';
+import{
   Collapse,
   Navbar,
   NavbarToggler,
@@ -29,7 +30,7 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md">
+      <Navbar color="dark" dark expand="md" className="fancy-font">
         <NavbarBrand href="/Home">Celebrity Recognition Application</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

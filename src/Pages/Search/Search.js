@@ -38,10 +38,15 @@ class Search extends Component {
       }
       async componentDidMount(){
         console.log(this.props.location);
+        if(!this.props.location.state){
+          this.props.history.push('/Home');
+          return;
+        }
+        this.loadCelebrity(this.props.location.state.n);
         let info = {content:"Lindsay Lohan",page:1};
         let myInit = { // OPTIONAL
           queryStringParameters: {  // OPTIONAL
-              name: "Lindsay Lohan",
+              name: this.props.location.state.n,
               page:1
           }
       }
@@ -130,7 +135,7 @@ class Search extends Component {
         await this.setState({loading:false});
     }
       async loadCelebrity(e){
-        await this.setState({name:e.target.id});
+        await this.setState({name:e});
         let myInit = { // OPTIONAL
           queryStringParameters: {  // OPTIONAL
               name: this.state.name,
@@ -205,46 +210,33 @@ class Search extends Component {
         return (
             <div className="App">
             <NavBar />
-            <header className="App-header">
-              <input type="file" onChange={this.identifyFile}></input>
-            </header>
-
             <div>
             
-        {this.state.loaded &&
-        <Popup
-          open={this.state.opened}
-          closeOnDocumentClick
-          onClose={this.closeModal}
-        >
-            <div>
-            <a className="close cursor-pointer" onClick={this.closeModal} >
-              &times;
-            </a>
-           {this.loadOptions()}
-            </div>
-        </Popup>}
       </div>
       {this.state.celeb.length !== 0 && 
       <div>
         <div>
-      <Card>
-            <a class="thumbnail">
-                    <img src={this.state.celeb.message.photo}/>
-                </a>        
-
-                <CardBody>
-          <CardTitle>{this.state.celeb.message.name}</CardTitle>
-          <CardText>{this.state.celeb.message.info}</CardText>
-        </CardBody>
-      </Card>
+        <Row className="mt-2">
+                <Col xs="2" className="ml-5">
+                    <a class="thumbnail">
+                        <img src={this.state.celeb.message.photo}/>
+                    </a>
+                </Col>
+                <Col className="mr-5">
+                    <p className="font-weight-bold" style={{fontSize: 20}}>{this.state.celeb.message.name}</p>
+                    {this.state.celeb.message.info}
+                </Col>
+                </Row>
     </div>
-    <div>
-      <label for="condition">Page</label>
+    <div xs="2" className="mb-2 w-25">
+      <label className="ml-3 font-weight-bold" for="condition">Page</label>
       <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
     </div>
     <Row>
-      {this.state.celeb.message.movies.map(item => <SearchCard movie={item} />)}
+      {this.state.celeb.message.movies.map(item => {
+      if(item.poster_path){
+        return <SearchCard movie={item} />}
+    })}
     </Row>
       </div>}
       {this.state.loading &&

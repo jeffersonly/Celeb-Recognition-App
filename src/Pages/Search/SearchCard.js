@@ -13,8 +13,8 @@ class SearchCard extends React.Component {
     render() {
         const movie = this.props.movie;
         return(
-        <Col sm="3">
-        <Card body>
+        <Col sm="3" style={{display: 'flex', justifyContent: 'center'}}>
+        <Card  body>
         <a class="thumbnail">
                   <img src={'https://image.tmdb.org/t/p/w1280'+ movie.poster_path}/>
               </a>  
