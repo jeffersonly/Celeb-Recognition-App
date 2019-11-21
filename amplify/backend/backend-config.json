@@ -31,19 +31,19 @@
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
 							"description": "API key",
-							"apiKeyExpirationDays": "100"
+							"apiKeyExpirationDays": "150"
 						}
 					}
 				}
 			}
 		},
-		"searchingapi": {
+		"searchapi": {
 			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "function",
-					"resourceName": "searchingfunction",
+					"resourceName": "searchfunction",
 					"attributes": [
 						"Name",
 						"Arn"
@@ -53,13 +53,13 @@
 		}
 	},
 	"storage": {
-		"celebrityrecognitionapppostss3": {
+		"celebrecappposts3": {
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
 		}
 	},
 	"function": {
-		"searchingfunction": {
+		"searchfunction": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true

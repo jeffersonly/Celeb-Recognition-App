@@ -28,16 +28,15 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/Login" exact component={Login} />
-          <Route path="/Home" exact component={Home} />
-          <Route path="/Register" exact component={Register} />
-          <Route path="/Confirm" exact component={Confirm} />
-          <Route path="/ForgotPassword" exact component={ForgotPassword} />
-          <Route path="/ChangePassword" exact component={ChangePassword} />
+          <Route path="/Login" component={Login} />
+          <Route path="/Home" component={Home} />
+          <Route path="/Register" component={Register} />
+          <Route path="/Confirm" component={Confirm} />
+          <Route path="/ForgotPassword" component={ForgotPassword} />
+          <Route path="/ChangePassword" component={ChangePassword} />
           <Route path="/Search" component={Search} />
-          <Route path="/MyPosts" exact component={CrudHome}/>
           <Route path="/*" component={NotFound} />
-          
+          <Route path="/MyPosts" component={CrudHome}/>
         </Switch>
       </Router>
     </div>
