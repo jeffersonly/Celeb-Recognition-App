@@ -55,6 +55,7 @@ export const createPost = `mutation CreatePost($input: CreatePostInput!) {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -79,6 +80,7 @@ export const updatePost = `mutation UpdatePost($input: UpdatePostInput!) {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -103,6 +105,7 @@ export const deletePost = `mutation DeletePost($input: DeletePostInput!) {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -130,6 +133,7 @@ export const createComment = `mutation CreateComment($input: CreateCommentInput!
         nextToken
       }
     }
+    createdAt
   }
 }
 `;
@@ -154,6 +158,7 @@ export const updateComment = `mutation UpdateComment($input: UpdateCommentInput!
         nextToken
       }
     }
+    createdAt
   }
 }
 `;
@@ -178,6 +183,7 @@ export const deleteComment = `mutation DeleteComment($input: DeleteCommentInput!
         nextToken
       }
     }
+    createdAt
   }
 }
 `;

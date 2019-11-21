@@ -6,6 +6,6 @@
 - Students: 
     - [Jefferson Ly](https://www.linkedin.com/in/jeffersonly/)
     - [Jonathan Van]()
-    - [Hung Tang]()
+    - [Hung Tang](https://www.linkedin.com/in/hung-tang-11a7b3b4/)
 ## Project Introduction
 ## Sample Demo Screenshots
