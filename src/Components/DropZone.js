@@ -78,7 +78,7 @@ export default function Previews() {
 
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState(new Map());
   const [message, setMessage] = useState([]);
   const [celeb, setCeleb] = useState([]);
   const [pages, setPages] = useState(1);
@@ -121,12 +121,14 @@ export default function Previews() {
       console.log(textEntitiesToData[0].metadata.name);
       //set state based on results
       //data is set based on celebrities identified, loaded indicates loading done
-      setData(textEntitiesToData);
+      console.log(res.entities);
+      setData(new Map(data.set("data",res.entities)))
+      console.log(data.get("data"));
       setLoaded(true);
       setLoading(false);
       setModal(true);
       //console.log({data});
-      console.log("helo " + {data}[0].metadata);
+      //onsole.log("helo " + {data}[0].metadata);
     })
     .catch(err => console.log(err));
   };
