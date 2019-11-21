@@ -69,7 +69,15 @@ const imgStyle = {
   height: '100%',
   maxHeight: '100vh'
 }
-
+const loadingStyle = {
+  position: 'absolute',
+  //top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, 0%)',
+  color: '#343a40',
+  height: '30%',
+  width: '30%',
+}
 
 
 export default function Previews() {
@@ -82,7 +90,7 @@ export default function Previews() {
   const [message, setMessage] = useState([]);
   const [celeb, setCeleb] = useState([]);
   const [pages, setPages] = useState(1);
-  const [name, setName] = useState();
+  const [name, setName] = useState('');
   const [error, setError] = useState();
   const [items, setItems] = useState();
 
@@ -99,11 +107,11 @@ export default function Previews() {
     //set state to empty
     await setLoading(false);
     await setLoaded(false);
-    await setData({});
+    await setData(new Map());
     await setMessage([]);
     await setCeleb([]);
     //used to show that item is being loaded
-    setLoading(true);
+    await setLoading(true);
 
     //use aws rekognition/amplify predictions to recognize celebs
     await Predictions.identify({
@@ -114,21 +122,18 @@ export default function Previews() {
         celebrityDetection: true
       }
     })
-    .then(res =>  {
+    .then(async res =>  {
       let entitiesToText = JSON.stringify(res.entities);
       let textEntitiesToData = JSON.parse(entitiesToText);
-      console.log("data asdasd " + textEntitiesToData);
-      console.log(textEntitiesToData[0].metadata.name);
       //set state based on results
       //data is set based on celebrities identified, loaded indicates loading done
       console.log(res.entities);
-      setData(new Map(data.set("data",res.entities)))
-      console.log(data.get("data"));
-      setLoaded(true);
-      setLoading(false);
-      setModal(true);
-      //console.log({data});
-      //onsole.log("helo " + {data}[0].metadata);
+      await setData(new Map(data.set("data",res.entities)));
+      //console.log(data.get("data"));
+      //console.log(data.get("data")[0].metadata.name);
+      await setLoaded(true);
+      await setLoading(false);
+      await setModal(true);
     })
     .catch(err => console.log(err));
   };
@@ -143,19 +148,19 @@ export default function Previews() {
       }
     }
     //used to show that item is being loaded
-    setLoading(true);
+    await setLoading(true);
     //use search api + api gateway based on the query set by init
     API.get('searchapi','/search',myInit)
-      .then(response => {
+      .then(async response => {
           const data = response;
           //if failed data set error message
           if(data["error"]){
-            setError(data["message"]);
+            await setError(data["message"]);
           } else {
             //if successful, display celeb data and render items
-            setCeleb(data);
-            setModal(false);
-            renderPages();
+            await setCeleb(data);
+            await setModal(false);
+            await renderPages();
           }
       })
       .catch(err => { console.log(err); })
@@ -163,55 +168,85 @@ export default function Previews() {
 
   //displays another page for movies that are shown
   async function newSelect(condition) {
-    setPages(condition.value);
+    await setPages(condition.value);
     const data = await performSearch({name},condition.value);
     
     //????????????
     //await this.setState({posts:data, loading:false});
     //setPosts(data);
-    setLoading(false);
+    await setLoading(false);
   }
 
   async function loadCelebrity(e) {
+    //console.log("event name: " + e.target.id);
     //set the name state to whichever celebrity is selected
     await setName(e.target.id);
+    //console.log("updated event name: " + name);
+    //console.log("page number: " + pages)
+    
+    //setting name is undefined.... wtf
+
+    
+  }
+
+  useEffect(() => {
     //initialize name and page parameters
+    
+    console.log("name: " + name);
+    console.log("pages: " + pages);
+    let nameString = name;
+    let pageString = `${pages}`;
     let myInit = {
       queryStringParameters: {
-          name: {name},
-          page: {pages}
+          name: nameString,
+          page: pageString
       }
     }
+
+    // let otherInit = {
+    //   queryStringParameters: {
+    //     name: 'Dwayne Johnson',
+    //     page: '1'
+    //   }
+    // }
+    console.log("updated event name: " + name);
+    console.log("init: " + myInit);
+
     //search based on selected celebrity name & page of movies to display
     API.get('searchapi', '/search', myInit)
-      .then(response => {
+      .then(async response => {
           const data = response;
+          console.log("data: " + myInit.queryStringParameters.name);
+          console.log('data from search: ' + data.message);
           //if error set error, otherwise display celebrity info
           if(data["error"]) {
-            setError(data["message"]);
+            await setError(data["message"]);
           } else {
-            setCeleb(data);
-            setModal(false);
-            renderPages();
+            await setCeleb(data);
+            await setModal(false);
+            console.log("got to here: " + data.message.info);
+            //await renderPages();
           }
       })
       .catch(err => { console.log(err); })
-  }
+  }, [name])
 
   //different buttons displayed for loading celebrities based off of names taken from rekognition
   function loadOptions() {
     let returns = [];
-    let dataOf = {data};
-    //for each of the celebrities identified, render a button w/ their name
-    for (let i = 0; i < dataOf.length; i++) {
-      returns.push (
-        <Button 
-          id={dataOf[i].metadata.name} 
-          onClick={e => loadCelebrity(e)}
-        >
-          {dataOf[i].metadata.name}
-        </Button>
-      )
+    let dataOf = data.get("data");
+    if(dataOf) {
+      for( let i = 0 ; i < dataOf.length; i++) {
+        //console.log("data id: " + dataOf[i].metadata.name);
+        returns.push (
+          <Button 
+            id={dataOf[i].metadata.name}
+            onClick={e => loadCelebrity(e)}
+          >
+            {dataOf[i].metadata.name}
+          </Button>
+        )
+      }
     }
     return returns;
   }
@@ -222,7 +257,7 @@ export default function Previews() {
     for (let i = 1; i <= {celeb}.message.pages; i++) {
         items.push({value: i, label: i});
     }
-    setItems(items);
+    await setItems(items);
   }
 
   //create cards regarding movies based on celeb
@@ -250,21 +285,20 @@ export default function Previews() {
 
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/jpeg, image/png',
-    onDrop: acceptedFiles => {
+    onDrop: async acceptedFiles => {
       //if one file, continue else alert user
       if (acceptedFiles.length === 1) {
-        identifyFile(acceptedFiles);
-        loadOptions();
-        
-        // console.log("loading: " + JSON.parse(JSON.stringify({loading})));
-        // console.log("loaded: " + JSON.stringify({loaded}));
-        // console.log("data: " + JSON.stringify({data}));
-        // console.log("message: " + {message});
-        // console.log("celeb: " + {celeb});
-        // console.log("pages: " + {pages});
-        // console.log("error: " + {error});
-        // console.log("name: " + {name});
-        // console.log("items: " + {items});
+        await identifyFile(acceptedFiles);
+        // console.log(data.get("data")[0].metadata.name);
+        // console.log("loading: " + loading);
+        // console.log("loaded: " + loaded);
+        // console.log("data:" + data);
+        // console.log("message: " + message);
+        // console.log("celeb: " + celeb);
+        // console.log("pages: " + pages);
+        // console.log("name: " + name);
+        // console.log("error: " + error);
+        // console.log("items: " + items);
 
         //after files have been accepted, do stuff
         //renders image that was uploaded
@@ -307,6 +341,7 @@ export default function Previews() {
         <h4 style={textStyle}>Drag and Drop Photo Here To Identify Celebrities!</h4>
         <em style={disclaimStyle}>Only *.jpeg and *.png images are accepted</em>
       </div>
+      {loading &&  <ReactLoading type={"bars"} style={loadingStyle} />  }  
       
       <h4 style={outerText}>The image uploaded will appear below.</h4>
       
@@ -315,6 +350,7 @@ export default function Previews() {
       </aside>
 
       <div>
+        
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Celebrities Identified</ModalHeader>
           <ModalBody>
