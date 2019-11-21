@@ -79,7 +79,6 @@ const loadingStyle = {
   width: '30%',
 }
 
-
 export default function Previews() {
   const [files, setFiles] = useState([]);
   const [modal, setModal] = useState(false);
@@ -138,97 +137,7 @@ export default function Previews() {
     .catch(err => console.log(err));
   };
 
-
-  //search for celebrity based on name and page
-  async function performSearch(n1,p1) {
-    let myInit = {
-      queryStringParameters: {
-        name: n1,
-        page: p1
-      }
-    }
-    //used to show that item is being loaded
-    await setLoading(true);
-    //use search api + api gateway based on the query set by init
-    API.get('searchapi','/search',myInit)
-      .then(async response => {
-          const data = response;
-          //if failed data set error message
-          if(data["error"]){
-            await setError(data["message"]);
-          } else {
-            //if successful, display celeb data and render items
-            await setCeleb(data);
-            await setModal(false);
-            await renderPages();
-          }
-      })
-      .catch(err => { console.log(err); })
-  }
-
-  //displays another page for movies that are shown
-  async function newSelect(condition) {
-    await setPages(condition.value);
-    const data = await performSearch({name},condition.value);
-    
-    //????????????
-    //await this.setState({posts:data, loading:false});
-    //setPosts(data);
-    await setLoading(false);
-  }
-
-  async function loadCelebrity(e) {
-    //console.log("event name: " + e.target.id);
-    //set the name state to whichever celebrity is selected
-    await setName(e.target.id);
-    //console.log("updated event name: " + name);
-    //console.log("page number: " + pages)
-    
-    //setting name is undefined.... wtf
-    //initialize name and page parameters
-
-    console.log("name: " + name);
-    console.log("pages: " + pages);
-    let nameString = `${name}`;
-    let pageString = `${pages}`;
-    let myInit = {
-      queryStringParameters: {
-          name: nameString,
-          page: pageString
-      }
-    }
-
-    // let otherInit = {
-    //   queryStringParameters: {
-    //     name: 'Dwayne Johnson',
-    //     page: '1'
-    //   }
-    // }
-    console.log("updated event name: " + name);
-    console.log("init: " + myInit);
-
-    //search based on selected celebrity name & page of movies to display
-    API.get('searchapi', '/search', myInit)
-      .then(async response => {
-          const data = response;
-          console.log("data: " + myInit.queryStringParameters.name);
-          console.log("page data: " + myInit.queryStringParameters.page);
-          
-          console.log('data from search: ' + data.message);
-          //if error set error, otherwise display celebrity info
-          if(data["error"]) {
-            await setError(data["message"]);
-          } else {
-            await setCeleb(data);
-            await setModal(false);
-            console.log("got to here: " + data.message.info);
-            //await renderPages();
-          }
-      })
-      .catch(err => { console.log(err); })
-    
-  }
-
+  //passes the celebrity name as props to another page to render info
   async function goTo(e) {
     await setName(e.target.id);
     changePage(true);
@@ -255,54 +164,13 @@ export default function Previews() {
     return returns;
   }
 
-  //makes multiple pages for celebrity movie cards loaded
-  async function renderPages(){
-    const items = [];
-    for (let i = 1; i <= {celeb}.message.pages; i++) {
-        items.push({value: i, label: i});
-    }
-    await setItems(items);
-  }
-
-  //create cards regarding movies based on celeb
-  function generateMovies() {
-    let returns = [];
-    //for each of the movies loaded
-    for (let i = 0; i< {celeb}.message.movies.length; i++) {
-      //current movie information
-      let current = {celeb}.message.movies[i];
-      returns.push(
-        <Col sm="3">
-            <Card body>
-                <a class="thumbnail">
-                  <img src={'https://image.tmdb.org/t/p/w1280'+ current.poster_path}/>
-                </a>  
-                <CardTitle>{current.title}</CardTitle>
-                <CardText>{current.overview}</CardText>
-            </Card>
-        </Col>)
-    }
-    return returns;
-  }
-
-
-
+  //drop zone stuff for accepting images
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/jpeg, image/png',
     onDrop: async acceptedFiles => {
       //if one file, continue else alert user
       if (acceptedFiles.length === 1) {
         await identifyFile(acceptedFiles);
-        // console.log(data.get("data")[0].metadata.name);
-        // console.log("loading: " + loading);
-        // console.log("loaded: " + loaded);
-        // console.log("data:" + data);
-        // console.log("message: " + message);
-        // console.log("celeb: " + celeb);
-        // console.log("pages: " + pages);
-        // console.log("name: " + name);
-        // console.log("error: " + error);
-        // console.log("items: " + items);
 
         //after files have been accepted, do stuff
         //renders image that was uploaded
