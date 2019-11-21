@@ -44,7 +44,7 @@ class Search extends Component {
               page:1
           }
       }
-        API.get('searchapi','/search',myInit).then(response => {
+        API.get('searchingapi','/search',myInit).then(response => {
           this.setState({message:response});
           console.log(this.state);
         }).catch(error=>{
@@ -103,7 +103,7 @@ class Search extends Component {
           }
       }
       this.setState({loading:true});
-        API.get('searchapi','/search',myInit).then(response => {
+        API.get('searchingapi','/search',myInit).then(response => {
           const data = response;
               if(data["error"]){
                 this.setState({error:data["message"]});
@@ -136,7 +136,7 @@ class Search extends Component {
               page: this.state.page
           }
       }
-        API.get('searchapi','/search',myInit).then(response => {
+        API.get('searchingapi','/search',myInit).then(response => {
           const data = response;
               if(data["error"]){
                 this.setState({error:data["message"]});
