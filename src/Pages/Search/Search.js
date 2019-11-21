@@ -62,7 +62,7 @@ class Search extends Component {
         this.setState({ [event.target.name]: event.target.value });
     };
     async identifyFile(event) {
-        console.log(event);
+
         const { target: {files}} = event;
         const [file,] = files || [];
         console.log("HI");
