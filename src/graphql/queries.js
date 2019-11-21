@@ -50,6 +50,7 @@ export const getPost = `query GetPost($id: ID!) {
         id
         author
         content
+        createdAt
       }
       nextToken
     }
@@ -75,7 +76,12 @@ export const listPosts = `query ListPosts(
       key
       userid
       comments {
-        nextToken
+        items {
+          id
+          author
+          content
+          createdAt
+        }
       }
     }
     nextToken
@@ -103,6 +109,7 @@ export const getComment = `query GetComment($id: ID!) {
         nextToken
       }
     }
+    createdAt
   }
 }
 `;
@@ -124,6 +131,7 @@ export const listComments = `query ListComments(
         key
         userid
       }
+      createdAt
     }
     nextToken
   }
