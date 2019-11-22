@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import '../Styling/Auth/Login.css';
-
 import { 
     Button, 
     Form, 
@@ -9,7 +7,6 @@ import {
     Label, 
     Input 
 } from 'reactstrap';
-
 import { Auth } from 'aws-amplify';
 
 //set initial state for clearing upon submit

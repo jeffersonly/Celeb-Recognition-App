@@ -1,0 +1,71 @@
+/* style for image thumbnail */
+.thumbsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+.thumb {
+    display: inline-flex;
+    border-radius: 2;
+    border: 1px solid #eaeaea;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    cursor: pointer;
+}
+.thumbInner {
+    display: flex;
+    min-width: 0px;
+    overflow: hidden;
+}
+/* style for text inside of dropzone */
+.textStyle {
+    color: #343a40;
+}
+.textStyle:hover {
+    color: #343a40;
+    text-decoration: none;
+    font-size: 26px;
+    text-shadow: 2px 2px 16px #343a40;
+    transition: 0.5s ease-in-out;
+}
+.disclaimStyle {
+    color: #bdbdbd;
+}
+/* style for text outside of drop zone */
+.outerText {
+    color: #343a40;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+/* styling to make image fit into page */
+.imgStyle {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+}
+/* styling for buttons of celebs */
+.celebButtonStyle:hover {
+    background-color: white !important; 
+    color: #343a40 !important;
+    border: solid 1.5px #343a40;
+}
+/* styling for buttons in modal */
+.buttonStyle:hover {
+    background-color: white !important; 
+    color: #343a40 !important;
+    border: solid 1.5px #343a40;
+    text-shadow: 2px 2px 16px #343a40;
+}
+/* styling for text in modal */
+.modalText {
+    font-size: 16px;
+}
+/* DropZone */
+.dropZoneStyle:hover {
+    box-shadow: 2px 2px 50px #343a40;
+    transition: all 0.8s ease-in-out !important; 
+}

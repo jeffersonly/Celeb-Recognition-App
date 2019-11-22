@@ -193,7 +193,7 @@ class NameSearch extends Component {
                     placeholder="Input Celebrity Name Here"
                     />
                     </Col>
-                    <Button>Search By Name</Button>
+                    <Button className="buttonStyle">Search By Name</Button>
 
                 </FormGroup>
             </Form>
