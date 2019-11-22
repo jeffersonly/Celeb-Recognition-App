@@ -91,7 +91,7 @@ class EditComment extends React.Component {
             
           }
           API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}))
-          .then(()=> window.location.reload());
+          // .then(()=> window.location.reload());
           
       }
 
