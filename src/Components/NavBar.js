@@ -23,7 +23,10 @@ const NavBar = (props) => {
   //function for signing out of the application - uses amplify
   async function signOut() {
     await Auth.signOut()
-      .then(data => console.log(data))
+      .then(data => {
+        console.log("Signed out: "  + data);
+        this.props.history.push('/login');
+    })
       .catch(err => console.log(err));
   }
 

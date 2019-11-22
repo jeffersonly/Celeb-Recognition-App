@@ -7,13 +7,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
 import * as queries from '../../graphql/queries';
 import NavBar from '../../Components/NavBar';
 import CommentForm from './addComment';
 import OtherCrudNavBar from "./otherCrudNavBar";
+
 const styles = {
   card: {
     width: 400,
@@ -57,7 +56,7 @@ const styles = {
 };
 
 class OtherListPosts extends Component {
-state = {
+  state = {
     open: false,
     posts: [],
     comments: [],
@@ -65,20 +64,22 @@ state = {
     fileUrl: [],
     key: ''
   }
+
   handleClose=()=> {
     this.setState({ open: false})
   }
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
- async componentDidMount () {
-   let data = await Auth.currentSession();
-   console.log(data);
+
+  //get current user
+  async componentDidMount () {
+    let data = await Auth.currentSession();
     var token = await data.getIdToken();
     this.setState({
       userid: token.payload["cognito:username"]
     })
-    
     ///get the query list of posts
     API.graphql(graphqlOperation(queries.listPosts ,{
       filter: {
@@ -87,14 +88,13 @@ state = {
               //eq: this.state.userID
           }
       }
-  }))
-     .then(data => {
-      console.log(data.data.listPosts.items)
+    }))
+    .then(data => {
       //get each post with key image
-      for (let i = 0; i< data.data.listPosts.items.length; i++){
+      for (let i = 0; i< data.data.listPosts.items.length; i++) {
+        //get images with keys
         Storage.get(data.data.listPosts.items[i].key)
         .then(data => {
-          console.log("in here data", data)
           let posts = this.state.posts
           posts[i].imageURL = data
           this.setState({
@@ -103,63 +103,51 @@ state = {
         })
         .catch(error =>console.log(error))
       }
-       this.setState({posts: data.data.listPosts.items})
-      })
-      .catch(error =>console.log(error))  
-   
+      this.setState({posts: data.data.listPosts.items})
+    })
+    .catch(error =>console.log(error))  
  }
    
-
-render(){
+  render() {
     const { classes } = this.props;
     const { posts } = this.state;
     return (
-      
       <div>
         <NavBar />
         <div>
           <OtherCrudNavBar/>
-        {/* <AppBar position="static" backgroundColor="#343a40">
-          <Toolbar backgroundColor="#343a40">
-            <Typography variant="h6" color="white" style={{fontFamily: 'Jomolhari'}} className={classes.grow}>
-              Other Posts
-            </Typography>
-          </Toolbar>
-        </AppBar> */}
-      <Grid container className={classes.root} spacing={16}>
-          {posts.map((post, index) => (
-             <Grid key={post.id} post>
-                 <Card className={classes.card}>
-                   <CardContent>
-                   <CardMedia
-                    className={classes.media}
-                    image = {post.imageURL}
-                    title="image" />
-                     <Typography className={classes.title}  gutterBottom>
-                       Title: {post.title}
-                     </Typography>
-                   
-                     {/* <img src={this.state.fileUrl[index]} alt="image"/> */}
-                      <Typography component="p">
+          <Grid container className={classes.root} spacing={16}>
+            {posts.map((post, index) => (
+              <Grid key={post.id} post>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <CardMedia
+                      className={classes.media}
+                      image = {post.imageURL}
+                      title="image" 
+                    />
+                    <Typography className={classes.title}  gutterBottom>
+                      Title: {post.title}
+                    </Typography>
+                    <Typography component="p">
                       Description: {post.description}
-                      </Typography>
+                    </Typography>
                   </CardContent>
-                    <CardActions className={classes.CardActionsStyle}>
-                      <CommentForm currentItem={post}/> 
-                  
-                   </CardActions>                    
-                 </Card>                
-               </Grid>
-              
-             ))}
-         </Grid>
+                  <CardActions className={classes.CardActionsStyle}>
+                    <CommentForm currentItem={post}/> 
+                  </CardActions>                    
+                </Card>                
+              </Grid>
+            ))}
+          </Grid>
         </div>
-        
       </div>
     );
   }
 }
+
 OtherListPosts.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
 export default withStyles(styles)(OtherListPosts);

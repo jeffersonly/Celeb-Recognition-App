@@ -4,34 +4,40 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-import { API, graphqlOperation, Storage } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
+
 class DeleteComment extends Component {
-state = {
+  state = {
     open: false
   };
-handleClickOpen = () => {
+
+  handleClickOpen = () => {
     this.setState({ open: true });
   };
-handleClose = () => {
+
+  handleClose = () => {
     this.setState({ open: false });
   };
-handleDelete = () => {
-  console.log("item deleted");
+
+  handleDelete = () => {
     this.setState({ open: false });
     var commentDetails = {
       id: this.props.currentComment.id,
     }
     API.graphql(graphqlOperation(mutations.deleteComment, { input: commentDetails }));
-    // .then(()=> {window.location.reload()});
   };
-render() {
-      return (
+
+  render() {
+    return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <Button style={{marginLeft: "125px"}}size='small' color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <DeleteIcon style={{color:'white'}} />
-      </Button>
-<Dialog
+        <Button 
+          style={{marginLeft: "125px"}} size='small' color="inherit" 
+          aria-label="Add" onClick={this.handleClickOpen}
+        >
+          <DeleteIcon style={{color:'white'}} />
+        </Button>
+        <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
@@ -50,4 +56,5 @@ render() {
     );
   }
 }
+
 export default DeleteComment;

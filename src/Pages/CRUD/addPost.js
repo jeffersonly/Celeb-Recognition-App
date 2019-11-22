@@ -3,11 +3,9 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
 import { API, graphqlOperation, Storage, Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import uuid from 'uuid/v4';
@@ -21,7 +19,7 @@ const {
 } = config
 
 class AddPost extends Component {
-state = {
+  state = {
     open: false,
     userid: '',
     postTitle: '',
@@ -31,19 +29,23 @@ state = {
     filename: '',
 
   };
-handleClickOpen = () => {
+
+  handleClickOpen = () => {
     this.setState({ open: true });
   };
-handleClose = () => {
+
+  handleClose = () => {
     this.setState({ open: false });
   };
-handleChange = name => event => {
+
+  handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
+
   //get the current user
-componentDidMount =()=>{
+  componentDidMount =()=>{
     Auth.currentSession()
     .then(data => {
       let token = data.getIdToken();
@@ -52,7 +54,8 @@ componentDidMount =()=>{
       })
     })
   }
-handleSubmit = (e) => {
+
+  handleSubmit = (e) => {
     const { name: filename, type: mimeType}=this.state.file;
     const key = `${uuid()}${filename}`;
     const fileForUpload = {
@@ -71,70 +74,71 @@ handleSubmit = (e) => {
         key,
         userid: this.state.userid
     }
-     API.graphql(graphqlOperation(mutations.createPost, {input: postDetails}));
-     //save the reference of image in S3
-     Storage.put(key,this.state.file, {contentType: this.state.file.type})
-     .then(()=>{
-       console.log("saved to s3")
-       this.setState( {
-         fileUrl:'',
-         file: '',
-         filename:''
-       })
-     })
-     .catch(error => console.log(error))
-    //  window.location.reload();
-    }
-fileHandler =(e)=>{
-      const file = e.target.files[0]
-      this.setState({
-        fileUrl: URL.createObjectURL(file),
-        file,
-        filename: file.name
+    //create post in dynamodb
+    API.graphql(graphqlOperation(mutations.createPost, {input: postDetails}));
+    //save the reference of image in S3
+    Storage.put(key,this.state.file, {contentType: this.state.file.type})
+    .then(()=>{
+      this.setState( {
+        fileUrl:'',
+        file: '',
+        filename:''
       })
-    }
+    })
+    .catch(error => console.log(error))
+  }
 
-render() {
-      return (
+  fileHandler =(e)=>{
+    const file = e.target.files[0]
+    this.setState({
+      fileUrl: URL.createObjectURL(file),
+      file,
+      filename: file.name
+    })
+  }
+
+  render() {
+    return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <Button variant="fab" mini color="white" aria-label="Add" onClick={this.handleClickOpen} >
-        <AddIcon style={{fontSize:'2.3rem', color:"#343a40"}}/>
-      </Button>
-<Dialog
+        <Button variant="fab" mini color="white" aria-label="Add" onClick={this.handleClickOpen} >
+          <AddIcon style={{fontSize:'2.3rem', color:"#343a40"}}/>
+        </Button>
+        <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle style={{ fontFamily:'serif',
-    backgroundColor: '#343a40',
-    color:'white'}}> New Post</DialogTitle>
+          <DialogTitle 
+            style={{ fontFamily:'serif',
+            backgroundColor: '#343a40',
+            color:'white'}}> New Post</DialogTitle>
           <DialogContent>
-              <TextField
+            <TextField
+              style={{marginRight: 10}}
+              id="beerName"
+              label="Title"
+              type="string"
+              onChange={this.handleChange('postTitle')}
+            />
+            <br/>
+            <Input 
                 style={{marginRight: 10}}
-                id="beerName"
-                label="Title"
-                type="string"
-                onChange={this.handleChange('postTitle')}
-              />
-              <br/>
-               <Input 
-                    style={{marginRight: 10}}
-                    id="itemFile"
-                    label="File"
-                    type="file"
-                    onChange={this.fileHandler}
-                        />
-                <img src={this.state.fileUrl} />
-              <TextField
-                style={{marginTop: 10}}
-                multiline
-                id="beerDescription"
-                label="Description"
-                type="string"
-                rows="4"
-                fullWidth
-                onChange={this.handleChange('postDescription')}
-              />
+                id="itemFile"
+                label="File"
+                type="file"
+                onChange={this.fileHandler}
+            />
+            <img src={this.state.fileUrl} />
+            <TextField
+              style={{marginTop: 10}}
+              multiline
+              id="beerDescription"
+              label="Description"
+              type="string"
+              rows="4"
+              fullWidth
+              onChange={this.handleChange('postDescription')}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='#343a40' fontFamily='serif'>

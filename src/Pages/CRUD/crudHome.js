@@ -8,6 +8,7 @@ class crudHome extends Component {
   state ={
     userid:""
   }
+
   componentDidMount =()=>{
     Auth.currentSession()
     .then(data => {
@@ -17,19 +18,18 @@ class crudHome extends Component {
       })
     })
   }
+
   render() {
     return (
+      <div>
+        <NavBar />
         <div>
-                 <NavBar />
-                 
-                 <div>
-                 <CrudNavBar />
-                 <ListPosts />
-                 </div>
-                
+          <CrudNavBar />
+          <ListPosts />
         </div>
-     
+      </div>
     );
   }
 }
+
 export default crudHome;

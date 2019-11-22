@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -15,18 +14,17 @@ const styles = theme => ({
     flexGrow: 1
   },
   grow: {
-   flexGrow: 1,
-   
- },
- appbarstyle: {
-  display: 'flex',
-  position: 'relative',
-  backgroundColor: 'transparent'
- }
+    flexGrow: 1,
+  },
+  appbarstyle: {
+    display: 'flex',
+    position: 'relative',
+    backgroundColor: 'transparent'
+  }
 });
 
 class OtherCrudNavBar extends Component {
-render(){
+  render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -35,8 +33,6 @@ render(){
             <Typography variant="h6" style={{fontFamily: 'Jomolhari' ,color:"#343a40"}} className={classes.grow}>
               Other Posts
             </Typography>
-         
-
           </Toolbar>
         </AppBar>
       </div>
@@ -47,4 +43,5 @@ render(){
 OtherCrudNavBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
 export default withStyles(styles)(OtherCrudNavBar);
