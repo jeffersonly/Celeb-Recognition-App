@@ -18,7 +18,7 @@
 - Professor: [Sanjay Garje](https://www.linkedin.com/in/sanjaygarje/)
 - Students: 
     - [Jefferson Ly](https://www.linkedin.com/in/jeffersonly/)
-    - [Jonathan Van]()
+    - [Jonathan Van](https://www.linkedin.com/in/jonathan-van-1803a0107/)
     - [Hung Tang](https://www.linkedin.com/in/hung-tang-11a7b3b4/)
 
 ## Project Introduction
