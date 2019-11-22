@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 
 import '../Styling/Auth/Login.css';
 
@@ -70,7 +70,6 @@ class Login extends Component {
             Auth.signIn(usersName, usersPassword)
             .then(res => this.isAuthenticated())
             .catch(err => console.log("error signing in ... ", err));
-            //this.setState(initialState);
         } 
     };
 

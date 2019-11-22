@@ -17,9 +17,8 @@ import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
 import EditComment from './editComment';
 // import * as queries from '../graphql/queries';
-import EditComment from './editComment';
 import DeleteComment from "./deleteComment";
-import ScrollArea from'react-scrollbar';
+//import ScrollArea from'react-scrollbar';
 import Box from '@material-ui/core/Box';
 
 const styles = {

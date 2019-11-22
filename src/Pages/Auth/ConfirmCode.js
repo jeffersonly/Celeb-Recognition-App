@@ -67,7 +67,6 @@ class Confirm extends Component {
             Auth.confirmSignUp(usersName, usersConfirmationCode)
             .then(res => window.location.href = "Login")
             .catch(err => console.log("failed to confirm user...", err));
-            //this.setState(initialState);
         } 
     };
 
