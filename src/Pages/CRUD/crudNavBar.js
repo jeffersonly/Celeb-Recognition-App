@@ -4,10 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
 import AddPost from './addPost';
-
-// import { Auth } from 'aws-amplify';
 
 const styles = theme => ({
   button: {
@@ -27,12 +24,6 @@ const styles = theme => ({
   backgroundColor: '#343a40'
  }
 });
-
-// function signOut() {
-//     Auth.signOut()
-//       .then(data => console.log(data))
-//       .catch(err => console.log(err))
-// }
 
 class CrudNavBar extends Component {
 render(){
