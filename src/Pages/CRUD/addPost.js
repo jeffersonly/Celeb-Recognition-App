@@ -105,7 +105,7 @@ render() {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title" style={{backgroundColor:'darkcyan'}} > New Post</DialogTitle>
+          <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40'}} > New Post</DialogTitle>
           <DialogContent>
               <TextField
                 style={{marginRight: 10}}

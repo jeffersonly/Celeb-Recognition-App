@@ -23,7 +23,7 @@ const styles = theme => ({
  appbarstyle: {
   display: 'flex',
   position: 'relative',
-  backgroundColor: 'darkgray'
+  backgroundColor: '#343a40'
  }
 });
 

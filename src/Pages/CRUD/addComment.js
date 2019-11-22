@@ -121,7 +121,7 @@ class AddComment extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <Box>
-                <DialogTitle id="form-dialog-title" style={{backgroundColor:'darkcyan'}}>Add a New Comment</DialogTitle>
+                <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40', color:'white'}}>Add a New Comment</DialogTitle>
                 <DialogContent>              
                     <Typography>
                         Author: {this.state.userid}
@@ -167,10 +167,7 @@ class AddComment extends React.Component {
                                                 <CardActions style={{backgroundColor: 'gainsboro'}}>
                                               <EditComment currentComment={comment}/>
                                               <DeleteComment currentComment={comment} />
-                                            </CardActions>
-                                        
-                                        
-                                              
+                                            </CardActions>    
                                         ): (null)
                                         } 
                                     </div>

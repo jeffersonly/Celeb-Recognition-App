@@ -109,7 +109,7 @@ class EditComment extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Edit Comment</DialogTitle>
+          <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40'}}>Edit Comment</DialogTitle>
           <DialogContent>
               <Typography>
                   Author: {this.state.userid}

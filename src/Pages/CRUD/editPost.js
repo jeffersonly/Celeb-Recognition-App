@@ -61,7 +61,7 @@ render() {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-       <DialogTitle id="form-dialog-title" style={{backgroundColor: 'darkcyan'}}>Edit Post</DialogTitle>
+       <DialogTitle id="form-dialog-title" style={{backgroundColor: '#343a40'}}>Edit Post</DialogTitle>
           <DialogContent>
           <CardMedia
                     className={classes.media}
