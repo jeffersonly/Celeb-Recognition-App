@@ -19,7 +19,6 @@ class NameSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            opened: false,
             loading: false,
             loaded: false,
             data: {},
@@ -70,13 +69,15 @@ class NameSearch extends Component {
         })
     }
 
-    //
+    //finds movies based on page selected
     async newSelect(condition){
         this.setState({ pages: condition.value });
         await this.performSearch(this.state.name,condition.value);
         await this.setState({loading:false});
     }
-      async loadCelebrity(e){
+
+    //find the celebrity based on name 
+    async loadCelebrity(e){
         await this.setState({name:e.target.id});
         let myInit = { // OPTIONAL
           queryStringParameters: {  // OPTIONAL
@@ -100,8 +101,8 @@ class NameSearch extends Component {
         })
     }
 
-
-      async renderPages(){
+    //displays movies
+    async renderPages(){
         const items = [];
         for (let i = 1; i <= this.state.celeb.message.pages; i++) {
             items.push({value: i, label: i});
@@ -115,66 +116,65 @@ class NameSearch extends Component {
             <div className="App">
             <NavBar />
             <header className="App-header">
-            <Form onSubmit={this.onSubmit} >
-              <FormGroup className="text-center">
-                    <Label sm={2} style={{fontSize: 50}}  for="name">Search</Label>
-                </FormGroup>
-                <FormGroup row className="ml-5">
-                <Col sm={10}>
-                    <Input
-                    onChange={this.handleChange}
-                    sm={2}
-                    value={this.state.name}
-                    type="name"
-                    name="name"
-                    id="name"
-                    placeholder="Input Celebrity Name Here"
-                    />
-                    </Col>
-                    <Button className="buttonStyle">Search By Name</Button>
-
-                </FormGroup>
-            </Form>
+                <Form onSubmit={this.onSubmit} >
+                    <FormGroup className="text-center">
+                        <Label sm={2} style={{fontSize: 50}}  for="name">Search</Label>
+                    </FormGroup>
+                    <FormGroup row className="ml-5">
+                        <Col sm={10}>
+                            <Input
+                            onChange={this.handleChange}
+                            sm={2}
+                            value={this.state.name}
+                            type="name"
+                            name="name"
+                            id="name"
+                            placeholder="Input Celebrity Name Here"
+                        />
+                        </Col>
+                        <Button className="buttonStyle">Search By Name</Button>
+                    </FormGroup>
+                </Form>
             </header>
 
+            {this.state.celeb.length !== 0 && 
             <div>
-      </div>
-      {this.state.celeb.length !== 0 && 
-        <div>
-            <div>
+                <div>
+                    <Row>
+                        <Col xs="2" className="ml-5">
+                            <a class="thumbnail">
+                                <img src={this.state.celeb.message.photo}/>
+                            </a>
+                        </Col>
+                        <Col className="mr-5">
+                            <p className="font-weight-bold" style={{fontSize: 20}}>{this.state.celeb.message.name}</p>
+                            {this.state.celeb.message.info}
+                            
+                        </Col>
+                    </Row>
+                </div>
+                <div xs="2" className="mb-2 w-25">
+                    <label className="ml-2" for="condition">
+                        Page
+                    </label>
+                    <Select value={ {value : this.state.pages, label: this.state.pages }} 
+                    required onChange={this.newSelect} name="condition" id="condition" 
+                    className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
+                </div>
                 <Row>
-                <Col xs="2" className="ml-5">
-                    <a class="thumbnail">
-                        <img src={this.state.celeb.message.photo}/>
-                    </a>
-                </Col>
-                <Col className="mr-5">
-                    <p className="font-weight-bold" style={{fontSize: 20}}>{this.state.celeb.message.name}</p>
-                    {this.state.celeb.message.info}
-                    
-                </Col>
+                    {this.state.celeb.message.movies.map(item => {
+                        if(item.poster_path){
+                            return <SearchCard movie={item} />}
+                        })
+                    }
                 </Row>
             </div>
-            <div xs="2" className="mb-2 w-25">
-                <label className="ml-2" for="condition">
-                    Page
-                </label>
-                <Select value={ {value : this.state.pages, label: this.state.pages }} required onChange={this.newSelect} name="condition" id="condition" className="col-md-8 col-offset-4 flex-none"options = {this.state.items} />
-            </div>
-            <Row>
-                {this.state.celeb.message.movies.map(item => {
-                  if(item.poster_path){
-                    return <SearchCard movie={item} />}
-                })}
-            </Row>
-        </div>
-        }
+            }
+            
             {this.state.loading &&
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-<ReactLoading className="align-middle" type={"bars"} color={"#353A40"} height={'20%'} width={'20%'} /> 
-
-</div>
-               
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <ReactLoading className="align-middle" type={"bars"} color={"#353A40"} height={'20%'} width={'20%'} /> 
+                </div>
             }  
             </div>
         );
