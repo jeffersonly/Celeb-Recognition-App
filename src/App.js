@@ -40,8 +40,8 @@ function App() {
         alert(e);
       }
     }
-  
-    setIsAuthenticating(false);
+    console.log(isAuthenticating);
+    setIsAuthenticating(!isAuthenticating);
   }
   return (
     !isAuthenticating &&
@@ -53,7 +53,7 @@ function App() {
           <UnauthenticatedRoute path="/register" exact component={Register}  appProps={{ isAuthenticated, userHasAuthenticated }} />
           <UnauthenticatedRoute path="/confirm" exact component={Confirm}  appProps={{ isAuthenticated, userHasAuthenticated }} />
           <UnauthenticatedRoute path="/forgotPassword" exact component={ForgotPassword}  appProps={{ isAuthenticated, userHasAuthenticated }} />
-          <UnauthenticatedRoute path="/changePassowrd" exact ccomponent={ChangePassword}  appProps={{ isAuthenticated, userHasAuthenticated }} />
+          <UnauthenticatedRoute path="/changePassword" exact component={ChangePassword}  appProps={{ isAuthenticated, userHasAuthenticated }} />
 
           <AuthenticatedRoute path="/home" exact component={Home} appProps={{ isAuthenticated, userHasAuthenticated }} />
           <AuthenticatedRoute path="/search" exact component={Search} appProps={{ isAuthenticated, userHasAuthenticated }} />

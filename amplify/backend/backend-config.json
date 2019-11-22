@@ -1,68 +1,68 @@
 {
-	"auth": {
-		"celebrecognitionappc3eecff0": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": []
-		}
-	},
-	"hosting": {
-		"S3AndCloudFront": {
-			"service": "S3AndCloudFront",
-			"providerPlugin": "awscloudformation"
-		}
-	},
-	"predictions": {
-		"identifyEntitiese08affa1": {
-			"providerPlugin": "awscloudformation",
-			"service": "Rekognition",
-			"dependsOn": [],
-			"identifyType": "identifyEntities"
-		}
-	},
-	"api": {
-		"searchapi": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "searchfunction",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		},
-		"celebrecognitionapp": {
-			"service": "AppSync",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"authConfig": {
-					"additionalAuthenticationProviders": [],
-					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "API key",
-							"apiKeyExpirationDays": "150"
-						}
-					}
-				}
-			}
-		}
-	},
-	"storage": {
-		"celebrityrecognitionapppostss3": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation"
-		}
-	},
-	"function": {
-		"searchfunction": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
-		}
-	}
+    "auth": {
+        "celebrecognitionappc3eecff0": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": []
+        }
+    },
+    "hosting": {
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation"
+        }
+    },
+    "predictions": {
+        "identifyEntitiese08affa1": {
+            "providerPlugin": "awscloudformation",
+            "service": "Rekognition",
+            "dependsOn": [],
+            "identifyType": "identifyEntities"
+        }
+    },
+    "api": {
+        "searchapi": {
+            "service": "API Gateway",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "function",
+                    "resourceName": "searchfunction",
+                    "attributes": [
+                        "Name",
+                        "Arn"
+                    ]
+                }
+            ]
+        },
+        "celebrecognitionapp": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "API key",
+                            "apiKeyExpirationDays": "150"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "storage": {
+        "celebrityrecognitionapppostss3": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation"
+        }
+    },
+    "function": {
+        "searchfunction": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true
+        }
+    }
 }
