@@ -84,11 +84,6 @@ class ChangePassword extends Component {
             let usersName = event.target[0].value;
             let usersConfirmationCode = event.target[1].value;
             let usersNewPassword = event.target[2].value;
-            //let usersNewPassword2 = event.target[3].value;
-            // console.log("username: " + usersName);
-            // console.log("confirm code: " + usersConfirmationCode);
-            // console.log("user new pass: " + usersNewPassword);
-            // console.log("user new pass2: " + usersNewPassword2);
             
             // Change password after receiving confirmation code
             Auth.forgotPasswordSubmit(usersName, usersConfirmationCode, usersNewPassword)

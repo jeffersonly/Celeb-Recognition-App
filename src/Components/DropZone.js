@@ -2,11 +2,8 @@ import React, {useEffect, useState, useMemo} from 'react';
 import {useDropzone} from 'react-dropzone';
 import { 
   Button, Modal, ModalHeader, ModalBody, ModalFooter, 
-  Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Row, Col,
 } from 'reactstrap';
 import ReactLoading from 'react-loading';
-import { API } from 'aws-amplify';
-import Select from 'react-select';
 import Predictions from '@aws-amplify/predictions';
 import {Redirect} from 'react-router-dom';
 // In Line Constants for Styling //
@@ -113,8 +110,6 @@ export default function Previews() {
 
   //identify celebrity based off of image
   async function identifyFile(acceptedFiles) {
-    //const { target: {files}} = event;
-    //const [file,] = files || [];
     const file = acceptedFiles[0] || [];
     //set state to empty
     await setLoading(false);
@@ -140,8 +135,6 @@ export default function Previews() {
       //data is set based on celebrities identified, loaded indicates loading done
       console.log(res.entities);
       await setData(new Map(data.set("data",res.entities)));
-      //console.log(data.get("data"));
-      //console.log(data.get("data")[0].metadata.name);
       await setLoaded(true);
       await setLoading(false);
       await setModal(true);
@@ -164,7 +157,6 @@ export default function Previews() {
         namesReturns += aName + ", "
       }
     }
-    //console.log("celeb names: " + listOfCelebs());
     return namesReturns;
   }
 
@@ -174,7 +166,6 @@ export default function Previews() {
     let dataOf = data.get("data");
     if(dataOf) {
       for( let i = 0 ; i < dataOf.length; i++) {
-        //console.log("data id: " + dataOf[i].metadata.name);
         returns.push (
           <Button 
             id={dataOf[i].metadata.name}

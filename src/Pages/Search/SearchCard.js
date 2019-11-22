@@ -18,7 +18,7 @@ class SearchCard extends React.Component {
         <a class="thumbnail">
                   <img src={'https://image.tmdb.org/t/p/w1280'+ movie.poster_path}/>
               </a>  
-          <CardTitle>{movie.title}</CardTitle>
+          <CardTitle className="cardTitleStyle">{movie.title}</CardTitle>
           <CardText>{movie.overview}</CardText>
         </Card>
       </Col>

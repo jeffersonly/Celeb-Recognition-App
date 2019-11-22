@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CrudNavBar from './crudNavBar';
 import ListPosts from './listPosts';
 import {Auth } from 'aws-amplify';
+import NavBar from '../../Components/NavBar';
 
 class crudHome extends Component {
   state ={
@@ -19,6 +20,7 @@ class crudHome extends Component {
   render() {
     return (
         <div>
+                 <NavBar />
                  <CrudNavBar />
                  <div>
                  <ListPosts />

@@ -52,14 +52,11 @@ class ForgotPassword extends Component {
         const isValid = this.validateForm();
         if(isValid) {
             let usersName = event.target[0].value;
-            //console.log(usersName);
 
             //send confirmation code to email for forgot password
             Auth.forgotPassword(usersName)
             .then(data => window.location.href = "ChangePassword")
             .catch(err => console.log(err));
-
-            //this.setState(initialState);
         } 
     };
 
