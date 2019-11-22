@@ -14,8 +14,8 @@ import * as mutations from '../../graphql/mutations';
 
 const styles ={
   media: {
-    height: 140,
-    width: 140
+    minHeight: 400,
+    minWidth: 400,
   }
 };
 class EditPost extends Component {
@@ -61,7 +61,7 @@ render() {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-       <DialogTitle id="form-dialog-title">Edit Item: {this.props.currentItem.title}</DialogTitle>
+       <DialogTitle id="form-dialog-title" style={{backgroundColor: 'darkcyan'}}>Edit Post</DialogTitle>
           <DialogContent>
           <CardMedia
                     className={classes.media}
@@ -71,7 +71,7 @@ render() {
                 style={{marginRight: 10}}
                 id="postTitle"
                 placeholder={this.props.currentItem.title}
-                label="title"
+                label="Title"
                 type="string"
                 onChange={this.handleChange('postTitle')}
               />

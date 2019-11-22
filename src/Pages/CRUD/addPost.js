@@ -14,6 +14,7 @@ import uuid from 'uuid/v4';
 import config from "../../aws-exports";
 import Input from '@material-ui/core/Input';
 
+
 const {
   aws_user_files_s3_bucket_region: region,
   aws_user_files_s3_bucket: bucket
@@ -96,15 +97,15 @@ fileHandler =(e)=>{
 render() {
       return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <AddIcon />
+      <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen} >
+        <AddIcon style={{fontSize:'2.3rem'}}/>
       </Button>
 <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add a New Post</DialogTitle>
+          <DialogTitle id="form-dialog-title" style={{backgroundColor:'darkcyan'}} > New Post</DialogTitle>
           <DialogContent>
               <TextField
                 style={{marginRight: 10}}

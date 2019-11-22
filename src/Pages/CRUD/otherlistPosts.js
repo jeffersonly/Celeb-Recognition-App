@@ -39,6 +39,12 @@ const styles = {
   media: {
     minHeight: 200,
     minWidth: 200
+  },
+  CardActionsStyle:{
+    display: 'flex',
+    padding: '8px',
+    alignItems: 'center',
+    backgroundColor: 'gainsboro'
   }
 };
 
@@ -131,7 +137,7 @@ render(){
                       Description: {post.description}
                       </Typography>
                   </CardContent>
-                    <CardActions>
+                    <CardActions className={classes.CardActionsStyle}>
                       <CommentForm currentItem={post}/> 
                   
                    </CardActions>                    

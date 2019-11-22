@@ -25,8 +25,9 @@ const styles = {
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14,
+    fontSize: 18,
     color: "primary",
+    fontWeight:'bold'
   },
   pos: {
     marginBottom: 12,
@@ -38,9 +39,15 @@ const styles = {
     padding: '10px',
   },
   media: {
-    minHeight: 200,
-    minWidth: 200,
+    minHeight: 300,
+    minWidth: 350,
 
+  },
+  CardActionsStyle:{
+    display: 'flex',
+    padding: '8px',
+    alignItems: 'center',
+    backgroundColor: 'gainsboro'
   }
 };
 class ListPosts extends Component {
@@ -101,11 +108,11 @@ render(){
     const { classes } = this.props;
     const { posts } = this.state;
     return (
-      <div className={classes.root}>
+      <div>
       <Grid container className={classes.root} spacing={16}>
           {posts.map((post, index) => (
             console.log(post),
-             <Grid key={post.id} post>
+             <Grid key={post.id} post spacing={10} >
                  <Card className={classes.card}>
                    <CardContent>
                    <CardMedia
@@ -115,13 +122,13 @@ render(){
                      <Typography className={classes.title} >
                        Title: {post.title}
                      </Typography>
-                     <br />
+                   
                      {/* <img src={this.state.fileUrl[index]} alt="image"/> */}
                       <Typography component="p">
                       Description: {post.description}
                       </Typography>
                   </CardContent>
-                    <CardActions>
+                    <CardActions className={classes.CardActionsStyle}>
                       <CommentForm currentItem={post}/> 
                       <EditPost currentItem ={post} />
                      <DeletePost currentItem={post} /> 

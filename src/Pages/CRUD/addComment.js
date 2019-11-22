@@ -28,8 +28,8 @@ const styles = {
     margin: 2
   },
   cardDisplayComment: {
-    width: 380,
-    height: 200,
+    width: 400,
+    height: 'auto',
     margin: 1
   },
   bullet: {
@@ -39,6 +39,7 @@ const styles = {
   },
   title: {
     fontSize: 14,
+    flexWrap:'wrap'
   },
   pos: {
     marginBottom: 12,
@@ -110,7 +111,7 @@ class AddComment extends React.Component {
         const { comments }=this.state;
         
         return (
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', flexWrap:'wrap'}}>
       <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
         <CommentIcon />
       </Button>
@@ -120,60 +121,61 @@ class AddComment extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <Box>
-          <DialogTitle id="form-dialog-title">Add a New Comment</DialogTitle>
-          <DialogContent>              
-              <Typography>
-                  Author: {this.state.userid}
-              </Typography>
-           
-              <TextField
-                style={{marginTop: 10}}
-                multiline
-                id="beerDescription"
-                label="Content"
-                type="string"
-                rows="4"
-                fullWidth
-                onChange={this.handleChange('commentContent')}
-              />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Add Comment
-            </Button>
-          </DialogActions>
+                <DialogTitle id="form-dialog-title" style={{backgroundColor:'darkcyan'}}>Add a New Comment</DialogTitle>
+                <DialogContent>              
+                    <Typography>
+                        Author: {this.state.userid}
+                    </Typography>
+                
+                    <TextField
+                      style={{marginTop: 10}}
+                      multiline
+                      id="beerDescription"
+                      label=""
+                      placeholder="What do you think about this post?"
+                      type="string"
+                      rows="4"
+                      fullWidth
+                      onChange={this.handleChange('commentContent')}
+                    />
+                </DialogContent>
+                <DialogActions >
+                  <Button onClick={this.handleClose} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={this.handleSubmit} color="primary">
+                    Add Comment
+                  </Button>
+                </DialogActions>
           </Box>
-         
-                <Box height="100%" bgcolor="grey.300" mx={0.5} width={420} display="inline-block">
-                    <Grid container className={classes.root} spacing={16}>
+           <Box height="100%"  mx={0.5} width={420} display="inline-block">
+                    <Grid container  spacing={16}>
                           {comments.map((comment) => (
                             console.log(comment),
-                            <Grid >
+                            <Grid style={{marginBottom: '10px'}}>
                                 <Card className={classes.cardDisplayComment}>
                                   <CardContent>
                                   
-                                    <Typography className={classes.title}  gutterBottom>
-                                      Author: {comment.author}
+                                    <Typography className={classes.title}>
+                                       {comment.author} : {comment.content}
                                     </Typography>
-                                    <br />
-                                      <Typography component="p">
-                                      Content: {comment.content}
-                                      </Typography>
+                                    
                                   </CardContent>
-                                  {comment.author == this.state.userid ? (
-                                     <CardActions>
-                                        <EditComment currentComment={comment}/>
-                                        <DeleteComment currentComment={comment} />
-                                        </CardActions>
+                                  <div >
+                                        {comment.author == this.state.userid ? (
+                                          
+                                                <CardActions style={{backgroundColor: 'gainsboro'}}>
+                                              <EditComment currentComment={comment}/>
+                                              <DeleteComment currentComment={comment} />
+                                            </CardActions>
                                         
-                                  ): (null)
-                                  } 
-                                </Card> 
-                                
-                              
+                                        
+                                              
+                                        ): (null)
+                                        } 
+                                    </div>
+                             </Card> 
+                                  
                                 </Grid>
                                   ))}
                           </Grid>
