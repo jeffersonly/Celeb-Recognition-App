@@ -21,8 +21,9 @@ class crudHome extends Component {
     return (
         <div>
                  <NavBar />
-                 <CrudNavBar />
+                 
                  <div>
+                 <CrudNavBar />
                  <ListPosts />
                  </div>
                 

@@ -16,12 +16,12 @@ const styles = theme => ({
   },
   grow: {
    flexGrow: 1,
-   
+   color: '#343a40',
  },
  appbarstyle: {
   display: 'flex',
   position: 'relative',
-  backgroundColor: '#343a40'
+  backgroundColor: 'transparent'
  }
 });
 
@@ -32,12 +32,10 @@ render(){
       <div className={classes.root}>
         <AppBar className={classes.appbarstyle}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" style={{fontFamily: 'Jomolhari'}} className={classes.grow}>
+            <Typography variant="h6" style={{fontFamily: 'Jomolhari'}} className={classes.grow}>
               My Posts
             </Typography>
             <AddPost />
-            {/* <AddItem /> */}
-            {/* <Button onClick={signOut}>Log Out</Button> */}
           </Toolbar>
         </AppBar>
       </div>
