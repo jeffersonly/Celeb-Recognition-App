@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Auth } from 'aws-amplify';
+import {Link } from 'react-router-dom';
 import '../Pages/Styling/Auth/Bar.css';
 import{
   Collapse,
@@ -20,9 +21,9 @@ const NavBar = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   //function for signing out of the application - uses amplify
-  function signOut() {
-    Auth.signOut()
-      .then(data => console.log(data), window.location.href = "/Login")
+  async function signOut() {
+    await Auth.signOut()
+      .then(data => console.log(data))
       .catch(err => console.log(err));
   }
 
@@ -34,11 +35,11 @@ const NavBar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/Home">Identify Celebs</NavLink>
+              <NavLink><Link to="/Home">Identify Celebs</Link></NavLink>
             </NavItem>
 
             <NavItem>
-              <NavLink href="/NameSearch">Search for Celebrity</NavLink>
+              <NavLink><Link to="/NameSearch">Search for Celebrity</Link></NavLink>
             </NavItem>
 
             <UncontrolledDropdown nav inNavbar>
@@ -46,18 +47,18 @@ const NavBar = (props) => {
                 Posts about Celebs
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem href="/Myposts" >
-                     My Posts
+                <DropdownItem>
+                  <Link to="/Myposts">My Posts</Link>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="/Otherposts" >
-                     Other posts
+                <DropdownItem >
+                     <Link to="/Otherposts">My Posts</Link>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
             <NavItem>
-              <NavLink href="" onClick={signOut}>Log Out</NavLink>
+              <NavLink onClick={signOut}><Link to="/Login">Logout</Link></NavLink>
             </NavItem>
           </Nav>
         </Collapse>
