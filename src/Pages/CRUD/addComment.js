@@ -15,8 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
-import EditComment from './editComment';
 // import * as queries from '../graphql/queries';
+import EditComment from "./editComment";
 import DeleteComment from "./deleteComment";
 //import ScrollArea from'react-scrollbar';
 import Box from '@material-ui/core/Box';
@@ -101,7 +101,7 @@ class AddComment extends React.Component {
           }
        
           API.graphql(graphqlOperation(mutations.createComment, {input: commentDetails}))
-          .then(()=> window.location.reload());
+          // .then(()=> window.location.reload());
       }
 
     
