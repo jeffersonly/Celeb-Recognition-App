@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import '../Styling/Auth/Login.css';
-
 import { 
     Button, 
     Form, 
@@ -9,12 +7,10 @@ import {
     Label, 
     Input 
 } from 'reactstrap';
-
 import { 
     GoogleLoginButton, 
     FacebookLoginButton 
 } from 'react-social-login-buttons';
-
 import { Auth } from 'aws-amplify';
 
 //set initial state for clearing upon submit
@@ -69,7 +65,7 @@ class Login extends Component {
 
             Auth.signIn(usersName, usersPassword)
             .then(res => this.isAuthenticated())
-            .catch(err => console.log("error signing in ... ", err));
+            .catch(err => alert(err.message));
         } 
     };
 

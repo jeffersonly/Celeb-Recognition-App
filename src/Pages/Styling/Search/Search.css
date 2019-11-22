@@ -44,3 +44,15 @@
   text-align: center;
   font-weight: bold;
 }
+
+/* styling for buttons in modal */
+.buttonStyle {
+  background-color: #343a40 !important;
+  color: white;
+}
+.buttonStyle:hover {
+  background-color: white; 
+  color: #343a40;
+  border: solid 1.5px #343a40;
+  box-shadow: 2px 2px 16px #343a40;
+}

@@ -30,35 +30,35 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="dark" dark expand="md" className="fancy-font">
-        <NavbarBrand href="/Home">Celebrity Recognition Application</NavbarBrand>
+        <NavbarBrand href="/Home" className="titleStyle">Celebrity Recognition Application</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink><Link to="/Home">Identify Celebs</Link></NavLink>
+              <NavLink><Link to="/Home" className="linkStyle">Identify Celebs</Link></NavLink>
             </NavItem>
 
             <NavItem>
-              <NavLink><Link to="/NameSearch">Search for Celebrity</Link></NavLink>
+              <NavLink><Link to="/NameSearch" className="linkStyle">Search for Celebrity</Link></NavLink>
             </NavItem>
 
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Posts about Celebs
+                <span className="linkStyle">Posts about Celebs</span>
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <Link to="/Myposts">My Posts</Link>
+                  <Link to="/Myposts" className="dropStyle">My Posts</Link>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem >
-                     <Link to="/Otherposts">My Posts</Link>
+                     <Link to="/Otherposts" className="dropStyle">My Posts</Link>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
             <NavItem>
-              <NavLink onClick={signOut}><Link to="/Login">Logout</Link></NavLink>
+              <NavLink onClick={signOut}><Link to="/Login" className="linkStyle">Logout</Link></NavLink>
             </NavItem>
           </Nav>
         </Collapse>
