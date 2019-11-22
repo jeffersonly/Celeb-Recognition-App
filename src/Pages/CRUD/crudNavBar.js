@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import AddPost from './addPost';
 
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 
 const styles = theme => ({
   button: {
@@ -20,6 +20,11 @@ const styles = theme => ({
   grow: {
    flexGrow: 1,
  },
+ appbarstyle: {
+  display: 'flex',
+  position: 'relative',
+  backgroundColor: 'darkgray'
+ }
 });
 
 // function signOut() {
@@ -33,10 +38,10 @@ render(){
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar className={classes.appbarstyle}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Posts
+              My Posts
             </Typography>
             <AddPost />
             {/* <AddItem /> */}
