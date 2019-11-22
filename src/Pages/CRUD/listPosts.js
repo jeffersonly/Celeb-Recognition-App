@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
+import { API, graphqlOperation, Storage, Auth }  from "aws-amplify";
 import * as queries from '../../graphql/queries';
 import EditPost from './editPost';
 import DeletePost from './deletePost';
@@ -17,7 +17,8 @@ const styles = {
   card: {
     width: 400,
     minHeight: 275,
-    margin: 2
+    margin: 2,
+    boxShadow: '2px 2px 10px #343a40',
   },
   bullet: {
     display: 'inline-block',
@@ -48,7 +49,6 @@ const styles = {
     padding: '8px',
     alignItems: 'center',
     backgroundColor: '#343a40',
-    
   }
 };
 class ListPosts extends Component {

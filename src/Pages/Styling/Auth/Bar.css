@@ -1,5 +1,6 @@
 .fancy-font {
     font-family: 'Jomolhari', serif;
+    z-index: 9999;
 }
 .linkStyle {
     color: white;

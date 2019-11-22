@@ -8,14 +8,12 @@ import {
     FormGroup, 
     Label, 
     Input,
-    Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle,Row,Col,FormText
+    Row,
+    Col,
 } from 'reactstrap';
 import NavBar from '../../Components/NavBar';
-import { Auth, API } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import Select from 'react-select';
-import Predictions from '@aws-amplify/predictions';
-import Popup from "reactjs-popup";
 
 class NameSearch extends Component {
     constructor(props) {
@@ -30,48 +28,28 @@ class NameSearch extends Component {
             pages:1,
             name:''
         };
+
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
         this.newSelect= this.newSelect.bind(this);
+    }
 
-      }
-      onSubmit(e){
-            console.log("HELLO")
-            e.preventDefault();
-            console.log("HI");
-            this.performSearch(this.state.name, this.state.pages);
-      }
-      async componentDidMount(){
-        let info = {content:"Lindsay Lohan",page:1};
-        let myInit = { // OPTIONAL
-          queryStringParameters: {  // OPTIONAL
-              name: "Lindsay Lohan",
-              page:1
-          }
-      }
-        API.get('searchapi','/search',myInit).then(response => {
-          this.setState({message:response});
-          console.log(this.state);
-        }).catch(error=>{
-          console.log(error);
-        })
-      }
-      openModal() {
-        this.setState({ opened: true });
-      }
-      closeModal() {
-        this.setState({ opened: false });
-      }
+    //on submitting name, do a search
+    onSubmit(e){
+        e.preventDefault();
+        this.performSearch(this.state.name, this.state.pages);
+    }
+
     //handle text change
     handleChange = (event) => {
         console.log(event.target.value);
         this.setState({ [event.target.name]: event.target.value });
     };
+
+    //searches based off of a name and page #
     async performSearch(n1,p1){
-        let myInit = { // OPTIONAL
-        queryStringParameters: {  // OPTIONAL
+        let myInit = {
+        queryStringParameters: {
               name: n1,
               page: p1
             }
@@ -84,20 +62,16 @@ class NameSearch extends Component {
                 console.log(this.state.error);
               }
               else{
-                console.log("HERE");
-                console.log(response);
-                this.setState({celeb:data,opened:false,loading:false});
+                this.setState({celeb:data, loading:false});
                 this.renderPages();
-                console.log(this.state.celeb);
               }
-            
-          
-        }).catch(error=>{
+        }).catch(error => {
           console.log(error);
         })
-      }
-      async newSelect(condition){
-        console.log(condition.value);
+    }
+
+    //
+    async newSelect(condition){
         this.setState({ pages: condition.value });
         await this.performSearch(this.state.name,condition.value);
         await this.setState({loading:false});
@@ -121,48 +95,12 @@ class NameSearch extends Component {
                 this.renderPages();
                 console.log(this.state.celeb);
               }
-            
-          
         }).catch(error=>{
           console.log(error);
         })
-        // let bigData = this.state.data;
-        // let body = [];
-        // for(let i = 0 ;i < bigData.length; i++){
-        //     body.push(bigData[i].metadata.name);
-        // }
-        // let inits = {
-        //   body:body
-        // }
-        // console.log("first body check " + body);
-        // API.post('searchapi', '/celebImages').then(response => {
-        //   const data = response;
-        //       if(data["error"]){
-        //         this.setState({error:data["message"]});
-        //         console.log(this.state.error);
-        //       }
-        //       else{
-        //         this.setState({celeb:data,opened:false});
-        //         this.renderPages();
-        //         console.log(this.state.celeb);
-        //       }
-        //       console.log("sec body check " + body);
-          
-        // }).catch(error=>{
-        //   console.log(error);
-        // })
-      }
-      loadOptions(){
-        let returns = [];
-        let data = this.state.data;
-        for (let i =0; i< data.length; i++) {
-         returns.push(
+    }
 
-          <Button id={data[i].metadata.name} onClick={e => this.loadCelebrity(e)}>{data[i].metadata.name}</Button>
-         )
-        }
-        return returns;
-      }
+
       async renderPages(){
         const items = [];
         for (let i = 1; i <= this.state.celeb.message.pages; i++) {
