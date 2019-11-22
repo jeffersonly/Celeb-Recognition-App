@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Auth } from 'aws-amplify';
+import {Link } from 'react-router-dom';
 import '../Pages/Styling/Auth/Bar.css';
 import{
   Collapse,
@@ -20,44 +21,44 @@ const NavBar = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   //function for signing out of the application - uses amplify
-  function signOut() {
-    Auth.signOut()
-      .then(data => console.log(data), window.location.href = "/Login")
+  async function signOut() {
+    await Auth.signOut()
+      .then(data => console.log(data))
       .catch(err => console.log(err));
   }
 
   return (
     <div>
       <Navbar color="dark" dark expand="md" className="fancy-font">
-        <NavbarBrand href="/Home">Celebrity Recognition Application</NavbarBrand>
+        <NavbarBrand href="/Home" className="titleStyle">Celebrity Recognition Application</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/Home">Identify Celebs</NavLink>
+              <NavLink><Link to="/Home" className="linkStyle">Identify Celebs</Link></NavLink>
             </NavItem>
 
             <NavItem>
-              <NavLink href="/NameSearch">Search for Celebrity</NavLink>
+              <NavLink><Link to="/NameSearch" className="linkStyle">Search for Celebrity</Link></NavLink>
             </NavItem>
 
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Posts about Celebs
+                <span className="linkStyle">Posts about Celebs</span>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem href="/Myposts" >
-                     My Posts
+                <DropdownItem>
+                  <Link to="/Myposts" className="dropStyle">My Posts</Link>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="/Otherposts" >
-                     Other posts
+                <DropdownItem >
+                     <Link to="/Otherposts" className="dropStyle">My Posts</Link>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
             <NavItem>
-              <NavLink href="" onClick={signOut}>Log Out</NavLink>
+              <NavLink onClick={signOut}><Link to="/Login" className="linkStyle">Logout</Link></NavLink>
             </NavItem>
           </Nav>
         </Collapse>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import '../Styling/Auth/Login.css';
-
 import { 
     Button, 
     Form, 
@@ -9,7 +7,6 @@ import {
     Label, 
     Input 
 } from 'reactstrap';
-
 import { Auth } from 'aws-amplify';
 
 //set initial state for clearing upon submit
@@ -65,8 +62,8 @@ class Confirm extends Component {
             console.log(usersConfirmationCode);
             
             Auth.confirmSignUp(usersName, usersConfirmationCode)
-            .then(res => window.location.href = "Login")
-            .catch(err => console.log("failed to confirm user...", err));
+            .then(res => window.location.href = "Login", alert("Confirming Account"))
+            .catch(err => alert((err.message)));
         } 
     };
 

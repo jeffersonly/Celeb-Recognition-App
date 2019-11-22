@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import '../Styling/Auth/Login.css';
-
 import { 
     Button, 
     Form, 
@@ -9,7 +7,6 @@ import {
     Label, 
     Input 
 } from 'reactstrap';
-
 import { Auth } from 'aws-amplify';
 
 //set initial state for clearing upon submit
@@ -55,8 +52,8 @@ class ForgotPassword extends Component {
 
             //send confirmation code to email for forgot password
             Auth.forgotPassword(usersName)
-            .then(data => window.location.href = "ChangePassword")
-            .catch(err => console.log(err));
+            .then(data => window.location.href = "ChangePassword", alert("Reseting password for user... an confirmation code will be sent to the user!"))
+            .catch(err => alert(err.message));
         } 
     };
 

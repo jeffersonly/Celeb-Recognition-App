@@ -88,8 +88,8 @@ class Register extends Component {
             
             //Sign user up
             Auth.signUp( usersName, usersPassword, usersEmail )
-            .then(res => window.location.href = "Confirm")
-            .catch(err => console.log("error signing user up...", err));
+            .then(res => window.location.href = "Confirm", alert("Registering user... A confirmation code will be sent to your email."))
+            .catch(err => alert((err.message)));
         } 
     };
 

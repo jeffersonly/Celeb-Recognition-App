@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Home from './Pages/Auth/Home';
@@ -9,13 +8,14 @@ import NameSearch from './Pages/Search/NameSearch';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ChangePassword from './Pages/Auth/ChangePassword';
 import NotFound from './Pages/Auth/NotFound';
-//import ProtectedRoute from './Pages/Auth/ProtectedRoute';
-import CrudHome from './Pages/CRUD/crudHome'
+import CrudHome from './Pages/CRUD/crudHome';
+import ProtectedRoute from './Pages/Auth/ProtectedRoute';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+import {Auth} from 'aws-amplify';
 import { createBrowserHistory } from 'history';
 import otherlistPosts from './Pages/CRUD/otherlistPosts';
 import './Pages/Styling/Auth/Bar.css'
@@ -28,15 +28,17 @@ function App() {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/Login" component={Login} />
-          <Route path="/Home" component={Home} />
           <Route path="/Register" component={Register} />
           <Route path="/Confirm" component={Confirm} />
           <Route path="/ForgotPassword" component={ForgotPassword} />
           <Route path="/ChangePassword" component={ChangePassword} />
-          <Route path="/Search" component={Search} />
-          <Route path="/NameSearch" component={NameSearch} />
-          <Route path="/MyPosts" exact component={CrudHome}/>
-          <Route path="/Otherposts" exact component={otherlistPosts}/>
+
+          <ProtectedRoute path="/Home" component={Home} />
+          <ProtectedRoute path="/Search" component={Search} />
+          <ProtectedRoute path="/NameSearch" component={NameSearch} />
+          <ProtectedRoute path="/MyPosts" component={CrudHome}/>
+          <ProtectedRoute path="/Otherposts" component={otherlistPosts}/>
+
           <Route path="/*" component={NotFound} />
         </Switch>
       </Router>

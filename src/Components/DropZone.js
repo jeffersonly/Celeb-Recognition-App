@@ -6,31 +6,9 @@ import {
 import ReactLoading from 'react-loading';
 import Predictions from '@aws-amplify/predictions';
 import {Redirect} from 'react-router-dom';
+import '../Pages/Styling/Components/DropZone.css';
+
 // In Line Constants for Styling //
-//for the previewed image thumbnail container
-const thumbsContainer = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
-};
-//style for image thumbnail
-const thumb = {
-  display: 'inline-flex',
-  borderRadius: 2,
-  border: '1px solid #eaeaea',
-  width: '100%',
-  height: '100%',
-  boxSizing: 'border-box',
-  justifyContent: 'center',
-  alignItems: 'center',
-  cursor: 'pointer'
-};
-const thumbInner = {
-  display: 'flex',
-  minWidth: 0,
-  overflow: 'hidden'
-};
 //styling of drop zone
 const baseStyle = {
   flex: 1,
@@ -47,26 +25,6 @@ const baseStyle = {
   transition: 'border .24s ease-in-out',
   cursor: 'pointer',
 };
-//style for text inside of dropzone
-const textStyle = {
-  textColor: '#343a40',
-}
-const disclaimStyle = {
-  color: '#bdbdbd',
-}
-//style for text outside of drop zone
-const outerText = {
-  textColor: '#343a40',
-  textAlign: 'center',
-  paddingTop: 15,
-  paddingBottom: 5,
-}
-//styling to make image fit into page
-const imgStyle = {
-  width: '100%',
-  height: '100%',
-  maxHeight: '100vh'
-}
 const loadingStyle = {
   position: 'absolute',
   top: '50%',
@@ -76,20 +34,14 @@ const loadingStyle = {
   height: '25%',
   width: '25%',
 }
-
 const celebButtonStyle = {
   backgroundColor: '#343a40',
   color: 'white',
 }
-
 const buttonStyle = {
   backgroundColor: '#343a40',
   color: 'white',
   margin: '10px',
-}
-
-const modalText = {
-  fontSize: '16px',
 }
 
 export default function Previews() {
@@ -171,6 +123,7 @@ export default function Previews() {
             id={dataOf[i].metadata.name}
             onClick={e => goTo(e)}
             style={celebButtonStyle}
+            className="celebButtonStyle"
           >
             {dataOf[i].metadata.name}
           </Button>
@@ -202,11 +155,11 @@ export default function Previews() {
   });
   
   const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
+    <div className="thumb" key={file.name}>
+      <div className="thumbInner">
         <img
           src={file.preview}
-          style={imgStyle}
+          className="imgStyle"
         />
       </div>
     </div>
@@ -226,16 +179,16 @@ export default function Previews() {
     <>
     {newpage ? <Redirect to= {{ pathname: '/search', state: {n: name}}}/> : null}
     <section className="container">
-      <div {...getRootProps({style})}>
+      <div {...getRootProps({style})} className="dropZoneStyle">
         <input {...getInputProps()} />
-        <h4 style={textStyle}>Drag and Drop Photo Here To Identify Celebrities!</h4>
-        <em style={disclaimStyle}>Only *.jpeg and *.png images are accepted</em>
+        <h4 className="textStyle">Drag and Drop Photo Here To Identify Celebrities!</h4>
+        <em className="disclaimStyle">Only *.jpeg and *.png images are accepted</em>
       </div>
       {loading &&  <ReactLoading type={"bars"} style={loadingStyle} />  }  
       
-      <h4 style={outerText}>The image uploaded will appear below.</h4>
+      <h4 className="outerText">The image uploaded will appear below.</h4>
       
-      <aside style={thumbsContainer} onClick={toggle}>
+      <aside className="thumbsContainer" onClick={toggle}>
         {thumbs}
       </aside>
 
@@ -244,7 +197,7 @@ export default function Previews() {
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Celebrities Identified</ModalHeader>
           <ModalBody>
-            <span style={modalText}>
+            <span className="modalText">
               Photo Uploaded:
               {thumbs}
               {listOfCelebs()}
@@ -255,7 +208,7 @@ export default function Previews() {
             </span>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={toggle} style={buttonStyle}>Close</Button>
+            <Button color="secondary" onClick={toggle} style={buttonStyle} className="buttonStyle">Close</Button>
           </ModalFooter>
         </Modal>
       </div>
