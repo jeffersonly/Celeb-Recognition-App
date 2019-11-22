@@ -25,12 +25,13 @@ const styles = {
   card: {
     width: 400,
     minHeight: 275,
-    margin: 2
+    margin: 2,
   },
   cardDisplayComment: {
     width: 400,
     height: 'auto',
-    margin: 1
+    margin: 1,
+    boxShadow: '2px 2px 10px #343a40',
   },
   bullet: {
     display: 'inline-block',
@@ -165,7 +166,7 @@ class AddComment extends React.Component {
                                   <CardContent>
                                   
                                     <Typography className={classes.title}>
-                                       {comment.author} : {comment.content}
+                                       <h5>{comment.author}:</h5> {comment.content}
                                     </Typography>
                                     
                                   </CardContent>

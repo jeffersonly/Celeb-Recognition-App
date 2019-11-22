@@ -30,6 +30,11 @@ const styles = {
     color: "primary",
     fontWeight:'bold'
   },
+  description: {
+    fontSize: 18,
+    color: "primary",
+    fontWeight:'italic'
+  },
   pos: {
     marginBottom: 12,
   },
