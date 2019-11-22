@@ -9,7 +9,6 @@ import ForgotPassword from './Pages/Auth/ForgotPassword';
 import ChangePassword from './Pages/Auth/ChangePassword';
 import NotFound from './Pages/Auth/NotFound';
 import CrudHome from './Pages/CRUD/crudHome';
-import ProtectedRoute from './Pages/Auth/ProtectedRoute';
 import UnauthenticatedRoute from './Pages/Auth/UnauthenticatedRoute';
 import AuthenticatedRoute from './Pages/Auth/AuthenticatedRoute';
 
