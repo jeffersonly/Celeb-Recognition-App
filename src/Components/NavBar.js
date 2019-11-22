@@ -52,7 +52,7 @@ const NavBar = (props) => {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem >
-                     <Link to="/Otherposts" className="dropStyle">My Posts</Link>
+                     <Link to="/Otherposts" className="dropStyle">Other Posts</Link>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

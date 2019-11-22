@@ -109,7 +109,7 @@ class EditComment extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40'}}>Edit Comment</DialogTitle>
+          <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40', color:'white'}}>Edit Comment</DialogTitle>
           <DialogContent>
               <Typography>
                   Author: {this.state.userid}
@@ -127,10 +127,10 @@ class EditComment extends React.Component {
               />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color="#343a40">
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button onClick={this.handleSubmit} color="#343a40">
               Edit Comment
             </Button>
           </DialogActions>

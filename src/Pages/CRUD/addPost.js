@@ -7,13 +7,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-
+import { withStyles } from '@material-ui/core/styles';
 import { API, graphqlOperation, Storage, Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import uuid from 'uuid/v4';
 import config from "../../aws-exports";
 import Input from '@material-ui/core/Input';
-
+import "../Styling/Crud/addPost.css";
 
 const {
   aws_user_files_s3_bucket_region: region,
@@ -105,7 +105,9 @@ render() {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40'}} > New Post</DialogTitle>
+          <DialogTitle style={{ fontFamily:'serif',
+    backgroundColor: '#343a40',
+    color:'white'}}> New Post</DialogTitle>
           <DialogContent>
               <TextField
                 style={{marginRight: 10}}
@@ -135,10 +137,10 @@ render() {
               />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color='#343a40' fontFamily='serif'>
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button onClick={this.handleSubmit} color='#343a40'>
               Add Post
             </Button>
           </DialogActions>

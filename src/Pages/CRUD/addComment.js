@@ -54,7 +54,11 @@ const styles = {
     minHeight: 200,
     minWidth: 200
   },
-
+  dialogtitleStyle:{
+    fontFamily:'serif',
+    backgroundColor: '#343a40',
+    color:'white'
+  }
 };
 class AddComment extends React.Component {
     constructor(props){
@@ -121,7 +125,8 @@ class AddComment extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <Box>
-                <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40', color:'white'}}>Add a New Comment</DialogTitle>
+                <DialogTitle id="form-dialog-title" className={classes.dialogtitleStyle}
+                 >Add a New Comment</DialogTitle>
                 <DialogContent>              
                     <Typography>
                         Author: {this.state.userid}
@@ -140,10 +145,10 @@ class AddComment extends React.Component {
                     />
                 </DialogContent>
                 <DialogActions >
-                  <Button onClick={this.handleClose} color="primary">
+                  <Button onClick={this.handleClose} color="#343a40">
                     Cancel
                   </Button>
-                  <Button onClick={this.handleSubmit} color="primary">
+                  <Button onClick={this.handleSubmit} color="#343a40">
                     Add Comment
                   </Button>
                 </DialogActions>
@@ -164,7 +169,7 @@ class AddComment extends React.Component {
                                   <div >
                                         {comment.author == this.state.userid ? (
                                           
-                                                <CardActions style={{backgroundColor: 'gainsboro'}}>
+                                                <CardActions style={{backgroundColor: '#343a40'}}>
                                               <EditComment currentComment={comment}/>
                                               <DeleteComment currentComment={comment} />
                                             </CardActions>    

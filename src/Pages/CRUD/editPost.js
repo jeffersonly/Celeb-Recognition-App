@@ -61,7 +61,7 @@ render() {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-       <DialogTitle id="form-dialog-title" style={{backgroundColor: '#343a40'}}>Edit Post</DialogTitle>
+       <DialogTitle id="form-dialog-title" style={{backgroundColor: '#343a40', color:'white'}}>Edit Post</DialogTitle>
           <DialogContent>
           <CardMedia
                     className={classes.media}
@@ -91,10 +91,10 @@ render() {
           </DialogContent>
           <DialogActions>
          
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color="#343a40">
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button onClick={this.handleSubmit} color="#343a40">
               Submit
             </Button>
           </DialogActions>

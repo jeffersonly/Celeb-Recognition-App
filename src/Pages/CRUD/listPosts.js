@@ -47,7 +47,8 @@ const styles = {
     display: 'flex',
     padding: '8px',
     alignItems: 'center',
-    backgroundColor: 'gainsboro'
+    backgroundColor: '#343a40',
+    
   }
 };
 class ListPosts extends Component {
