@@ -97,8 +97,8 @@ fileHandler =(e)=>{
 render() {
       return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen} >
-        <AddIcon style={{fontSize:'2.3rem'}}/>
+      <Button variant="fab" mini color="white" aria-label="Add" onClick={this.handleClickOpen} >
+        <AddIcon style={{fontSize:'2.3rem', color:'white'}}/>
       </Button>
 <Dialog
           open={this.state.open}

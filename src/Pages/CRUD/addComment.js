@@ -58,6 +58,9 @@ const styles = {
     fontFamily:'serif',
     backgroundColor: '#343a40',
     color:'white'
+  },
+  icon: {
+    color:'white'
   }
 };
 class AddComment extends React.Component {
@@ -117,7 +120,7 @@ class AddComment extends React.Component {
         return (
             <div style={{display: 'flex', flexWrap:'wrap'}}>
       <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <CommentIcon />
+        <CommentIcon className={classes.icon} />
       </Button>
 <Dialog
           open={this.state.open}

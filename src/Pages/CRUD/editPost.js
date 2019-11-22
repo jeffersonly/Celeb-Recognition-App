@@ -16,6 +16,9 @@ const styles ={
   media: {
     minHeight: 400,
     minWidth: 400,
+  },
+  icon: {
+    color:'white'
   }
 };
 class EditPost extends Component {
@@ -54,7 +57,7 @@ render() {
       return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
       <Button size='small' color="inherit" aria-label="Edit" onClick={this.handleClickOpen}>
-        <EditIcon />
+        <EditIcon className={classes.icon}/>
       </Button>
 <Dialog
           open={this.state.open}

@@ -13,6 +13,7 @@ import { API, graphqlOperation, Storage,Auth }  from "aws-amplify";
 import * as queries from '../../graphql/queries';
 import NavBar from '../../Components/NavBar';
 import CommentForm from './addComment';
+import OtherCrudNavBar from "./otherCrudNavBar";
 const styles = {
   card: {
     width: 400,
@@ -25,7 +26,9 @@ const styles = {
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14,
+    fontSize: 18,
+    color: "primary",
+    fontWeight:'bold'
   },
   pos: {
     marginBottom: 12,
@@ -48,7 +51,7 @@ const styles = {
   }
 };
 
-class ListPosts extends Component {
+class OtherListPosts extends Component {
 state = {
     open: false,
     posts: [],
@@ -110,13 +113,14 @@ render(){
       <div>
         <NavBar />
         <div>
-        <AppBar position="static" backgroundColor="#343a40">
+          <OtherCrudNavBar/>
+        {/* <AppBar position="static" backgroundColor="#343a40">
           <Toolbar backgroundColor="#343a40">
             <Typography variant="h6" color="white" style={{fontFamily: 'Jomolhari'}} className={classes.grow}>
               Other Posts
             </Typography>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
       <Grid container className={classes.root} spacing={16}>
           {posts.map((post, index) => (
              <Grid key={post.id} post>
@@ -125,11 +129,11 @@ render(){
                    <CardMedia
                     className={classes.media}
                     image = {post.imageURL}
-                    title="Contemplative Reptile" />
+                    title="image" />
                      <Typography className={classes.title}  gutterBottom>
                        Title: {post.title}
                      </Typography>
-                     <br />
+                   
                      {/* <img src={this.state.fileUrl[index]} alt="image"/> */}
                       <Typography component="p">
                       Description: {post.description}
@@ -150,7 +154,7 @@ render(){
     );
   }
 }
-ListPosts.propTypes = {
+OtherListPosts.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(ListPosts);
+export default withStyles(styles)(OtherListPosts);
