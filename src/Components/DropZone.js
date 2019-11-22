@@ -104,9 +104,13 @@ export default function Previews() {
     let namesReturns = 'Celebrities Identified: ';
     let listData = data.get("data");
     if(listData) {
-      for(let i = 0; i < listData.length; i++) {
-        let aName = listData[i].metadata.name;
-        namesReturns += aName + ", "
+      if(listData.length === 0) {
+        namesReturns += "None"
+      } else {
+        for(let i = 0; i < listData.length; i++) {
+          let aName = listData[i].metadata.name;
+          namesReturns += aName + ", "
+        }
       }
     }
     return namesReturns;
@@ -117,17 +121,30 @@ export default function Previews() {
     let returns = [];
     let dataOf = data.get("data");
     if(dataOf) {
-      for( let i = 0 ; i < dataOf.length; i++) {
-        returns.push (
+      if(dataOf.length === 0) {
+        returns.push(
           <Button 
-            id={dataOf[i].metadata.name}
-            onClick={e => goTo(e)}
+            onClick={e => window.location.href="/MyPosts"}
             style={celebButtonStyle}
             className="celebButtonStyle"
           >
-            {dataOf[i].metadata.name}
+            No Celebrities Found, Click to go Create a Post
           </Button>
         )
+      } else {
+        returns.push(<span>Click on an actor to view more information about them!</span>)
+        for( let i = 0 ; i < dataOf.length; i++) {
+          returns.push (
+            <Button 
+              id={dataOf[i].metadata.name}
+              onClick={e => goTo(e)}
+              style={celebButtonStyle}
+              className="celebButtonStyle"
+            >
+              {dataOf[i].metadata.name}
+            </Button>
+          )
+        }
       }
     }
     return returns;
@@ -201,8 +218,6 @@ export default function Previews() {
               Photo Uploaded:
               {thumbs}
               {listOfCelebs()}
-              <br/><br/>
-              Click on an actor to view more information about them!
               <br/><br/>
               {loadOptions()}
             </span>
