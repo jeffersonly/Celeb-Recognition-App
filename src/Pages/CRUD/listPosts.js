@@ -30,6 +30,11 @@ const styles = {
     color: "primary",
     fontWeight:'bold'
   },
+  description: {
+    fontSize: 18,
+    color: "primary",
+    fontWeight:'italic'
+  },
   pos: {
     marginBottom: 12,
   },
@@ -125,7 +130,7 @@ render(){
                      </Typography>
                    
                      {/* <img src={this.state.fileUrl[index]} alt="image"/> */}
-                      <Typography component="p">
+                      <Typography component="p" className={classes.description}>
                       Description: {post.description}
                       </Typography>
                   </CardContent>

@@ -102,7 +102,7 @@ class EditComment extends React.Component {
         return (
             <div style={{display: 'flex', flexWrap: 'wrap'}}>
       <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <EditIcon />
+        <EditIcon style={{color:'white'}} />
       </Button>
 <Dialog
           open={this.state.open}

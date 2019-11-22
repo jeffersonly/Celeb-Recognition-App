@@ -17,7 +17,7 @@ import {
 } from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import { createBrowserHistory } from 'history';
-import otherlistPosts from './Pages/CRUD/otherlistPosts';
+import OtherlistPosts from './Pages/CRUD/otherlistPosts';
 import './Pages/Styling/Auth/Bar.css'
 const browserHistory = createBrowserHistory();
 
@@ -37,7 +37,7 @@ function App() {
           <ProtectedRoute path="/Search" component={Search} />
           <ProtectedRoute path="/NameSearch" component={NameSearch} />
           <ProtectedRoute path="/MyPosts" component={CrudHome}/>
-          <ProtectedRoute path="/Otherposts" component={otherlistPosts}/>
+          <ProtectedRoute path="/Otherposts" component={OtherlistPosts}/>
 
           <Route path="/*" component={NotFound} />
         </Switch>

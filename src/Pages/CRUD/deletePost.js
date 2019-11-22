@@ -32,7 +32,7 @@ render() {
       return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
       <Button style={{marginLeft: "125px"}}size='small' color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <DeleteIcon />
+        <DeleteIcon style={{color: 'white'}} />
       </Button>
 <Dialog
           open={this.state.open}
