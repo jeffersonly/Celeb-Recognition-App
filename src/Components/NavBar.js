@@ -15,10 +15,8 @@ import{
   DropdownItem 
 } from 'reactstrap';
 
-
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
 
   //function for signing out of the application - uses amplify
@@ -55,7 +53,6 @@ const NavBar = (props) => {
                 <DropdownItem href="/Otherposts" >
                      Other posts
                 </DropdownItem>
-               
               </DropdownMenu>
             </UncontrolledDropdown>
 

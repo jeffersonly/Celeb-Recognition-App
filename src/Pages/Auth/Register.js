@@ -85,11 +85,7 @@ class Register extends Component {
             let usersName = event.target[0].value;
             let usersEmail = event.target[1].value;
             let usersPassword = event.target[2].value;
-
-            //console.log("user: " + usersName);
-            //console.log("email: " + usersEmail);
-            //console.log("password: " + usersPassword);
-
+            
             //Sign user up
             Auth.signUp( usersName, usersPassword, usersEmail )
             .then(res => window.location.href = "Confirm")

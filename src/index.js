@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Login from './Pages/Auth/Login';
 import * as serviceWorker from './serviceWorker';
 
 //import bootstrap css
@@ -10,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 //import amplify stuff 
 import Amplify, { Auth } from 'aws-amplify'
 import config from './aws-exports'
-import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 
 //split config oauth links so that they can be read properly for redirects
 var urlsIn = config.oauth.redirectSignIn.split(",");

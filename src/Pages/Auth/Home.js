@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 
 import { Auth } from 'aws-amplify';
 
-import Dropzone from 'react-dropzone';
-
-import Predictions from '@aws-amplify/predictions';
-
 import NavBar from '../../Components/NavBar';
 import Previews from '../../Components/DropZone';
 
