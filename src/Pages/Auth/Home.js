@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-
 import { Auth } from 'aws-amplify';
-
 import NavBar from '../../Components/NavBar';
 import Previews from '../../Components/DropZone';
-
 import '../Styling/Auth/Home.css';
 
 class Home extends Component {

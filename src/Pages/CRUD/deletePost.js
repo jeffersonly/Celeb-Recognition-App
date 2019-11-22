@@ -6,40 +6,47 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
+
 class DeletePost extends Component {
-state = {
+  state = {
     open: false
   };
-handleClickOpen = () => {
+
+  handleClickOpen = () => {
     this.setState({ open: true });
   };
-handleClose = () => {
+
+  handleClose = () => {
     this.setState({ open: false });
   };
-handleDelete = () => {
-  console.log("item deleted");
+
+  handleDelete = () => {
     this.setState({ open: false });
     var postDetails = {
       id: this.props.currentItem.id,
     }
+    //remove photo from dynamodb
     API.graphql(graphqlOperation(mutations.deletePost, { input: postDetails }))
-    // .then(()=> {window.location.reload()})
+    //remove photo from s3
     Storage.remove(this.props.currentItem.imageURL)
     .then(()=>console.log("image deleted in S3"))
     .catch(error => console.log(error))
   };
-render() {
-      return (
+
+  render() {
+    return (
       <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <Button style={{marginLeft: "125px"}}size='small' color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <DeleteIcon style={{color: 'white'}} />
-      </Button>
-<Dialog
+        <Button style={{marginLeft: "125px"}}size='small' color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
+          <DeleteIcon style={{color: 'white'}} />
+        </Button>
+        <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Are you sure you want to delete Post: {this.props.currentItem.title}?</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            Are you sure you want to delete Post: {this.props.currentItem.title}?
+          </DialogTitle>
           <DialogActions>
             <Button onClick={this.handleClose} color="#343a40">
               Cancel
@@ -53,4 +60,5 @@ render() {
     );
   }
 }
+
 export default DeletePost;

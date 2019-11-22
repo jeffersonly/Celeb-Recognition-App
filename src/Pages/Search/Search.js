@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import '../Styling/Search/Search.css'
 import ReactLoading from 'react-loading';
 import SearchCard from './SearchCard';
-import { 
-  Row, Col
-} from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import NavBar from '../../Components/NavBar';
 import { API } from 'aws-amplify';
 import Select from 'react-select';
