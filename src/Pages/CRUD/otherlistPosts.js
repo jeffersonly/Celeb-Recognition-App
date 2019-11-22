@@ -44,7 +44,7 @@ const styles = {
     display: 'flex',
     padding: '8px',
     alignItems: 'center',
-    backgroundColor: 'gainsboro'
+    backgroundColor: "#343a40"
   }
 };
 
@@ -109,14 +109,12 @@ render(){
       
       <div>
         <NavBar />
-         <AppBar position="static" color="default">
-          <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+        <div>
+        <AppBar position="static" backgroundColor="#343a40">
+          <Toolbar backgroundColor="#343a40">
+            <Typography variant="h6" color="white" style={{fontFamily: 'Jomolhari'}} className={classes.grow}>
               Other Posts
             </Typography>
-            {/* <AddPost /> */}
-            {/* <AddItem /> */}
-            {/* <Button onClick={signOut}>Log Out</Button> */}
           </Toolbar>
         </AppBar>
       <Grid container className={classes.root} spacing={16}>
@@ -146,6 +144,8 @@ render(){
               
              ))}
          </Grid>
+        </div>
+        
       </div>
     );
   }

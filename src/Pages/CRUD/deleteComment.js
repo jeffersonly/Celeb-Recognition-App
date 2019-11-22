@@ -38,10 +38,10 @@ render() {
         >
           <DialogTitle id="form-dialog-title">Are you sure you want to delete this comment?</DialogTitle>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleClose} color="#343a40">
               Cancel
             </Button>
-            <Button onClick={this.handleDelete} color="primary">
+            <Button onClick={this.handleDelete} color="#343a40">
               Delete
             </Button>
           </DialogActions>
