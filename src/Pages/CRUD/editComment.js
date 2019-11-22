@@ -6,17 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core/styles';
-import CommentIcon from '@material-ui/icons/Comment';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
 import { API, graphqlOperation,Auth } from "aws-amplify";
 import * as mutations from '../../graphql/mutations';
 import Typography from '@material-ui/core/Typography';
-
-// import * as queries from '../graphql/queries';
 
 const styles = {
   card: {
@@ -46,85 +39,84 @@ const styles = {
     minWidth: 200
   }
 };
+
 class EditComment extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            open: false,
-            postid: "",
-            commentAuthor: "",
-            commentContent: "",
-            userid: "",
-            
-        }
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false,
+      postid: "",
+      commentAuthor: "",
+      commentContent: "",
+      userid: "",
     }
-    async componentDidMount () {
-      let data = await Auth.currentSession();
-      console.log(data);
-       var token = await data.getIdToken();
-       this.setState({
-         userid: token.payload["cognito:username"]
-       })
-       console.log(this.state.userid)
   }
-    handleClickOpen = () => {
-        this.setState({ open: true });
-      };
-    handleClose = () => {
-        this.setState({ open: false });
-      };
-    handleChange = name => event => {
-        this.setState({
-          [name]: event.target.value,
+
+  //when component mounts get user
+  async componentDidMount () {
+    let data = await Auth.currentSession();
+    var token = await data.getIdToken();
+    this.setState({
+      userid: token.payload["cognito:username"]
+    })
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+
+    });
+  };
  
-        });
-      };
- 
-    handleSubmit = (e) => {
-          this.setState({
-            open: false,
-          })
-          var commentDetails = {
-            id: this.props.currentComment.id,
-            author: this.state.userid,
-            content: this.state.commentContent,
-            
-          }
-          API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}))
-          // .then(()=> window.location.reload());
-          
-      }
+  handleSubmit = (e) => {
+    this.setState({
+      open: false,
+    })
+    var commentDetails = {
+      id: this.props.currentComment.id,
+      author: this.state.userid,
+      content: this.state.commentContent,
+    }
+    //update the dynamodb table 
+    API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}))
+  }
 
     
-    render(){
-    //   const { classes } = this.props;
-    //     const { comments }=this.state;
-        return (
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
-      <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
-        <EditIcon />
-      </Button>
-<Dialog
+  render() {
+    return (
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        <Button variant="fab" mini color="inherit" aria-label="Add" onClick={this.handleClickOpen}>
+          <EditIcon style={{color:'white'}} />
+        </Button>
+        <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title" style={{backgroundColor:'#343a40', color:'white'}}>Edit Comment</DialogTitle>
           <DialogContent>
-              <Typography>
-                  Author: {this.state.userid}
-              </Typography>
-           
-              <TextField
-                style={{marginTop: 10}}
-                multiline
-                id="b"
-                label="Content"
-                type="string"
-                rows="4"
-                fullWidth
-                onChange={this.handleChange('commentContent')}
-              />
+            <Typography>
+              Author: {this.state.userid}
+            </Typography>
+
+            <TextField
+              style={{marginTop: 10}}
+              multiline
+              id="b"
+              label="Content"
+              type="string"
+              rows="4"
+              fullWidth
+              onChange={this.handleChange('commentContent')}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="#343a40">
@@ -134,10 +126,10 @@ class EditComment extends React.Component {
               Edit Comment
             </Button>
           </DialogActions>
-        
         </Dialog>
       </div>
-        )
-    }
+    )
+  }
 }
+
 export default withStyles(styles)(EditComment);

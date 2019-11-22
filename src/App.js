@@ -20,7 +20,7 @@ import {
 } from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import { createBrowserHistory } from 'history';
-import otherlistPosts from './Pages/CRUD/otherlistPosts';
+import OtherlistPosts from './Pages/CRUD/otherlistPosts';
 import './Pages/Styling/Auth/Bar.css'
 const browserHistory = createBrowserHistory();
 
@@ -60,7 +60,7 @@ function App() {
           <AuthenticatedRoute path="/search" exact component={Search} appProps={{ isAuthenticated, userHasAuthenticated }} />
           <AuthenticatedRoute path="/namesearch" exact component={NameSearch} appProps={{ isAuthenticated, userHasAuthenticated }} />
           <AuthenticatedRoute path="/myposts" exact component={CrudHome} appProps={{ isAuthenticated, userHasAuthenticated }} />
-          <AuthenticatedRoute path="/Otherposts" exact component={otherlistPosts} appProps={{ isAuthenticated, userHasAuthenticated }} />
+          <AuthenticatedRoute path="/Otherposts" exact component={OtherlistPosts} appProps={{ isAuthenticated, userHasAuthenticated }} />
 
           <Route path="/*" component={NotFound} />
         </Switch>

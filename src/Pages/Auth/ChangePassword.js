@@ -85,7 +85,7 @@ class ChangePassword extends Component {
             // Change password after receiving confirmation code
             Auth.forgotPasswordSubmit(usersName, usersConfirmationCode, usersNewPassword)
             .then(data => window.location.href = "Login")
-            .catch(err => console.log(err));
+            .catch(err => alert(err.message));
         } 
     };
 

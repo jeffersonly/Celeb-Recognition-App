@@ -9,7 +9,7 @@
     -  [Resources to Configure on Cloud Account](#resources-to-configure-on-cloud-account)
     - [Software that is needed to be downloaded Locally](#software-that-is-needed-to-be-downloaded-locally)
     - [Local Configurations](#local-configurations)
-5. [How to Set Up & Run the Project Locally](#how-to-set-up-&-run-the-project-locally)
+5. [How to Set Up and Run the Project Locally](#how-to-set-up-and-run-the-project-locally)
 
 ## Project Information
 
@@ -28,7 +28,8 @@ Ever wondered who a celebrity was in a show you watched? Not sure about who the 
 The Celebrity Recognition Application can be used to recognize Celebrities within photos! The application allows users to find information about celebrities they may be curious about! They simply have to upload an image to the application, which uses AWS services to identify celebrities, and they will be provided with celebrity names and information. If AWS can't identify the celebrity, many other users may be able to! Our social aspect allows users to create posts and get information from other users.
 
 ## Demo
-![DemoPic](images/DemoPic.png)
+![AppDemo1](images/AppDemo1.png)
+![AppDemo2](images/AppDemo2.png)
 ## Pre-Requisites Set Up
 
 ### Resources to Configure on Cloud Account
@@ -67,7 +68,7 @@ The Celebrity Recognition Application can be used to recognize Celebrities withi
         ![AmplifyRESTApiConfig](images/AmplifyRESTApiConfig.png)
         
 
-## How to Set Up & Run the Project Locally
+## How to Set Up and Run the Project Locally
 
 To set up the project locally, go to the [master branch of the repository](https://github.com/jeffersonly/Celeb-Recognition-App) and clone the project. Then open up the file and run 'npm install' to install all the dependencies needed. After doing so, assuming that the steps in the preconfiguration were followed correctly, you can run 'npm start' and the project should start up on localhost:3000/ 
 
