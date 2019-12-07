@@ -10,6 +10,7 @@ class Home extends Component {
         <NavBar />
         <div className="lowerItem">
           <Previews/>
+          <h1>Hi this is an update</h1>
         </div>
         
       </div>
