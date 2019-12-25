@@ -109,6 +109,9 @@ class AddComment extends React.Component {
         }
       
         API.graphql(graphqlOperation(mutations.createComment, {input: commentDetails}))
+        .then(() => {
+          window.location.reload();
+        })
     }
 
     

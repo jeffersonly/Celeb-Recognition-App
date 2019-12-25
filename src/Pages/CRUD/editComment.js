@@ -87,6 +87,9 @@ class EditComment extends React.Component {
     }
     //update the dynamodb table 
     API.graphql(graphqlOperation(mutations.updateComment, {input: commentDetails}))
+    .then(() => {
+      window.location.reload();
+    })
   }
 
     

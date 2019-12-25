@@ -84,6 +84,7 @@ class AddPost extends Component {
         file: '',
         filename:''
       })
+      window.location.reload();
     })
     .catch(error => console.log(error))
   }
