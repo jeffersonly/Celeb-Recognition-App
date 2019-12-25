@@ -25,7 +25,10 @@ class DeleteComment extends Component {
     var commentDetails = {
       id: this.props.currentComment.id,
     }
-    API.graphql(graphqlOperation(mutations.deleteComment, { input: commentDetails }));
+    API.graphql(graphqlOperation(mutations.deleteComment, { input: commentDetails }))
+    .then(() => {
+      window.location.reload();
+    });
   };
 
   render() {

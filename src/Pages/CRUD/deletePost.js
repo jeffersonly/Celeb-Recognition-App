@@ -25,12 +25,17 @@ class DeletePost extends Component {
     var postDetails = {
       id: this.props.currentItem.id,
     }
-    //remove photo from dynamodb
-    API.graphql(graphqlOperation(mutations.deletePost, { input: postDetails }))
+    
     //remove photo from s3
     Storage.remove(this.props.currentItem.imageURL)
     .then(()=>console.log("image deleted in S3"))
     .catch(error => console.log(error))
+
+    //remove photo from dynamodb
+    API.graphql(graphqlOperation(mutations.deletePost, { input: postDetails }))
+    .then(() => {
+      window.location.reload();
+    })
   };
 
   render() {

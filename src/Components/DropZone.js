@@ -43,6 +43,9 @@ const buttonStyle = {
   color: 'white',
   margin: '10px',
 }
+const modalStyle = {
+  paddingTop: '3.5%',
+}
 
 export default function Previews() {
   const [files, setFiles] = useState([]);
@@ -211,7 +214,7 @@ export default function Previews() {
 
       <div>
         
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal isOpen={modal} toggle={toggle} style={modalStyle}>
           <ModalHeader toggle={toggle}>Celebrities Identified</ModalHeader>
           <ModalBody>
             <span className="modalText">

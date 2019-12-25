@@ -52,7 +52,10 @@ class EditPost extends Component {
         description: this.state.postDescription,
     }
     //update dynamodb table
-    API.graphql(graphqlOperation(mutations.updatePost, {input: postDetails}));
+    API.graphql(graphqlOperation(mutations.updatePost, {input: postDetails}))
+    .then(() => {
+      window.location.reload();
+    });
   }
 
   render() {
