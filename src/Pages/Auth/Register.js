@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import '../Styling/Auth/Login.css';
-
 import { 
     Button, 
     Form, 
@@ -9,6 +7,7 @@ import {
     Label, 
     Input 
 } from 'reactstrap';
+import { Auth } from 'aws-amplify';
 
 //set initial state for clearing upon submit
 const initialState = {
@@ -80,7 +79,14 @@ class Register extends Component {
         if(isValid) {
             //check to see if user can sign up - amplify
             console.log(this.state);
-            this.setState(initialState);
+            let usersName = event.target[0].value;
+            let usersEmail = event.target[1].value;
+            let usersPassword = event.target[2].value;
+            
+            //Sign user up
+            Auth.signUp( usersName, usersPassword, usersEmail )
+            .then(res => window.location.href = "Confirm", alert("Registering user... A confirmation code will be sent to your email."))
+            .catch(err => alert((err.message)));
         } 
     };
 

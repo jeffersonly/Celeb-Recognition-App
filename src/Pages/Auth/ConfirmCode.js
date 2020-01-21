@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import '../Styling/Auth/Login.css';
-
 import { 
     Button, 
     Form, 
@@ -9,12 +7,13 @@ import {
     Label, 
     Input 
 } from 'reactstrap';
+import { Auth } from 'aws-amplify';
 
 //set initial state for clearing upon submit
 const initialState = {
-    email: "",
+    username: "",
     confirmationCode: "",
-    emailError: "",
+    usernameError: "",
     confirmationCodeError: "",
 }
 
@@ -32,22 +31,19 @@ class Confirm extends Component {
 
     //check to see if form has errors
     validateForm = () => {
-        let emailError = "";
+        let usernameError = "";
         let confirmationCodeError = "";
 
-        if(!this.state.email) {
-            emailError = "Email can not be empty!";
-        }
-        else if(!this.state.email.includes("@")) {
-            emailError = "Please enter a valid email!";
+        if(!this.state.username) {
+            usernameError = "Username can not be empty!";
         }
 
         if(!this.state.confirmationCode) {
             confirmationCodeError = "Confirmation Code can not be empty!";
         }
 
-        if(emailError || confirmationCodeError) {
-            this.setState({emailError, confirmationCodeError});
+        if(usernameError || confirmationCodeError) {
+            this.setState({usernameError, confirmationCodeError});
             return false;
         }
 
@@ -59,9 +55,15 @@ class Confirm extends Component {
         event.preventDefault();
         const isValid = this.validateForm();
         if(isValid) {
-            //check to see if user confirm code- amplify
-            console.log(this.state);
-            this.setState(initialState);
+            //confirm account with confirmation code
+            let usersName = event.target[0].value;
+            let usersConfirmationCode = event.target[1].value;
+            console.log(usersName);
+            console.log(usersConfirmationCode);
+            
+            Auth.confirmSignUp(usersName, usersConfirmationCode)
+            .then(res => window.location.href = "Login", alert("Confirming Account"))
+            .catch(err => alert((err.message)));
         } 
     };
 
@@ -70,16 +72,16 @@ class Confirm extends Component {
             <Form className="loginForm" onSubmit={this.handleSubmit}>
                 <h2 className="text-center">Confirm Account</h2>
                 <FormGroup>
-                    <Label>Email</Label>
+                    <Label>Username</Label>
                     <Input 
-                        type="email" 
-                        placeholder="Enter Email"
-                        name="email"
-                        value={this.state.email}
+                        type="text" 
+                        placeholder="Enter Username"
+                        name="username"
+                        value={this.state.username}
                         onChange={this.handleChange}
                     />
                     <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.emailError}
+                        {this.state.usernameError}
                     </div>
                 </FormGroup>
                 <FormGroup>
